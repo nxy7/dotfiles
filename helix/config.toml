@@ -1,0 +1,14 @@
+theme = "nightfox"
+
+[editor]
+line-number = "relative"
+scrolloff = 10
+true-color = true
+bufferline = "always"
+completion-trigger-len = 1
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.lsp]
+display-messages = true
