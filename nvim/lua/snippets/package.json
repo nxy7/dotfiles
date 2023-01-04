@@ -1,0 +1,13 @@
+{
+	"name": "My Snippets",
+	"contributes": {
+		"snippets": [
+			{
+				"language": [
+					"typescriptreact"
+				],
+				"path": "qwik.json"
+			}
+		]
+	}
+}

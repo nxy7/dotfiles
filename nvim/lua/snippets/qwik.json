@@ -1,0 +1,30 @@
+{
+	"Qwik named component": {
+		"prefix": "qcomp",
+		"body": [
+			"export const $1 = component$(()=>{})"
+		],
+		"description": "Qwik named component"
+	},
+	"Qwik use client effect": {
+		"prefix": "qclient",
+		"body": [
+			"useClientEffect$(async()=>{$1})"
+		],
+		"description": "Qwik use client effect"
+	},
+	"Qwik use task": {
+		"prefix": "qtask",
+		"body": [
+			"useTask$(async(c)=>{$1})"
+		],
+		"description": "Qwik use client effect"
+	},
+	"Qwik useResource": {
+		"prefix": "qtask",
+		"body": [
+			"useResource$(async(c)=>{$1})"
+		],
+		"description": "Qwik use client effect"
+	}
+}
