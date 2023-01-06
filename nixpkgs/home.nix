@@ -6,6 +6,7 @@
   home.stateVersion = "22.11";
 
   home.packages = [
+    pkgs.podman-compose
     pkgs.latex2html
     pkgs.nil
     pkgs.gopls
@@ -39,12 +40,29 @@
     pkgs.git
     pkgs.gh
   ];
-
   programs.home-manager.enable = true; # Let Home Manager install and manage itself.
   programs.neovim = {
     enable = true;
     viAlias = true;
     vimAlias = true;
+  };
+  programs.zsh = {
+    enable = true;
+    autocd = true;
+    dotDir = ".config/zsh";
+    enableCompletion = true;
+    enableAutosuggestions = true;
+    enableSyntaxHighlighting = true;
+
+    initExtraFirst = 
+      "source $HOME/.config/aliases.sh\nsource $HOME/.config/paths.sh"
+    ;
+       
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "golang" "tmux" "rust" "gh"];
+      theme = "afowler";
+    };
   };
 }
 		

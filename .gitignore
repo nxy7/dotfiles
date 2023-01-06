@@ -1,0 +1,14 @@
+yarn
+procps
+gh
+cni
+
+
+# include those
+!README.md
+!aliases.sh
+!paths.sh
+!helix
+!nvim
+!zsh
+!nixpkgs
