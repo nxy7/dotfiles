@@ -16,6 +16,7 @@
     pkgs.zig
     pkgs.tree-sitter
     pkgs.llvm
+    pkgs.gcc
     # rust support
     pkgs.rustup
     # golang support
