@@ -1,8 +1,4 @@
-yarn
-procps
-gh
-cni
-
+*
 
 # include those
 !README.md
