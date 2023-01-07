@@ -10,7 +10,7 @@ require("lazy").setup({
     -- import LazyVim plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import/override with your plugins
-    -- { import = "plugins" },
+    { import = "plugins" },
   },
   defaults = {
     lazy = true, -- every plugin is lazy-loaded by default

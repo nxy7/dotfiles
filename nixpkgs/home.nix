@@ -15,6 +15,7 @@
     # zig and tree-sitter to fix neovim tree-sitter (you can find it in treesitter config) bug
     pkgs.zig
     pkgs.tree-sitter
+    pkgs.llvm
     # rust support
     pkgs.rustup
     # golang support
