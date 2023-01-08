@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  home.username = "nxyt";
-  home.homeDirectory = "/home/nxyt";
+  home.username = "nxy7";
+  home.homeDirectory = "/home/nxy7";
   home.stateVersion = "22.11";
 
   home.packages = [
@@ -28,7 +28,6 @@
     pkgs.nodePackages.pnpm
 
     # all stuff necesarry for helix lsp
-    pkgs.helix
     pkgs.nodePackages.typescript
     pkgs.nodePackages.typescript-language-server
     pkgs.nodePackages.prettier
@@ -42,7 +41,12 @@
     pkgs.git
     pkgs.gh
   ];
+
+
   programs.home-manager.enable = true; # Let Home Manager install and manage itself.
+  programs.helix = {
+    enable = true;
+  };
   programs.neovim = {
     enable = true;
     viAlias = true;
@@ -55,11 +59,9 @@
     enableCompletion = true;
     enableAutosuggestions = true;
     enableSyntaxHighlighting = true;
-
     initExtraFirst = 
       "source $HOME/.config/aliases.sh\nsource $HOME/.config/paths.sh"
-    ;
-       
+    ;       
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "golang" "tmux" "rust" "gh"];

@@ -5,10 +5,45 @@ line-number = "relative"
 scrolloff = 10
 true-color = true
 bufferline = "always"
+idle-timeout = 0
 completion-trigger-len = 1
+color-modes = true
 
 [editor.cursor-shape]
 insert = "bar"
+normal = "block"
+select = "block"
 
 [editor.lsp]
 display-messages = true
+
+[keys.normal]
+X = "extend_line_above"
+C-space = "completion"
+C-p = "file_picker"
+C-b = "buffer_picker"
+0 = "goto_line_start"
+"$" = "goto_line_end"
+G = "goto_file_end"
+V = ["select_mode", "extend_to_line_bounds"]
+C = ["extend_to_line_end", "yank_main_selection_to_clipboard", "delete_selection", "insert_mode"]
+D = ["extend_to_line_end", "yank_main_selection_to_clipboard", "delete_selection"]
+S = "surround_add" # Would be nice to be able to do something after this but it isn't chainable
+C-left = ":bprev"
+C-right= ":bnext"
+
+[keys.insert]
+C-space = "completion"
+C-p = "file_picker"
+C-b = "buffer_picker"
+j = { k = "normal_mode" } # Maps `jk` to exit insert mode
+C-left = ":bprev"
+C-right= ":bnext"
+
+[keys.select]
+C-p = "file_picker"
+C-b = "buffer_picker"
+0 = "goto_line_start"
+"$" = "goto_line_end"
+C-left = ":bprev"
+C-right= ":bnext"
