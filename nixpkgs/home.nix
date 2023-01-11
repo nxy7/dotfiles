@@ -1,11 +1,23 @@
-{ config, pkgs, ... }:
-
+{inputs, outputs, lib, config, pkgs, ...}:
+ # {
+let
+  helix = pkgs.fetchFromGitHub {
+    owner = "helix-editor";
+    repo = "helix";
+    rev = "2d601d6";
+    # sha256 = "x1tc9rZNZY9eXk/TOqG/EufCZ/9rYndCCP1nu5+Ncz8";
+  };
+in
 {
   home.username = "nxy7";
   home.homeDirectory = "/home/nxy7";
   home.stateVersion = "22.11";
 
   home.packages = [
+    pkgs.zellij
+    # pkgs.htop
+    # helix
+    pkgs.helix
     pkgs.podman-compose
     pkgs.latex2html
     pkgs.nil
@@ -38,14 +50,15 @@
     # dev setup
     pkgs.lazygit
     pkgs.tmux
-    pkgs.git
     pkgs.gh
   ];
 
 
   programs.home-manager.enable = true; # Let Home Manager install and manage itself.
-  programs.helix = {
+    programs.git = {
     enable = true;
+    userName = "nxyt";
+    userEmail = "lolnoxy@gmail.com";
   };
   programs.neovim = {
     enable = true;

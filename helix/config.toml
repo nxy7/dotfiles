@@ -5,7 +5,7 @@ line-number = "relative"
 scrolloff = 10
 true-color = true
 bufferline = "always"
-idle-timeout = 0
+idle-timeout = 75
 completion-trigger-len = 1
 color-modes = true
 
@@ -16,6 +16,9 @@ select = "block"
 
 [editor.lsp]
 display-messages = true
+
+[editor.file-picker]
+hidden = false
 
 [keys.normal]
 X = "extend_line_above"
