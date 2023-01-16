@@ -8,7 +8,6 @@
         
         home-manager = {
             url = "github:nix-community/home-manager";
-            inputs.nixpkgs.follows = "nixpkgs";
         };
     };
     
@@ -19,24 +18,15 @@
 
     homeConfigurations = {
       "nxy7@nxyt-windows" = home-manager.lib.homeManagerConfiguration {
-        configuration = import ./home.nix;
-        pkgs = nixpkgs;
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
-        system = "x86_64-linux";
-        homeDirectory = "/home/nxy7";
-        username = "nxy7";
-        stateVersion = "23.05";
+        modules = [
+          ./home.nix
+        ];
+        
+        
       };
     };
-
-    # homeManagerConfigurations = {
-    #   darwin = inputs.home-manager.lib.homeManagerConfiguration {
-    #     configuration = ./home.nix;
-    #     system = "x86_64-darwin";
-    #     homeDirectory = "/home/nxy7";
-    #     username = "nxy7";
-    #   };
-    # };
 
   };
 }

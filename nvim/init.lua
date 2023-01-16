@@ -1,18 +1,21 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+local impatient_ok, impatient = pcall(require, "impatient")
+if impatient_ok then impatient.enable_profile() end
 
--- disable netrw so nvmitree can be launched at startup
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
--- vim.o.clipboard = unnamedplus
+for _, source in ipairs {
+  "core.utils",
+  "core.options",
+  "core.bootstrap",
+  "core.diagnostics",
+  "core.autocmds",
+  "core.mappings",
+  "configs.which-key-register",
+} do
+  local status_ok, fault = pcall(require, source)
+  if not status_ok then vim.api.nvim_err_writeln("Failed to load " .. source .. "\n\n" .. fault) end
+end
 
-require("config.lazy")
-require("config.options")
+astronvim.conditional_func(astronvim.user_plugin_opts("polish", nil, false))
 
-vim.api.nvim_create_autocmd("User", {
-	pattern = "VeryLazy",
-	callback = function()
-		require("config.commands")
-		require("config.keymappings")
-	end,
-})
+if vim.fn.has "nvim-0.8" ~= 1 or vim.version().prerelease then
+  vim.schedule(function() astronvim.notify("Unsupported Neovim Version! Please check the requirements", "error") end)
+end

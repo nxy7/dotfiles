@@ -1,5 +1,10 @@
 {inputs, outputs, lib, config, pkgs, helix-master, ...}:
 {
+  home.system = "x86_64-linux";
+  home.homeDirectory = "/home/nxy7";
+  home.username = "nxy7";
+  home.stateVersion = "23.05";
+
   home.packages = [
     pkgs.fswatch
     pkgs.haskellPackages.latex
@@ -9,6 +14,7 @@
     pkgs.gopls
     pkgs.texlab
     pkgs.rust-analyzer
+    helix-master
     # zig and tree-sitter to fix neovim tree-sitter (you can find it in treesitter config) bug
     pkgs.zig
     pkgs.tree-sitter
@@ -52,9 +58,7 @@
   };
   programs.helix = {
     enable = true;
-    package = helix-editor.packages."x86_64-linux".default;
-    # i think that for this to work i need to convert home manager to flake version?
-    # package = helix-master.packages."x86_64-linux".default;
+    package = helix-master.packages."x86_64-linux".default;
   };
   programs.zsh = {
     enable = true;
