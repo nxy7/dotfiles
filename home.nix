@@ -1,6 +1,5 @@
 {inputs, outputs, lib, config, pkgs, helix-master, ...}:
 {
-  home.system = "x86_64-linux";
   home.homeDirectory = "/home/nxy7";
   home.username = "nxy7";
   home.stateVersion = "23.05";
