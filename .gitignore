@@ -1,6 +1,9 @@
 *
 
 # include those
+!flake.nix
+!flake.lock
+!home.nix
 !README.md
 !aliases.sh
 !paths.sh

@@ -34,12 +34,17 @@ D = ["extend_to_line_end", "yank_main_selection_to_clipboard", "delete_selection
 S = "surround_add" # Would be nice to be able to do something after this but it isn't chainable
 C-left = ":bprev"
 C-right= ":bnext"
+C-j= "half_page_down"
+C-k= "half_page_up"
+# C-m = "select_textobject_inner"
+# M = "select_textobject_around"
+
 
 [keys.insert]
 C-space = "completion"
 C-p = "file_picker"
 C-b = "buffer_picker"
-j = { k = "normal_mode" } # Maps `jk` to exit insert mode
+# j = { k = "normal_mode" } # Maps `jk` to exit insert mode
 C-left = ":bprev"
 C-right= ":bnext"
 

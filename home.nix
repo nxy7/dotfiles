@@ -1,22 +1,9 @@
 {inputs, outputs, lib, config, pkgs, helix-master, ...}:
-let 
-  helix = fetchGit {
-    url= "https://github.com/helix-editor/helix";
-    # rev = "b633139";
-  };
-in
 {
-  home.username = "nxy7";
-  home.homeDirectory = "/home/nxy7";
-  home.stateVersion = "23.05";
-
   home.packages = [
     pkgs.fswatch
     pkgs.haskellPackages.latex
     pkgs.zellij
-    # pkgs.htop
-    helix
-    # pkgs.helix
     pkgs.podman-compose
     pkgs.nil
     pkgs.gopls
@@ -65,6 +52,7 @@ in
   };
   programs.helix = {
     enable = true;
+    package = helix-editor.packages."x86_64-linux".default;
     # i think that for this to work i need to convert home manager to flake version?
     # package = helix-master.packages."x86_64-linux".default;
   };
