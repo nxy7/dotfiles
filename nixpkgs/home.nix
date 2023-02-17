@@ -14,6 +14,7 @@ in
     pkgs.fswatch
     pkgs.haskellPackages.latex
     pkgs.zellij
+    pkgs.qmk
     # pkgs.htop
     helix
     # pkgs.helix
