@@ -14,6 +14,8 @@
     pkgs.texlab
     pkgs.rust-analyzer
     helix-master
+    pkgs.python39
+    pkgs.qmk
     # zig and tree-sitter to fix neovim tree-sitter (you can find it in treesitter config) bug
     pkgs.zig
     pkgs.tree-sitter
