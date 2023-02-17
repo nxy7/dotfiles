@@ -1,12 +1,13 @@
-theme = "dark_plus"
+theme = "github_dark_dimmed"
 
 [editor]
 line-number = "relative"
+auto-format = true
 scrolloff = 10
 true-color = true
 bufferline = "always"
 idle-timeout = 75
-completion-trigger-len = 1
+completion-trigger-len = 2
 color-modes = true
 
 [editor.cursor-shape]
@@ -24,27 +25,27 @@ hidden = false
 X = "extend_line_above"
 C-space = "completion"
 C-p = "file_picker"
-C-b = "buffer_picker"
 0 = "goto_line_start"
 "$" = "goto_line_end"
 G = "goto_file_end"
 V = ["select_mode", "extend_to_line_bounds"]
-C = ["extend_to_line_end", "yank_main_selection_to_clipboard", "delete_selection", "insert_mode"]
-D = ["extend_to_line_end", "yank_main_selection_to_clipboard", "delete_selection"]
-S = "surround_add" # Would be nice to be able to do something after this but it isn't chainable
+S = "surround_add" 
 C-left = ":bprev"
 C-right= ":bnext"
 C-j= "half_page_down"
 C-k= "half_page_up"
-# C-m = "select_textobject_inner"
-# M = "select_textobject_around"
+
+
+# C-m = "match_mode"
+"M" = "select_textobject_inner"
+"A-M" = "select_textobject_around"
 
 
 [keys.insert]
 C-space = "completion"
 C-p = "file_picker"
 C-b = "buffer_picker"
-# j = { k = "normal_mode" } # Maps `jk` to exit insert mode
+# j = { k = "normal_mode" } 
 C-left = ":bprev"
 C-right= ":bnext"
 

@@ -27,6 +27,7 @@ in
     pkgs.tree-sitter
     pkgs.llvm
     pkgs.gcc
+    pkgs.python39
     # rust support
     pkgs.rustup
     # golang support

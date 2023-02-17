@@ -198,17 +198,16 @@ local config = {
   -- lower level configuration and more robust one. (which-key will
   -- automatically pick-up stored data by this setting.)
   mappings = {
-    -- first key is the mode
     n = {
-      -- second key is the lefthand side of the map
-      -- mappings seen under group name "Buffer"
       ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
       ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
       ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
       ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
-      ["<C-e>"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle neotree" }
-      -- quick save
-      -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+      ["<C-j>"] = { "<C-d>zz", desc = "jump half page down" },
+      ["<C-k>"] = { "<C-u>zz", desc = "jump half page up" },
+      ["<C-e>"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle neotree" },
+      ["<C-b>"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle neotree" },
+      ["<C-p>"] = { "<cmd>Telescope find_files<cr>", desc = "Telescope find files" },
     },
     t = {
       -- setting a mapping to false will disable it
