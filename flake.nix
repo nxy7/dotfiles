@@ -3,12 +3,8 @@
 
   inputs = {
         nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
         helix-master.url = "github:helix-editor/helix/master";
-        
-        home-manager = {
-            url = "github:nix-community/home-manager";
-        };
+        home-manager.url = "github:nix-community/home-manager";
     };
     
   outputs = { self, home-manager, nixpkgs, helix-master }:
