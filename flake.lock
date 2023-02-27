@@ -137,17 +137,17 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1676564472,
-        "narHash": "sha256-ZvNxNPji9oAG1CYvOQml/bWuKJJL+CQH6O2tkHq/17Y=",
-        "owner": "helix-editor",
-        "repo": "helix",
-        "rev": "ce0837dbb75badf39c9b1ac251fba9c3efbc57c4",
+        "lastModified": 1673823798,
+        "narHash": "sha256-hU8d7SGkTT/Aa/UHCwHmYceWND25gLTs9TZjwFD+Obg=",
+        "owner": "pinelang",
+        "repo": "helix-tree-explorer",
+        "rev": "50e047cfdb7ca50039af0531de9d3447f09f3d3d",
         "type": "github"
       },
       "original": {
-        "owner": "helix-editor",
+        "owner": "pinelang",
         "ref": "master",
-        "repo": "helix",
+        "repo": "helix-tree-explorer",
         "type": "github"
       }
     },
@@ -249,11 +249,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1676518424,
-        "narHash": "sha256-OsJSBwl9Hayh/bmxDtUyxm2U6btaBHuLvviE9KpMmwQ=",
+        "lastModified": 1676928847,
+        "narHash": "sha256-FIqk+DHRICsWozlOdRxOXO/g9hCqjPYpmr8wQGrpUCA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a592a97fcedae7a06b8506623b25fd38a032ad13",
+        "rev": "5ab8b5ae26e6a4b781bdebdfd131c054f0b96e70",
         "type": "github"
       },
       "original": {

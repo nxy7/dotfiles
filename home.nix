@@ -3,8 +3,14 @@
   home.homeDirectory = "/home/nxy7";
   home.username = "nxy7";
   home.stateVersion = "23.05";
-
+  
   home.packages = [
+    pkgs.gitoxide
+    # pkgs.zsh-powerlevel10k
+    pkgs.sqlc
+    pkgs.htop
+    pkgs.sccache
+    pkgs.nodePackages_latest.ts-node
     pkgs.fswatch
     pkgs.haskellPackages.latex
     pkgs.zellij
@@ -13,7 +19,6 @@
     pkgs.gopls
     pkgs.texlab
     pkgs.rust-analyzer
-    helix-master
     pkgs.python39
     pkgs.qmk
     # zig and tree-sitter to fix neovim tree-sitter (you can find it in treesitter config) bug
@@ -45,37 +50,58 @@
     pkgs.gh
   ];
 
-
-  programs.home-manager.enable = true; # Let Home Manager install and manage itself.
-    programs.git = {
-    enable = true;
-    userName = "nxyt";
-    userEmail = "lolnoxy@gmail.com";
-  };
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-  };
-  programs.helix = {
-    enable = true;
-    package = helix-master.packages."x86_64-linux".default;
-  };
-  programs.zsh = {
-    enable = true;
-    autocd = true;
-    dotDir = ".config/zsh";
-    enableCompletion = true;
-    enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
-    initExtraFirst = 
-      "source $HOME/.config/aliases.sh\nsource $HOME/.config/paths.sh"
-    ;       
-    oh-my-zsh = {
+  programs = {
+    home-manager.enable = true;
+    git = {
       enable = true;
-      plugins = [ "git" "golang" "tmux" "rust" "gh"];
-      theme = "afowler";
+      userName = "nxyt";
+      userEmail = "lolnoxy@gmail.com";
+    };
+    neovim = {
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
+    };
+    helix = {
+      enable = true;
+      package = helix-master.packages."x86_64-linux".default;
+    };
+    zsh = {
+      enable = true;
+      autocd = true;
+      dotDir = ".config/zsh";
+      enableCompletion = true;
+      enableAutosuggestions = true;
+      enableSyntaxHighlighting = true;
+      initExtraFirst = '' 
+        source $HOME/.config/aliases.sh
+        source $HOME/.config/paths.sh
+      '';       
+      # initExtra = ''
+      #   exec nu
+      # '';
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" "golang" "tmux" "rust" "gh"];
+        theme = "afowler";
+      };
+    };
+    starship = {
+      enable = true;
+      
+    };
+    nushell = {
+      enable = true;
+      extraEnv = ''
+        # source $HOME/.config/aliases.sh
+      '';
+    };
+    fish = {
+      enable = true;
+	    shellInit = "source $HOME/.config/aliases.sh\nsource $HOME/.config/paths.sh";
+      # package = fishPkg;
     };
   };
+  
 }
 		
