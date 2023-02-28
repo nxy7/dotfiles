@@ -1,11 +1,11 @@
-{inputs, outputs, lib, config, pkgs, usrName, helix-master, ...}:
-{
+{ inputs, outputs, lib, config, pkgs, usrName, helix-master, ... }: {
   home = rec {
     username = usrName;
-    homeDirectory = "/home/" + username; 
+    homeDirectory = "/home/" + username;
     stateVersion = "23.05";
-    
+
     packages = [
+      pkgs.nixfmt
       pkgs.gitoxide
       pkgs.sqlc
       pkgs.htop
@@ -41,7 +41,7 @@
       pkgs.gh
     ];
   };
-  
+
   programs = {
     home-manager.enable = true;
     git = {
@@ -65,22 +65,22 @@
       enableCompletion = true;
       enableAutosuggestions = true;
       enableSyntaxHighlighting = true;
-      initExtraFirst = '' 
+      initExtraFirst = ''
         source $HOME/.config/aliases.sh
         source $HOME/.config/paths.sh
-      '';       
+      '';
       # initExtra = ''
       #   exec nu
       # '';
       oh-my-zsh = {
         enable = true;
-        plugins = [ "git" "golang" "tmux" "rust" "gh"];
+        plugins = [ "git" "golang" "tmux" "rust" "gh" ];
         theme = "afowler";
       };
     };
     starship = {
       enable = true;
-      
+
     };
     nushell = {
       enable = true;
@@ -90,10 +90,12 @@
     };
     fish = {
       enable = true;
-	    shellInit = "source $HOME/.config/aliases.sh\nsource $HOME/.config/paths.sh";
+      shellInit = ''
+        source $HOME/.config/aliases.sh
+        source $HOME/.config/paths.sh'';
       # package = fishPkg;
     };
   };
-  
+
 }
-		
+
