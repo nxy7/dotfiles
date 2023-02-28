@@ -16,6 +16,7 @@
       pkgs.rust-analyzer
       pkgs.python39
       pkgs.qmk
+      pkgs.google-cloud-sdk-gce
       # rust support
       pkgs.rustup
       # golang support

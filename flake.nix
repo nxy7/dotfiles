@@ -9,13 +9,13 @@
     
   outputs = { self, home-manager, nixpkgs, helix-master }:
   let
-        system = "x86_64-linux";
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
-        allowUnfree = { nixpkgs.config.allowUnfree = true; };
-configuration = name: home-manager.lib.homeManagerConfiguration {
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      allowUnfree = { nixpkgs.config.allowUnfree = true; };
+    pcConfiguration = name: home-manager.lib.homeManagerConfiguration {
       inherit pkgs;    
       
       extraSpecialArgs = {
@@ -35,7 +35,7 @@ configuration = name: home-manager.lib.homeManagerConfiguration {
     defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
     defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
 
-    homeConfigurations.kraja = configuration "kraja";
-    homeConfigurations.nxyt = configuration "nxyt";
+    homeConfigurations.kraja = pcConfiguration "kraja";
+    homeConfigurations.nxyt = pcConfiguration "nxyt";
     };
 }
