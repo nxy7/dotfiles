@@ -33,5 +33,6 @@
 
       homeConfigurations.kraja = pcConfiguration "kraja";
       homeConfigurations.nxyt = pcConfiguration "nxyt";
+      homeConfigurations.nxy7 = pcConfiguration "nxy7";
     };
 }
