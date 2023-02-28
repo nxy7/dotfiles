@@ -15,16 +15,12 @@
           config.allowUnfree = true;
         };
         allowUnfree = { nixpkgs.config.allowUnfree = true; };
-  in
-   {
-    defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
-    defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
-
-    homeConfigurations.nxy7 = home-manager.lib.homeManagerConfiguration {
+configuration = name: home-manager.lib.homeManagerConfiguration {
       inherit pkgs;    
       
       extraSpecialArgs = {
         helix-master = helix-master;
+        usrName = name;
       };
         modules = [
           allowUnfree
@@ -34,5 +30,12 @@
         
       };
 
-  };
+  in
+   {
+    defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
+    defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
+
+    homeConfigurations.kraja = configuration "kraja";
+    homeConfigurations.nxyt = configuration "nxyt";
+    };
 }

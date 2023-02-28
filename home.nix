@@ -1,55 +1,46 @@
-{inputs, outputs, lib, config, pkgs, helix-master, ...}:
+{inputs, outputs, lib, config, pkgs, usrName, helix-master, ...}:
 {
-  home.homeDirectory = "/home/nxy7";
-  home.username = "nxy7";
-  home.stateVersion = "23.05";
+  home = rec {
+    username = usrName;
+    homeDirectory = "/home/" + username; 
+    stateVersion = "23.05";
+    
+    packages = [
+      pkgs.gitoxide
+      pkgs.sqlc
+      pkgs.htop
+      pkgs.sccache
+      pkgs.nodePackages_latest.ts-node
+      pkgs.zellij
+      pkgs.gopls
+      pkgs.rust-analyzer
+      pkgs.python39
+      pkgs.qmk
+      # rust support
+      pkgs.rustup
+      # golang support
+      pkgs.go
+      # javascript packages
+      pkgs.nodejs
+      pkgs.deno
+      pkgs.yarn
+      pkgs.nodePackages.pnpm
+
+      # all stuff necesarry for helix lsp
+      pkgs.nodePackages.typescript
+      pkgs.nodePackages.typescript-language-server
+      pkgs.nodePackages.prettier
+      # other languages
+      pkgs.julia
+      pkgs.php
+
+      # dev setup
+      pkgs.lazygit
+      pkgs.tmux
+      pkgs.gh
+    ];
+  };
   
-  home.packages = [
-    pkgs.gitoxide
-    # pkgs.zsh-powerlevel10k
-    pkgs.sqlc
-    pkgs.htop
-    pkgs.sccache
-    pkgs.nodePackages_latest.ts-node
-    pkgs.fswatch
-    pkgs.haskellPackages.latex
-    pkgs.zellij
-    pkgs.podman-compose
-    pkgs.nil
-    pkgs.gopls
-    pkgs.texlab
-    pkgs.rust-analyzer
-    pkgs.python39
-    pkgs.qmk
-    # zig and tree-sitter to fix neovim tree-sitter (you can find it in treesitter config) bug
-    pkgs.zig
-    pkgs.tree-sitter
-    pkgs.llvm
-    pkgs.gcc
-    # rust support
-    pkgs.rustup
-    # golang support
-    pkgs.go
-    # javascript packages
-    pkgs.nodejs
-    pkgs.deno
-    pkgs.yarn
-    pkgs.nodePackages.pnpm
-
-    # all stuff necesarry for helix lsp
-    pkgs.nodePackages.typescript
-    pkgs.nodePackages.typescript-language-server
-    pkgs.nodePackages.prettier
-    # other languages
-    pkgs.julia
-    pkgs.php
-
-    # dev setup
-    pkgs.lazygit
-    pkgs.tmux
-    pkgs.gh
-  ];
-
   programs = {
     home-manager.enable = true;
     git = {
