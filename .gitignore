@@ -5,6 +5,7 @@ nvim
 !flake.lock
 !home.nix
 !README.md
+!.gitignore
 !aliases.sh
 !paths.sh
 !helix/
