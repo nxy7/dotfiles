@@ -9,11 +9,6 @@
 !paths.sh
 !helix/
 !helix/*
-!nvim/
-!nvim/*
-!nvim/*/*
-!nvim/*/*/*
-!nvim/*/*/*/*
 !nixpkgs/
 !nixpkgs/*
 !nixpkgs/*/*
