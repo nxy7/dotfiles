@@ -1,44 +1,47 @@
-{ inputs, outputs, lib, config, pkgs, usrName, helix-master, ... }: {
+{ inputs, outputs, lib, config, pkgs, username, helix-master, system, ... }: {
   home = rec {
-    username = usrName;
+    inherit username;
     homeDirectory = "/home/" + username;
     stateVersion = "23.05";
 
-    packages = [
-      pkgs.nixfmt
-      pkgs.gitoxide
-      pkgs.sqlc
-      pkgs.htop
-      pkgs.sccache
-      pkgs.nodePackages_latest.ts-node
-      pkgs.zellij
-      pkgs.gopls
-      pkgs.rust-analyzer
-      pkgs.python39
-      pkgs.qmk
-      pkgs.google-cloud-sdk-gce
+    packages = with pkgs; [
+      nixfmt
+      bun
+      gitoxide
+      sqlc
+      htop
+      sccache
+      nodePackages_latest.ts-node
+      zellij
+      gopls
+      rust-analyzer
+      python39
+      qmk
+      google-cloud-sdk-gce
       # rust support
-      pkgs.rustup
+      rustup
       # golang support
-      pkgs.go
+      go
       # javascript packages
-      pkgs.nodejs
-      pkgs.deno
-      pkgs.yarn
-      pkgs.nodePackages.pnpm
+      nodejs
+      deno
+      yarn
+      nodePackages.pnpm
 
       # all stuff necesarry for helix lsp
-      pkgs.nodePackages.typescript
-      pkgs.nodePackages.typescript-language-server
-      pkgs.nodePackages.prettier
+      nodePackages.typescript
+      nodePackages.typescript-language-server
+      nodePackages.prettier
       # other languages
-      pkgs.julia
-      pkgs.php
+      julia
+      php
 
       # dev setup
-      pkgs.lazygit
-      pkgs.tmux
-      pkgs.gh
+      gcc
+      # binutils-unwrapped_2_38
+      lazygit
+      tmux
+      gh
     ];
   };
 
@@ -49,14 +52,9 @@
       userName = "nxyt";
       userEmail = "lolnoxy@gmail.com";
     };
-    neovim = {
-      enable = true;
-      viAlias = true;
-      vimAlias = true;
-    };
     helix = {
       enable = true;
-      package = helix-master.packages."x86_64-linux".default;
+      package = helix-master.packages.${system}.default;
     };
     zsh = {
       enable = true;
@@ -69,31 +67,18 @@
         source $HOME/.config/aliases.sh
         source $HOME/.config/paths.sh
       '';
-      # initExtra = ''
-      #   exec nu
-      # '';
       oh-my-zsh = {
         enable = true;
         plugins = [ "git" "golang" "tmux" "rust" "gh" ];
         theme = "afowler";
       };
     };
-    starship = {
-      enable = true;
-
-    };
+    starship = { enable = true; };
     nushell = {
       enable = true;
       extraEnv = ''
         # source $HOME/.config/aliases.sh
       '';
-    };
-    fish = {
-      enable = true;
-      shellInit = ''
-        source $HOME/.config/aliases.sh
-        source $HOME/.config/paths.sh'';
-      # package = fishPkg;
     };
   };
 

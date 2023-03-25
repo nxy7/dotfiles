@@ -3,7 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    helix-master.url = "github:pinelang/helix-tree-explorer/master";
+    helix-master.url =
+      "github:helix-editor/helix/621ab0e57f051790a663dd4a32c841bb96bdd527";
     home-manager.url = "github:nix-community/home-manager";
   };
 
@@ -14,22 +15,21 @@
         inherit system;
         config.allowUnfree = true;
       };
-      allowUnfree = { nixpkgs.config.allowUnfree = true; };
       pcConfiguration = name:
         home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
 
           extraSpecialArgs = {
-            helix-master = helix-master;
-            usrName = name;
+            inherit helix-master;
+            inherit system;
+            username = name;
           };
-          modules = [ allowUnfree ./home.nix ];
+          modules = [ ./home.nix ];
 
         };
 
     in {
-      defaultPackage.x86_64-linux = home-manager.defaultPackage.x86_64-linux;
-      defaultPackage.x86_64-darwin = home-manager.defaultPackage.x86_64-darwin;
+      defaultPackage.${system} = home-manager.defaultPackage.${system};
 
       homeConfigurations.kraja = pcConfiguration "kraja";
       homeConfigurations.nxyt = pcConfiguration "nxyt";

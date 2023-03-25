@@ -1,4 +1,4 @@
-Repository holding my all configuration files
+Repository holding my configuration files
 I use nix to configure my system so to run all configurations you need 'Nix' installed with flakes enabled, and then run
 `nix run . switch -- --flake .`
 
