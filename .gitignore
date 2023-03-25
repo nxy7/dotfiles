@@ -1,5 +1,5 @@
 *
-
+nvim
 # include those
 !flake.nix
 !flake.lock

@@ -12,7 +12,6 @@
       htop
       sccache
       nodePackages_latest.ts-node
-      zellij
       gopls
       rust-analyzer
       python39
@@ -80,6 +79,7 @@
         # source $HOME/.config/aliases.sh
       '';
     };
+    zellij = { enable = true; };
   };
 
 }

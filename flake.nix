@@ -3,36 +3,38 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    helix-master.url =
-      "github:helix-editor/helix/621ab0e57f051790a663dd4a32c841bb96bdd527";
+    helix-master.url = "github:helix-editor/helix/22.03";
     home-manager.url = "github:nix-community/home-manager";
+    utils.url = "github:numtide/flake-utils";
+    nci.url = "github:yusdacra/nix-cargo-integration";
   };
 
-  outputs = { self, home-manager, nixpkgs, helix-master }:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      pcConfiguration = name:
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-
-          extraSpecialArgs = {
-            inherit helix-master;
-            inherit system;
-            username = name;
-          };
-          modules = [ ./home.nix ];
-
+  outputs = { self, utils, home-manager, nixpkgs, helix-master, nci }:
+    utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          config.allowUnfreePredicate = (_: true);
         };
+        pcConfiguration = name:
+          home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
 
-    in {
-      defaultPackage.${system} = home-manager.defaultPackage.${system};
+            extraSpecialArgs = {
+              inherit pkgs nci helix-master system;
+              username = name;
+            };
+            modules = [ ./home.nix ];
 
-      homeConfigurations.kraja = pcConfiguration "kraja";
-      homeConfigurations.nxyt = pcConfiguration "nxyt";
-      homeConfigurations.nxy7 = pcConfiguration "nxy7";
-    };
+          };
+
+      in {
+        packages = {
+          default = home-manager.defaultPackage.${system};
+          homeConfigurations.kraja = pcConfiguration "kraja";
+          homeConfigurations.nxyt = pcConfiguration "nxyt";
+          homeConfigurations.nxy7 = pcConfiguration "nxy7";
+        };
+      });
 }
