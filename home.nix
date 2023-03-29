@@ -55,9 +55,9 @@
       userEmail = "lolnoxy@gmail.com";
     };
     helix = import ./helix/helix.nix;
-    zsh = import ./zsh.nix;
+    zsh = import ./zsh/zsh.nix;
     starship = { enable = true; };
-    nushell = import ./nushell.nix;
+    nushell = import ./nushell/nushell.nix;
     zellij = { enable = true; };
   };
 
