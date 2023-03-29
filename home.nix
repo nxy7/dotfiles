@@ -54,7 +54,7 @@
       userName = "nxyt";
       userEmail = "lolnoxy@gmail.com";
     };
-    helix = import ./helix.nix;
+    helix = import ./helix/helix.nix;
     zsh = import ./zsh.nix;
     starship = { enable = true; };
     nushell = import ./nushell.nix;
