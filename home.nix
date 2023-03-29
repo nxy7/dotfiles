@@ -54,10 +54,10 @@
       userName = "nxyt";
       userEmail = "lolnoxy@gmail.com";
     };
-    helix = import ./helix/helix.nix;
-    # zsh = import ./zsh.nix;
+    helix = import ./helix.nix;
+    zsh = import ./zsh.nix;
     starship = { enable = true; };
-    # nushell = import ./nushell.nix;
+    nushell = import ./nushell.nix;
     zellij = { enable = true; };
   };
 
