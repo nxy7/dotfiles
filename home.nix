@@ -6,6 +6,7 @@
 
     packages = with pkgs; [
       nixfmt
+      cargo-espflash
       bun
       gitoxide
       sqlc
@@ -44,6 +45,8 @@
     ];
   };
 
+  # imports = [ ./helix.nix ];
+
   programs = {
     home-manager.enable = true;
     git = {
@@ -51,34 +54,10 @@
       userName = "nxyt";
       userEmail = "lolnoxy@gmail.com";
     };
-    helix = {
-      enable = true;
-      package = helix-master.packages.${system}.default;
-    };
-    zsh = {
-      enable = true;
-      autocd = true;
-      dotDir = ".config/zsh";
-      enableCompletion = true;
-      enableAutosuggestions = true;
-      enableSyntaxHighlighting = true;
-      initExtraFirst = ''
-        source $HOME/.config/aliases.sh
-        source $HOME/.config/paths.sh
-      '';
-      oh-my-zsh = {
-        enable = true;
-        plugins = [ "git" "golang" "tmux" "rust" "gh" ];
-        theme = "afowler";
-      };
-    };
+    helix = import ./helix/helix.nix;
+    # zsh = import ./zsh.nix;
     starship = { enable = true; };
-    nushell = {
-      enable = true;
-      extraEnv = ''
-        # source $HOME/.config/aliases.sh
-      '';
-    };
+    # nushell = import ./nushell.nix;
     zellij = { enable = true; };
   };
 
