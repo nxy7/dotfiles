@@ -11,16 +11,12 @@
 
   programs = {
     home-manager.enable = true;
-    git = {
-      enable = true;
-      userName = "nxyt";
-      userEmail = "lolnoxy@gmail.com";
-    };
+    git = import ./git.nix;
     helix = import ./helix.nix;
     zsh = import ./zsh.nix;
-    starship = { enable = true; };
+    starship = import ./starship.nix;
     nushell = import ./nushell.nix;
-    zellij = { enable = true; };
+    zellij = import ./zellij.nix;
   };
 
 }
