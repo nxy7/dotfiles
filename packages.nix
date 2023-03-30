@@ -1,6 +1,7 @@
 { pkgs, ... }:
 with pkgs; [
   nixfmt
+  bat
   cargo-espflash
   bun
   gitoxide
@@ -13,6 +14,7 @@ with pkgs; [
   python39
   qmk
   google-cloud-sdk-gce
+  ripgrep
   # rust support
   rustup
   # golang support
