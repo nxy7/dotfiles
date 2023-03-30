@@ -1,4 +1,5 @@
 { inputs, outputs, lib, config, pkgs, username, helix-master, system, ... }: {
+
   home = rec {
     inherit username;
     homeDirectory = "/home/" + username;

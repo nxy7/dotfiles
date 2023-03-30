@@ -1,4 +1,19 @@
-{
+let
+  settings = builtins.fromTOML (builtins.readFile ./helix/config.toml);
+
+  languages = [
+    {
+      name = "tsx";
+      auto-format = true;
+    }
+    {
+      name = "nix";
+      auto-format = true;
+      formatter = { command = "nixfmt"; };
+    }
+  ];
+in {
   enable = true;
-  # package = helix-master.packages.${system}.default;
+  inherit settings;
+  inherit languages;
 }
