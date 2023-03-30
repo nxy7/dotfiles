@@ -12,12 +12,12 @@
 
   programs = {
     home-manager.enable = true;
-    git = import ./git.nix;
-    helix = import ./helix.nix;
-    zsh = import ./zsh.nix;
-    starship = import ./starship.nix;
-    nushell = import ./nushell.nix;
-    zellij = import ./zellij.nix;
+    git = import ./programs/git.nix;
+    helix = import ./programs/helix.nix;
+    zsh = import ./programs/zsh.nix;
+    starship = import ./programs/starship.nix;
+    nushell = import ./programs/nushell.nix;
+    zellij = import ./programs/zellij.nix;
   };
 
 }
