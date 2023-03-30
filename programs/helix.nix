@@ -1,5 +1,5 @@
 let
-  settings = builtins.fromTOML (builtins.readFile ./helix/config.toml);
+  settings = builtins.fromTOML (builtins.readFile ./../helix/config.toml);
 
   languages = [
     {
