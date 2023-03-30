@@ -18,6 +18,7 @@
     starship = import ./programs/starship.nix;
     nushell = import ./programs/nushell.nix;
     zellij = import ./programs/zellij.nix;
+    bash = import ./programs/bash.nix;
   };
 
 }
