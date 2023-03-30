@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, username, helix-master, system, ... }: {
+{ username, pkgs, ... }: {
 
   home = rec {
     inherit username;
@@ -7,8 +7,6 @@
 
     packages = import ./packages.nix pkgs;
   };
-
-  # imports = [ ./helix.nix ];
 
   programs = {
     home-manager.enable = true;

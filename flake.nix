@@ -25,10 +25,7 @@
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
 
-            extraSpecialArgs = {
-              inherit pkgs nci helix-master system;
-              username = name;
-            };
+            extraSpecialArgs = { username = name; };
             modules = [ ./home.nix ];
 
           };
