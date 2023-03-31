@@ -1,6 +1,10 @@
 {
   enable = true;
+  extraConfig = ''
+    alias z = zoxide;
+    source ~/.zoxide.nu;
+  '';
   extraEnv = ''
-    # source $HOME/.config/aliases.sh
+    zoxide init nushell | save -f ~/.zoxide.nu;
   '';
 }

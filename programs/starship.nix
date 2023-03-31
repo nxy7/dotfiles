@@ -1,1 +1,7 @@
-{ enable = true; }
+{ 
+  enable = true;
+settings = ''
+{
+
+}
+''; }

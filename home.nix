@@ -17,6 +17,7 @@
     nushell = import ./programs/nushell.nix;
     zellij = import ./programs/zellij.nix;
     bash = import ./programs/bash.nix;
+    oh-my-posh = import ./programs/oh-my-posh.nix;
   };
 
 }
