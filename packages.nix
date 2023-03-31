@@ -1,6 +1,7 @@
 { pkgs, ... }:
 with pkgs; [
   nixfmt
+  zoxide
   bat
   cargo-espflash
   bun

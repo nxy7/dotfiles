@@ -19,6 +19,7 @@
   };
   initExtra = ''
     source $HOME/.nix-profile/etc/profile.d/nix.sh;
+    exec nu;
   '';
   oh-my-zsh = {
     enable = true;
