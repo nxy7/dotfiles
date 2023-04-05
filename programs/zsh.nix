@@ -20,7 +20,6 @@
   initExtra = ''
     source $HOME/.nix-profile/etc/profile.d/nix.sh;
     eval "$(zoxide init zsh)";
-    exec nu;
   '';
   oh-my-zsh = {
     enable = true;
