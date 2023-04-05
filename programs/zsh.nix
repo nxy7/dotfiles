@@ -11,7 +11,7 @@
     grep = "grep --color=auto";
     rm = "rm -r";
     mv = "mv -r";
-    z = "zellij";
+    z = "zoxide";
     ll = "ls -alF";
     la = "ls -A";
     l = "ls -CF";
@@ -19,6 +19,7 @@
   };
   initExtra = ''
     source $HOME/.nix-profile/etc/profile.d/nix.sh;
+    eval "$(zoxide init zsh)";
     exec nu;
   '';
   oh-my-zsh = {
