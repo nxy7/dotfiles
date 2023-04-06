@@ -2,6 +2,8 @@
   enable = true;
   extraConfig = ''
     alias z = zoxide;
+    alias rm = rm -r;
+    alias cp = cp -r;
     alias lg = lazygit;
     source ~/.zoxide.nu;
     source ~/.oh-my-posh.nu;

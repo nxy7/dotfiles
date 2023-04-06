@@ -1,5 +1,7 @@
 { pkgs, ... }:
 with pkgs; [
+  imagemagick
+  pngcrush
   nixfmt
   zoxide
   bat
