@@ -5,6 +5,9 @@
     alias lg = lazygit;
     source ~/.zoxide.nu;
     source ~/.oh-my-posh.nu;
+    let-env config = {
+      show_banner: false,
+    };
   '';
   extraEnv = ''
     let-env PATH = ($env.PATH | split row ":" | prepend $"($env.HOME)/.nix-profile/bin" | prepend "/nix/var/nix/profiles/default/bin");
