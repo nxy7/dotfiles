@@ -1,5 +1,9 @@
 { pkgs, ... }:
 with pkgs; [
+  sqlx-cli
+  pkg-config
+  openssl
+  kubectl
   imagemagick
   pngcrush
   nixfmt

@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    helix-master.url = "github:helix-editor/helix";
+    helix-master.url = "github:pinelang/helix-tree-explorer/tree_explore";
     home-manager.url = "github:nix-community/home-manager";
     utils.url = "github:numtide/flake-utils";
     nci.url = "github:yusdacra/nix-cargo-integration";
