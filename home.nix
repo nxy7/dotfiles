@@ -6,7 +6,7 @@
     stateVersion = "23.05";
     shellAliases = { te = "ls"; };
 
-    packages = import ./packages.nix pkgs;
+    packages = import ./packages/packages.nix pkgs;
     sessionVariables = {
       EDITOR = "hx";
       PKG_CONFIG_PATH = pkgs.openssl;

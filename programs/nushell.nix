@@ -2,8 +2,11 @@ pkgs: {
   enable = true;
   extraConfig = ''
     alias z = zoxide;
-    # alias rm = rm -r
-    # alias cp = cp -r
+
+    alias rm = ^rm -r;
+    alias cp = ^cp -r;
+    alias la = ls -a;
+    alias ll = ls -l;
     alias lg = lazygit;
     source ~/.zoxide.nu;
     source ~/.oh-my-posh.nu;

@@ -7,7 +7,6 @@ with pkgs; [
   kubectl
   imagemagick
   pngcrush
-  nixfmt
   zoxide
   bat
   cargo-espflash
@@ -16,7 +15,6 @@ with pkgs; [
   sqlc
   htop
   sccache
-  nodePackages_latest.ts-node
   gopls
   rust-analyzer
   python39
@@ -28,12 +26,14 @@ with pkgs; [
   # golang support
   go
   # javascript packages
+  nodePackages_latest.ts-node
   nodejs
   deno
   yarn
   nodePackages.pnpm
 
-  # all stuff necesarry for helix lsp
+  # Helix Stuff
+  nixfmt
   nodePackages.typescript
   nodePackages.typescript-language-server
   nodePackages.prettier
@@ -45,6 +45,5 @@ with pkgs; [
   gcc
   # binutils-unwrapped_2_38
   lazygit
-  tmux
   gh
 ]
