@@ -1,5 +1,6 @@
 { pkgs, ... }:
 with pkgs; [
+  redis
   sqlx-cli
   pkg-config
   openssl
