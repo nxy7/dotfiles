@@ -1,8 +1,8 @@
 { pkgs, ... }:
 with pkgs; [
-  nodePackages_latest.ts-node
-  nodejs
   deno
-  yarn
+  nodejs
+  nodePackages_latest.ts-node
   nodePackages.pnpm
+  yarn
 ]
