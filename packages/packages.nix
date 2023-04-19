@@ -1,1 +1,1 @@
-{ pkgs, ... }: import ./helix_pkgs.nix pkgs
+{ pkgs, ... }: import ./helixpkgs.nix pkgs ++ import.nodepkgs.nix pkgs

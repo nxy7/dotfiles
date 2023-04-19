@@ -25,12 +25,6 @@ with pkgs; [
   rustup
   # golang support
   go
-  # javascript packages
-  nodePackages_latest.ts-node
-  nodejs
-  deno
-  yarn
-  nodePackages.pnpm
 
   # Helix Stuff
   nixfmt
