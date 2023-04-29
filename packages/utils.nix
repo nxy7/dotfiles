@@ -1,5 +1,8 @@
 { pkgs, ... }:
 with pkgs; [
+  redis
+  k3s
+  taplo
   bat
   bun
   cargo-espflash

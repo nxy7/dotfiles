@@ -6,3 +6,7 @@ auto-format = true
 name = "nix"
 auto-format = true
 formatter = {command = "nixfmt"}
+
+[[language]]
+name = "yaml"
+auto-format = true

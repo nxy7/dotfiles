@@ -3,6 +3,7 @@ theme = "github_dark_dimmed"
 [editor]
 line-number = "relative"
 auto-format = true
+auto-info = false
 scrolloff = 10
 true-color = true
 bufferline = "always"
@@ -17,6 +18,7 @@ select = "block"
 
 [editor.lsp]
 display-messages = true
+display-inlay-hints = true
 
 [editor.file-picker]
 hidden = false

@@ -5,7 +5,11 @@ with pkgs; [
   gopls
   julia
   php
+
   python39
+  python39Packages.pip
+
   rust-analyzer
   rustup
+  cargo-nextest
 ]
