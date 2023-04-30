@@ -12,7 +12,7 @@
   outputs = { self, utils, home-manager, nixpkgs, helix-master, nci }:
     utils.lib.eachDefaultSystem (system:
       let
-        helixOverlay = import overlays/helix.nix;
+        helixOverlay = import overlays/helix.nix helix-master system;
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;

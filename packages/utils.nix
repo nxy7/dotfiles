@@ -2,6 +2,7 @@
 with pkgs; [
   redis
   k3s
+  kompose
   taplo
   bat
   bun
