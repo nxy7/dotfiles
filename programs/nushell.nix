@@ -7,6 +7,8 @@ pkgs: {
     alias cp = ^cp -r;
     alias la = ls -a;
     alias ll = ls -l;
+    alias kctl = sudo k3s kubectl;
+    alias nix-switch = nix run . switch -- --flake .;
     alias lg = lazygit;
     source ~/.zoxide.nu;
     source ~/.oh-my-posh.nu;

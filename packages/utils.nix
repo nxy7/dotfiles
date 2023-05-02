@@ -1,6 +1,8 @@
 { pkgs, ... }:
 with pkgs; [
   redis
+  postgresql_15
+  devspace
   k3s
   kompose
   taplo
