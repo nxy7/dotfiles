@@ -3,8 +3,6 @@ with pkgs; [
   redis
   postgresql_15
   devspace
-  k3s
-  kompose
   taplo
   bat
   bun
@@ -13,7 +11,6 @@ with pkgs; [
   google-cloud-sdk-gce
   htop
   imagemagick
-  kubectl
   openssl
   pkg-config
   pngcrush
