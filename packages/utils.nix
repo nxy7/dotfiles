@@ -20,5 +20,4 @@ with pkgs; [
   sccache
   sqlc
   sqlx-cli
-  zoxide
 ]

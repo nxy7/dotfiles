@@ -1,4 +1,4 @@
-{
+pkgs: {
   enable = true;
   autocd = true;
   # dotDir = ".config/zsh";
@@ -10,7 +10,7 @@
     ls = "ls --color=auto";
     grep = "grep --color=auto";
     rm = "rm -r";
-    mv = "mv -r";
+    mv = "mv";
     z = "zoxide";
     ll = "ls -alF";
     la = "ls -A";
@@ -20,12 +20,12 @@
     cp = "cp -rfL";
   };
   initExtra = ''
-    source $HOME/.nix-profile/etc/profile.d/nix.sh;
-    eval "$(zoxide init zsh)";
+    source $HOME/.nix-profile/etc/profile.d/nix.sh
+    PKG_CONFIG_PATH="${pkgs.openssl.dev}/lib/pkgconfig"
   '';
-  oh-my-zsh = {
-    enable = true;
-    plugins = [ "git" "golang" "tmux" "rust" "gh" ];
-    theme = "afowler";
-  };
+  # oh-my-zsh = {
+  #   enable = true;
+  #   plugins = [ "git" "golang" "tmux" "rust" "gh" ];
+  #   theme = "afowler";
+  # };
 }

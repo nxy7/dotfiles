@@ -17,10 +17,11 @@
     home-manager.enable = true;
     git = import ./programs/git.nix;
     helix = import ./programs/helix.nix;
-    zsh = import ./programs/zsh.nix;
+    zsh = import ./programs/zsh.nix pkgs;
     starship = import ./programs/starship.nix;
     nushell = import ./programs/nushell.nix pkgs;
     zellij = import ./programs/zellij.nix;
+    zoxide = import ./programs/zoxide.nix;
     bash = import ./programs/bash.nix;
     oh-my-posh = import ./programs/oh-my-posh.nix;
   };
