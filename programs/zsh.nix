@@ -14,6 +14,8 @@
     z = "zoxide";
     ll = "ls -alF";
     la = "ls -A";
+    kctl = "sudo k3s kubectl";
+    nix-switch = "nix run . switch -- --flake .";
     l = "ls -CF";
     cp = "cp -rfL";
   };
