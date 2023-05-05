@@ -1,8 +1,4 @@
-{ 
+{
   enable = true;
-# settings = ''
-# {
-
-# }
-# ''; 
+  settings = { add_newline = true; };
 }

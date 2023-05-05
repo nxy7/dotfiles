@@ -1,6 +1,11 @@
 { pkgs, ... }:
 with pkgs; [
   redis
+  k9s
+  firefox
+  chromium
+  ngrok
+  colorls
   postgresql_15
   devspace
   taplo

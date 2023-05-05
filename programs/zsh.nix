@@ -11,7 +11,7 @@ pkgs: {
     grep = "grep --color=auto";
     rm = "rm -r";
     mv = "mv";
-    z = "zoxide";
+    # z = "zoxide";
     ll = "ls -alF";
     la = "ls -A";
     kctl = "sudo k3s kubectl";
