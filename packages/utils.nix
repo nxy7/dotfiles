@@ -2,6 +2,9 @@
 with pkgs; [
   redis
   k9s
+  kube3d
+  kubectl
+  tilt
   firefox
   chromium
   ngrok
