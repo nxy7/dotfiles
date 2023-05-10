@@ -2,6 +2,7 @@
 with pkgs; [
   redis
   k9s
+  kustomize
   kube3d
   kubectl
   tilt
