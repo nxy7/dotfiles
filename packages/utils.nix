@@ -1,6 +1,8 @@
 { pkgs, ... }:
 with pkgs; [
   redis
+  texlive.combined.scheme-full
+  tilt
   k9s
   kustomize
   kube3d
