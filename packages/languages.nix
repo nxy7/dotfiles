@@ -10,6 +10,6 @@ with pkgs; [
   python39
   python39Packages.pip
 
-  rustup # rustup contains rust analyzer
+  (rust-bin.beta.latest.default.override { extensions = [ "rust-src" ]; })
   cargo-nextest
 ]
