@@ -16,7 +16,7 @@ pkgs: {
     source ~/.oh-my-posh.nu
 
     try {
-      neofetch
+      freshfetch
     }
   '';
   extraEnv = ''

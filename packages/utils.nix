@@ -2,6 +2,8 @@
 with pkgs; [
   redis
   texlive.combined.scheme-full
+  neofetch
+  freshfetch
   tilt
   hugo
   telepresence2
