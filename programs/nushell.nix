@@ -14,6 +14,10 @@ pkgs: {
 
     source ~/.zoxide.nu
     source ~/.oh-my-posh.nu
+
+    try {
+      neofetch
+    }
   '';
   extraEnv = ''
     let-env PATH = ($env.PATH | split row ":" | prepend $"($env.HOME)/.nix-profile/bin" | prepend "/nix/var/nix/profiles/default/bin")

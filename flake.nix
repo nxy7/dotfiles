@@ -24,6 +24,7 @@
           config.allowUnfreePredicate = (_: true);
           overlays = [ helixOverlay (import rust-overlay) ];
         };
+        name = pk
         pcConfiguration = name:
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;

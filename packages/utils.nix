@@ -3,6 +3,8 @@ with pkgs; [
   redis
   texlive.combined.scheme-full
   tilt
+  hugo
+  telepresence2
   k9s
   kustomize
   kube3d
