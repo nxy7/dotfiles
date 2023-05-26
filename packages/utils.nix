@@ -2,6 +2,8 @@
 with pkgs; [
   redis
   texlive.combined.scheme-full
+  onedrive
+  cachix
   neofetch
   freshfetch
   tilt
