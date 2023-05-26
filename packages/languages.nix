@@ -1,16 +1,15 @@
 { pkgs, ... }:
 with pkgs; [
-  gcc
-
   go
   gopls
   julia
   php
-  nodePackages_latest.svelte-language-server
 
   python39
   python39Packages.pip
 
-  rust-bin.stable.latest.default
+  (rust-bin.stable.latest.default.override {
+    extensions = [ "cargo" "rust-analysis" "rust-src" "rust-std" "rustc" ];
+  })
   cargo-nextest
 ]

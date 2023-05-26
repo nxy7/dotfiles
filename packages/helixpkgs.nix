@@ -4,9 +4,9 @@ with pkgs; [
   nixfmt
   nodePackages.typescript
   nodePackages.typescript-language-server
+  nodePackages_latest.svelte-language-server
   nodePackages.prettier
 
-  # binutils-unwrapped_2_38
   lazygit
   gh
 ]
