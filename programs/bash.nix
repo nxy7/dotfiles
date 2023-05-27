@@ -17,4 +17,7 @@
     set completion-ignore-case on" > $HOME/.inputrc;
     source $HOME/.nix-profile/etc/profile.d/nix.sh;
   '';
+  profileExtra = ''
+    export MOZ_ENABLE_WAYLAND=1
+  '';
 }

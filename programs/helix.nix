@@ -1,7 +1,7 @@
 let
   settings = builtins.fromTOML (builtins.readFile ./../helix/config.toml);
 
-  languages = [
+  languages.language = [
     {
       name = "tsx";
       auto-format = true;
