@@ -9,7 +9,8 @@ let
     {
       name = "nix";
       auto-format = true;
-      formatter = { command = "nixfmt"; };
+      language-server = {command = "rnix-lsp"; };
+      formatter = { command = "rnix-lsp"; };
     }
   ];
 in {

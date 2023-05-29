@@ -3,6 +3,7 @@ with pkgs; [
   texlive.combined.scheme-full
   cachix
   freshfetch
+  rnix-lsp
   hugo
   telepresence2
   k9s

@@ -5,7 +5,7 @@ auto-format = true
 [[language]]
 name = "nix"
 auto-format = true
-formatter = {command = "nixfmt"}
+formatter = {command = "rnix-lsp"}
 
 [[language]]
 name = "yaml"
