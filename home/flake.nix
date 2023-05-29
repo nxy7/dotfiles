@@ -32,7 +32,7 @@
             inherit pkgs;
 
             extraSpecialArgs = { username = name; };
-            modules = [ home/home.nix ];
+            modules = [ ./home.nix ];
 
           };
 
