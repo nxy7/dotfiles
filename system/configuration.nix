@@ -2,12 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, nixpkgs, ... }:
+{ config, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     /etc/nixos/hardware-configuration.nix
   ];
+
+
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -18,7 +21,7 @@
   hardware.opengl.enable = true;
 
   # Optionally, you may need to select the appropriate driver version for your specific GPU.
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.unstable;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
   # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
   hardware.nvidia.modesetting.enable = true;
@@ -96,13 +99,13 @@
     isNormalUser = true;
     description = "nxyt";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with nixpkgs; [
-      firefox-devedition-bin
+    packages = with pkgs; [
+      pkgs.firefox-devedition-bin
       firefox
       kate
       #  thunderbird
     ];
-    shell = nixpkgs.nushell;
+    shell = pkgs.nushell;
   };
   virtualisation.docker.enable = true;
 
@@ -111,18 +114,17 @@
   services.xserver.displayManager.autoLogin.user = "nxyt";
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  pkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with nixpkgs; [
+  environment.systemPackages = with pkgs; [
     vscode
     alacritty
     git
     helix
   ];
-  environment.shells = with nixpkgs; [ nushell ];
+  environment.shells = with pkgs; [ nushell ];
 
   services.flatpak.enable = true;
 

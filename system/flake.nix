@@ -1,19 +1,25 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.03";
+    nixpkgs.url = "nixpkgs/nixos-23.05";
     # hardware-info.url = "/etc/nixos/hardware-configuration.nix";
   };
 
 
   outputs = inputs@{ self, nixpkgs, ... }:
-    # let
-    #   pkgs = import nixpkgs{};
-    # in
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        config = {
+          allowUnfree = true;
+        };
+      };
+    in
     {
 
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        # specialArgs = inputs;
+        inherit system;
+        specialArgs = inputs // { pkgs = pkgs; };
         modules = [ ./configuration.nix ];
       };
 
