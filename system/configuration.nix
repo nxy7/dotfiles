@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, nixpkgs, ... }:
 
 {
   imports = [ # Include the results of the hardware scan.
@@ -18,7 +18,7 @@
   hardware.opengl.enable = true;
 
   # Optionally, you may need to select the appropriate driver version for your specific GPU.
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.unstable;
 
   # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
   hardware.nvidia.modesetting.enable = true;
@@ -54,7 +54,9 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
@@ -94,13 +96,13 @@
     isNormalUser = true;
     description = "nxyt";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [
+    packages = with nixpkgs; [
       firefox-devedition-bin
       firefox
       kate
       #  thunderbird
     ];
-    shell = pkgs.nushell;
+    shell = nixpkgs.nushell;
   };
   virtualisation.docker.enable = true;
 
@@ -114,18 +116,14 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with nixpkgs; [
     vscode
     alacritty
     git
     helix
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
   ];
-  environment.shells = with pkgs; [ nushell ];
+  environment.shells = with nixpkgs; [ nushell ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
   services.flatpak.enable = true;
 
   programs.steam = {
@@ -135,13 +133,6 @@
     dedicatedServer.openFirewall =
       true; # Open ports in the firewall for Source Dedicated Server
   };
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;

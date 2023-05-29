@@ -5,14 +5,19 @@
   };
 
 
-  outputs = { self, nixpkgs }: {
+  outputs = inputs@{ self, nixpkgs, ... }:
+    # let
+    #   pkgs = import nixpkgs{};
+    # in
+    {
 
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [ ./configuration.nix ];
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        # specialArgs = inputs;
+        modules = [ ./configuration.nix ];
+      };
+
+      nixosConfigurations.default = self.nixosConfigurations.nixos;
+
     };
-
-    nixosConfigurations.default = self.nixosConfigurations.nixos;
-
-  };
 }

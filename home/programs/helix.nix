@@ -10,7 +10,7 @@ let
       name = "nix";
       auto-format = true;
       language-server = {command = "rnix-lsp"; };
-      formatter = { command = "rnix-lsp"; };
+      # formatter = { command = "rnix-lsp"; };
     }
   ];
 in {

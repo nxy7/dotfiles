@@ -4,6 +4,7 @@ with pkgs; [
   cachix
   freshfetch
   rnix-lsp
+  nil
   hugo
   telepresence2
   k9s
