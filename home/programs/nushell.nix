@@ -13,10 +13,10 @@ pkgs: {
     alias lg = lazygit
 
 
-    source ~/.zoxide.nu
-    source ~/.oh-my-posh.nu
+    # source ~/.zoxide.nu
+    # source ~/.oh-my-posh.nu
 
-    freshfetch
+    ${pkgs.freshfetch}/bin/freshfetch
   '';
   extraEnv = ''
     let-env PATH = ($env.PATH | split row ":" | prepend $"($env.HOME)/.nix-profile/bin" | prepend "/nix/var/nix/profiles/default/bin")
@@ -25,7 +25,7 @@ pkgs: {
     }
     let-env PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig"
 
-    zoxide init nushell | save ~/.zoxide.nu
-    oh-my-posh init nu
+    # zoxide init nushell | save ~/.zoxide.nu
+    # oh-my-posh init nu
   '';
 }

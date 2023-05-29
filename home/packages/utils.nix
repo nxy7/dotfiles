@@ -1,6 +1,7 @@
 { pkgs, ... }:
 with pkgs; [
   texlive.combined.scheme-full
+  keepassxc
   cachix
   freshfetch
   rnix-lsp

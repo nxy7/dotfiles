@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.05";
+    nixpkgs.url = "nixpkgs/nixos-22.11";
     # hardware-info.url = "/etc/nixos/hardware-configuration.nix";
   };
 
@@ -9,7 +9,6 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
-        inherit system;
         config = {
           allowUnfree = true;
         };
@@ -19,7 +18,7 @@
 
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = inputs // { pkgs = pkgs; };
+        specialArgs = inputs // { inherit pkgs; };
         modules = [ ./configuration.nix ];
       };
 

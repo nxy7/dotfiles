@@ -1,5 +1,5 @@
 {
-  enable = true;
+  enable = false;
   settings = {
     time.disabled = false;
 
