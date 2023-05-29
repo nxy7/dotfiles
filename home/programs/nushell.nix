@@ -8,6 +8,7 @@ pkgs: {
     alias la = ls -a
     alias ll = ls -l
     alias kctl = sudo k3s kubectl
+    alias home-switch = nix run . switch -- --flake .
     alias nix-switch = nix run . switch -- --flake .
     alias lg = lazygit
 
