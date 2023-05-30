@@ -9,11 +9,12 @@ let
     {
       name = "nix";
       auto-format = true;
-      language-server = {command = "rnix-lsp"; };
+      # language-server = {command = "rnix-lsp"; };
       # formatter = { command = "rnix-lsp"; };
     }
   ];
-in {
+in
+{
   enable = true;
   inherit settings;
   inherit languages;

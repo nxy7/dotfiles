@@ -1,5 +1,20 @@
 {
   "nodes": {
+    "betapkgs": {
+      "locked": {
+        "lastModified": 1685356226,
+        "narHash": "sha256-f2clSOdqi0SvY1WSgbnl2YgCZmoCXOxeUjYeXp8p2zI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0f7f5ca1cdec8dea85bb4fa60378258171d019ad",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-23.05",
+        "type": "indirect"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1685314633,
@@ -17,6 +32,7 @@
     },
     "root": {
       "inputs": {
+        "betapkgs": "betapkgs",
         "nixpkgs": "nixpkgs"
       }
     }

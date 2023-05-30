@@ -1,4 +1,4 @@
-{ config, nixpkgs, pkgs, ... }:
+{ config, pkgs, betaPkgs, ... }:
 # let
 #   pkgs = import nixpkgs {
 #     config = {
@@ -14,14 +14,11 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # nix.extraConfig = ''
-  #   experimental-features = nix-command flakes
-  # '';
-
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
+  boot.kernelPackages = betaPkgs.linuxPackages_zen;
 
   nixpkgs.config.allowUnfree = true;
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -122,6 +119,7 @@
     description = "nxyt";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
+      brave
       firefox-devedition-bin
       firefox
     ];
