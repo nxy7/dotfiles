@@ -7,10 +7,7 @@
 #   };
 # in
 {
-  imports = [
-    /etc/nixos/hardware-configuration.nix
-  ];
-
+  imports = [ /etc/nixos/hardware-configuration.nix ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -58,27 +55,36 @@
 
   # Enable the X11 windowing system.
   # xdg.portal.enable = true;
-  services.xserver.enable = true;
+
+  services.xserver = {
+    enable = true;
+
+    # KDE
+    # displayManager.sddm.enable = true;
+    # desktopManager.plasma5.enable = true;
+
+    # Gnome
+    desktopManager.gnome.enable = true;
+    # displayManager.gdm.enable = true;
+    # displayManager.gdm.wayland = true;
+
+    # Xfce
+    # displayManager.gdm.enable = true;
+    # desktopManager.xfce.enable = true;
+    # desktopManager.xterm.enable = false;
+
+    displayManager.autoLogin.enable = true;
+    displayManager.autoLogin.user = "nxyt";
+  };
+
+  # I don't want to use default tools and instead pick them myself
+  # services.gnome.core-utilities.enable = false;
 
   # KDE
-  # services.xserver.displayManager.sddm.enable = true;
-  # services.xserver.desktopManager.plasma5.enable = true;
 
   # Gnome
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.displayManager.gdm.wayland = true;
-  services.xserver.desktopManager.gnome.enable = true;
 
-  # Xfce
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.xfce.enable = true;
-  # services.xserver.desktopManager.xterm.enable = false;
-
-
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "nxyt";
   # services.xserver.displayManager.defaultSession = "gnome";
-
 
   # Configure keymap in X11
   services.xserver = {
@@ -118,16 +124,13 @@
     isNormalUser = true;
     description = "nxyt";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    packages = with pkgs; [
-      brave
-      firefox-devedition-bin
-      firefox
-    ];
+    packages = with pkgs; [ brave discord firefox-devedition-bin firefox ];
     shell = pkgs.nushell;
   };
   virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
+    # gnome.gnome-terminal
     lutris
     vscode
     htop

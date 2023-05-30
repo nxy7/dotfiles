@@ -16,6 +16,11 @@ insert = "bar"
 normal = "block"
 select = "block"
 
+[editor.soft-wrap]
+enable = true
+max-wrap = 25
+# wrap-indicator = ""
+
 [editor.lsp]
 display-messages = true
 display-inlay-hints = true

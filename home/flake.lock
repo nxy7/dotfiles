@@ -401,17 +401,16 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1684223945,
-        "narHash": "sha256-2OXAI7tcfHWfPULSsuTcDPiGgd11OPGeC4F2Y/xgEkw=",
-        "owner": "pinelang",
-        "repo": "helix-tree-explorer",
-        "rev": "08850573d3b0ce36b3a0abc9c3b1f5106bda175c",
+        "lastModified": 1685446183,
+        "narHash": "sha256-3sKAQxTGW2PfNRsjm/1Ik4NX4wOSSYjGOoi9a4PNVPg=",
+        "owner": "helix-editor",
+        "repo": "helix",
+        "rev": "92380540b858b66f247789e5270d61c9d1305033",
         "type": "github"
       },
       "original": {
-        "owner": "pinelang",
-        "ref": "tree_explore",
-        "repo": "helix-tree-explorer",
+        "owner": "helix-editor",
+        "repo": "helix",
         "type": "github"
       }
     },
