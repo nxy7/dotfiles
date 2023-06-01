@@ -9,11 +9,12 @@ pkgs: {
     alias ll = ls -l
     alias kctl = sudo k3s kubectl
     alias home-switch = nix run . --impure switch -- --flake .
-    alias nix-switch = sudo nixos-rebuild --flake . --impure
+    alias system-switch = sudo nixos-rebuild --flake . --impure
     alias lg = lazygit
 
 
-    # source ~/.zoxide.nu
+
+    source ~/.zoxide.nu
     # source ~/.oh-my-posh.nu
 
     ${pkgs.freshfetch}/bin/freshfetch
@@ -25,7 +26,7 @@ pkgs: {
     }
     let-env PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig"
 
-    # zoxide init nushell | save ~/.zoxide.nu
-    # oh-my-posh init nu
+    ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu
+    ${pkgs.oh-my-posh}/bin/oh-my-posh init nu
   '';
 }

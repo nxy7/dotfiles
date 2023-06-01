@@ -1,4 +1,4 @@
 {
-  # enable = true;
+  enable = true;
   # enableZshIntegration = true;
 }
