@@ -140,11 +140,19 @@
     proggyfonts
   ];
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # udev rules for embedded development
+  services.udev.extraRules = ''
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", MODE="0666"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0xcafe", MODE="0666", GROUP="embeddev", SYMLINK+="picoprobe"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", MODE="0666"
+    KERNEL=="hidraw7", MODE="0666", GROUP="embeddev"
+    KERNEL=="hidraw4", MODE="0666", GROUP="embeddev"
+  '';
+
   users.users.nxyt = {
     isNormalUser = true;
     description = "nxyt";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "embeddev" ];
     packages = with pkgs; [ brave discord firefox-devedition-bin firefox ];
     shell = betaPkgs.nushell;
   };
@@ -153,6 +161,7 @@
   environment.systemPackages = with pkgs; [
     # gnome.gnome-terminal
     gnome.gnome-tweaks
+    vlc
     lutris
     vscode
     htop

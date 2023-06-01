@@ -1,4 +1,8 @@
-pkgs: {
+pkgs:
+let
+  poshConfig =
+    builtins.toFile "posh-config.json" (builtins.readFile ./posh-config.json);
+in {
   enable = true;
   extraConfig = ''
     alias z = zoxide
@@ -15,7 +19,7 @@ pkgs: {
 
 
     source ~/.zoxide.nu
-    # source ~/.oh-my-posh.nu
+    source ~/.oh-my-posh.nu
 
     ${pkgs.freshfetch}/bin/freshfetch
   '';
@@ -27,6 +31,6 @@ pkgs: {
     let-env PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig"
 
     ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu
-    ${pkgs.oh-my-posh}/bin/oh-my-posh init nu
+    ${pkgs.oh-my-posh}/bin/oh-my-posh init nu -c ${poshConfig}
   '';
 }
