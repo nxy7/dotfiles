@@ -111,13 +111,34 @@
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
+    # lowLatency = {
+    #   # enable this module      
+    #   enable = true;
+    #   # defaults (no need to be set unless modified)
+    #   quantum = 64;
+    #   rate = 48000;
+    # };
+
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+  # security.rtkit.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+  fonts.fonts = with pkgs; [
+    nerdfonts
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
+  ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nxyt = {
@@ -125,23 +146,27 @@
     description = "nxyt";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [ brave discord firefox-devedition-bin firefox ];
-    shell = pkgs.nushell;
+    shell = betaPkgs.nushell;
   };
   virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
     # gnome.gnome-terminal
+    gnome.gnome-tweaks
     lutris
     vscode
     htop
     ripgrep
     wget
+    usbutils
     alacritty
     git
     helix
   ];
-  environment.shells = with pkgs; [ nushell ];
+  environment.shells = with betaPkgs; [ nushell ];
   services.flatpak.enable = true;
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
   programs.steam = {
     enable = true;
     remotePlay.openFirewall =
@@ -149,6 +174,7 @@
     dedicatedServer.openFirewall =
       true; # Open ports in the firewall for Source Dedicated Server
   };
+  programs.gamemode.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
