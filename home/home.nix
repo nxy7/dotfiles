@@ -24,6 +24,11 @@
     zoxide = import ./programs/zoxide.nix;
     bash = import ./programs/bash.nix;
     oh-my-posh = import ./programs/oh-my-posh.nix;
+
+    direnv.enable = true;
+    direnv.nix-direnv.enable = true;
+    direnv.enableNushellIntegration = true;
+
   };
 
 }

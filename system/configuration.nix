@@ -14,6 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" ];
 
   boot.kernelPackages = betaPkgs.linuxPackages_zen;
 
@@ -56,15 +57,16 @@
   # Enable the X11 windowing system.
   # xdg.portal.enable = true;
 
+  # programs.sway.enable = true;
   services.xserver = {
     enable = true;
 
     # KDE
-    # displayManager.sddm.enable = true;
-    # desktopManager.plasma5.enable = true;
+    displayManager.sddm.enable = true;
+    desktopManager.plasma5.enable = true;
 
     # Gnome
-    desktopManager.gnome.enable = true;
+    # desktopManager.gnome.enable = true;
     # displayManager.gdm.enable = true;
     # displayManager.gdm.wayland = true;
 
@@ -76,9 +78,6 @@
     displayManager.autoLogin.enable = true;
     displayManager.autoLogin.user = "nxyt";
   };
-
-  # I don't want to use default tools and instead pick them myself
-  # services.gnome.core-utilities.enable = false;
 
   # KDE
 
@@ -145,6 +144,8 @@
     SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", MODE="0666"
     SUBSYSTEM=="usb", ATTRS{idVendor}=="0xcafe", MODE="0666", GROUP="embeddev", SYMLINK+="picoprobe"
     SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", MODE="0666"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0x303a", MODE="0666", GROUP="embeddev"
+    KERNEL=="ttyACM0", MODE="0666", GROUP="embeddev"
     KERNEL=="hidraw7", MODE="0666", GROUP="embeddev"
     KERNEL=="hidraw4", MODE="0666", GROUP="embeddev"
   '';
@@ -153,14 +154,24 @@
     isNormalUser = true;
     description = "nxyt";
     extraGroups = [ "networkmanager" "wheel" "docker" "embeddev" ];
-    packages = with pkgs; [ brave discord firefox-devedition-bin firefox ];
+    packages = with pkgs; [ discord ];
     shell = betaPkgs.nushell;
   };
   virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
-    # gnome.gnome-terminal
-    gnome.gnome-tweaks
+    kitty
+
+    broot
+    exa
+    du-dust
+    hyperfine
+    xclip
+    wl-clipboard
+    brave
+    firefox-devedition-bin
+    vivaldi
+    firefox
     vlc
     lutris
     vscode

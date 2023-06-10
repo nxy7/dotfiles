@@ -1,6 +1,7 @@
 { pkgs, ... }:
 with pkgs; [
   keepassxc
+  ventoy
   cachix
   freshfetch
   rnix-lsp

@@ -19,18 +19,21 @@ in {
 
 
     source ~/.zoxide.nu
-    source ~/.oh-my-posh.nu
+    # source ~/.oh-my-posh.nu
+
+
 
     ${pkgs.freshfetch}/bin/freshfetch
   '';
   extraEnv = ''
-    let-env PATH = ($env.PATH | split row ":" | prepend $"($env.HOME)/.nix-profile/bin" | prepend "/nix/var/nix/profiles/default/bin")
+    let-env PATH = ($env.PATH | split row ":" | prepend $"($env.HOME)/.nix-profile/bin" | prepend "/nix/var/nix/profiles/default/bin");
+
     let-env config = {
       show_banner: false,
-    }
-    let-env PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig"
+    };
+    let-env PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
 
-    ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu
-    ${pkgs.oh-my-posh}/bin/oh-my-posh init nu -c ${poshConfig}
+    ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu;
+    # ${pkgs.oh-my-posh}/bin/oh-my-posh init nu -c ${poshConfig};
   '';
 }

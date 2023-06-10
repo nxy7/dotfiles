@@ -1,4 +1,4 @@
 {
-  enable = true;
-  useTheme = "amro";
+  # enable = true;
+  # useTheme = "amro";
 }

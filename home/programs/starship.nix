@@ -1,5 +1,6 @@
 {
   enable = false;
+  enableNushellIntegration = true;
   settings = {
     time.disabled = false;
 
