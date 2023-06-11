@@ -20,12 +20,7 @@ pkgs: {
     cp = "cp -rfL";
   };
   initExtra = ''
-    source $HOME/.nix-profile/etc/profile.d/nix.sh
-    PKG_CONFIG_PATH="${pkgs.openssl.dev}/lib/pkgconfig"
+    # source $HOME/.nix-profile/etc/profile.d/nix.sh
+    # PKG_CONFIG_PATH="${pkgs.openssl.dev}/lib/pkgconfig"
   '';
-  # oh-my-zsh = {
-  #   enable = true;
-  #   plugins = [ "git" "golang" "tmux" "rust" "gh" ];
-  #   theme = "afowler";
-  # };
 }

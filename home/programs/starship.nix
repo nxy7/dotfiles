@@ -1,6 +1,8 @@
 {
   enable = false;
   enableNushellIntegration = true;
+  enableBashIntegration = true;
+  enableZshIntegration = true;
   settings = {
     time.disabled = false;
 
