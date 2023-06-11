@@ -24,6 +24,7 @@
     zoxide = import ./programs/zoxide.nix;
     bash = import ./programs/bash.nix;
     oh-my-posh = import ./programs/oh-my-posh.nix;
+    broot.enable = true;
 
     direnv.enable = true;
     direnv.nix-direnv.enable = true;

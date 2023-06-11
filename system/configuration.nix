@@ -162,10 +162,6 @@
   environment.systemPackages = with pkgs; [
     kitty
 
-    broot
-    exa
-    du-dust
-    hyperfine
     xclip
     wl-clipboard
     brave
@@ -175,8 +171,6 @@
     vlc
     lutris
     vscode
-    htop
-    ripgrep
     wget
     usbutils
     alacritty

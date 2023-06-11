@@ -1,5 +1,11 @@
 { pkgs, ... }:
 with pkgs; [
+  exa
+  du-dust
+  hyperfine
+  htop
+
+  pueue
   keepassxc
   ventoy
   cachix
