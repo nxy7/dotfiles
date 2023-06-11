@@ -1,6 +1,6 @@
 { pkgs, ... }:
-with pkgs; [
-  texlive.combined.scheme-full
+with pkgs;
+[
   # go
   # gopls
   # julia
