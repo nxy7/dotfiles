@@ -161,6 +161,7 @@
 
   environment.systemPackages = with pkgs; [
     kitty
+    distrobox
 
     xclip
     wl-clipboard
