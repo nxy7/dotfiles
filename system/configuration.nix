@@ -62,11 +62,11 @@
     enable = true;
 
     # KDE
-    displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
+    # displayManager.sddm.enable = true;
+    # desktopManager.plasma5.enable = true;
 
     # Gnome
-    # desktopManager.gnome.enable = true;
+    desktopManager.gnome.enable = true;
     # displayManager.gdm.enable = true;
     # displayManager.gdm.wayland = true;
 
@@ -162,6 +162,12 @@
   environment.systemPackages = with pkgs; [
     kitty
     distrobox
+    libreoffice-qt
+    pmutils
+    obs-studio
+    ytmdesktop
+    ungoogled-chromium
+    libsForQt5.okular
 
     xclip
     wl-clipboard

@@ -1,5 +1,6 @@
 { pkgs, ... }:
 with pkgs; [
+  nix-prefetch-github
   exa
   du-dust
   hyperfine
@@ -13,7 +14,6 @@ with pkgs; [
   rnix-lsp
   nil
   hugo
-  telepresence2
   k9s
   kustomize
   kube3d
