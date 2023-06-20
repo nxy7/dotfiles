@@ -3,12 +3,10 @@ theme = "github_dark_dimmed"
 [editor]
 line-number = "relative"
 auto-format = true
-auto-info = false
-scrolloff = 10
+auto-save = true
 true-color = true
 bufferline = "always"
-idle-timeout = 75
-completion-trigger-len = 2
+idle-timeout = 40
 color-modes = true
 
 [editor.cursor-shape]
@@ -27,6 +25,7 @@ display-inlay-hints = true
 
 [editor.file-picker]
 hidden = false
+max-depth = 10
 
 [keys.normal]
 X = "extend_line_above"
