@@ -1,5 +1,6 @@
 { pkgs, ... }:
 with pkgs; [
+  buildah-unwrapped
   nix-prefetch-github
   exa
   du-dust

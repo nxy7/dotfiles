@@ -16,6 +16,9 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" ];
 
+  # without this NixOS cannot hibernate properly
+  security.protectKernelImage = false;
+
   boot.kernelPackages = betaPkgs.linuxPackages_zen;
 
   nixpkgs.config.allowUnfree = true;
@@ -23,6 +26,10 @@
   hardware.opengl.enable = true;
 
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+  # environment.shellInit = ''
+  #   [ -n "$DISPLAY" ] && xhost +si:localuser:$USER || true
+  # '';
 
   # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
   hardware.nvidia.modesetting.enable = true;
@@ -157,10 +164,17 @@
     packages = with pkgs; [ discord ];
     shell = betaPkgs.nushell;
   };
+
   virtualisation.docker.enable = true;
+  virtualisation.docker.extraOptions =
+    ''--insecure-registry "http://noxy.ddns.net:5000"'';
+  # virtualisation.dockersocketActivation = false;
+  # virtualisation.docker;
 
   environment.systemPackages = with pkgs; [
     kitty
+    rpi-imager
+    zip
     distrobox
     libreoffice-qt
     pmutils
@@ -177,7 +191,11 @@
     firefox
     vlc
     lutris
+
     vscode
+    # (vscode.fhsWithPackages
+    #   (ps: with ps; [ rustc rustup zlib openssl.dev pkg-config ]))
+
     wget
     usbutils
     alacritty
