@@ -4,6 +4,7 @@ let
     builtins.toFile "posh-config.json" (builtins.readFile ./posh-config.json);
 in {
   enable = true;
+  package = pkgs.nushellFull;
   extraConfig = ''
     alias z = zoxide
 

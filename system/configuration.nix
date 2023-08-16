@@ -15,11 +15,66 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" ];
+  time.hardwareClockInLocalTime = true;
+
+  # windows vm options
+  # boot.kernelModules = [ "vfio-pci" ];
+  # boot.blacklistedKernelModules = [ "nouveau" ];
+  # boot.kernelParams = [ "intel_iommu=on" ];
+  environment.systemPackages = with pkgs; [
+    kitty
+    cifs-utils
+    obsidian
+    rpi-imager
+    zip
+    mysql
+    betaPkgs.etcher
+    yt-dlp
+    # distrobox
+    libreoffice-qt
+    # betaPkgs.davinci-resolve
+    pmutils
+    obs-studio
+    ytmdesktop
+    insomnia
+    ungoogled-chromium
+    libsForQt5.okular
+
+    xclip
+    wl-clipboard
+    brave
+    firefox-devedition-bin
+    vivaldi
+    firefox
+    vlc
+    lutris
+
+    vscode
+    # (vscode.fhsWithPackages
+    #   (ps: with ps; [ rustc rustup zlib openssl.dev pkg-config ]))
+
+    wget
+    usbutils
+    alacritty
+    git
+    helix
+  ];
+  environment.shells = with betaPkgs; [ nushell ];
+  # fileSystems."/mnt/share" = {
+  #   device = "//mainpi.local/hdd";
+  #   fsType = "cifs";
+  #   options = let
+  #     # this line prevents hanging on network split
+  #     automount_opts =
+  #       "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+  #   in [ "${automount_opts},credentials=/etc/nixos/smb-secrets" ];
+  # };
 
   # without this NixOS cannot hibernate properly
   security.protectKernelImage = false;
 
-  boot.kernelPackages = betaPkgs.linuxPackages_zen;
+  boot.kernelPackages = betaPkgs.linuxPackages_latest;
 
   nixpkgs.config.allowUnfree = true;
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -65,6 +120,12 @@
   # xdg.portal.enable = true;
 
   # programs.sway.enable = true;
+  services.syncthing = {
+    enable = true;
+    user = "nxyt";
+    dataDir = "/home/nxyt/Sync";
+    configDir = "/home/nxyt/.config/syncthing";
+  };
   services.xserver = {
     enable = true;
 
@@ -171,38 +232,6 @@
   # virtualisation.dockersocketActivation = false;
   # virtualisation.docker;
 
-  environment.systemPackages = with pkgs; [
-    kitty
-    rpi-imager
-    zip
-    distrobox
-    libreoffice-qt
-    pmutils
-    obs-studio
-    ytmdesktop
-    ungoogled-chromium
-    libsForQt5.okular
-
-    xclip
-    wl-clipboard
-    brave
-    firefox-devedition-bin
-    vivaldi
-    firefox
-    vlc
-    lutris
-
-    vscode
-    # (vscode.fhsWithPackages
-    #   (ps: with ps; [ rustc rustup zlib openssl.dev pkg-config ]))
-
-    wget
-    usbutils
-    alacritty
-    git
-    helix
-  ];
-  environment.shells = with betaPkgs; [ nushell ];
   services.flatpak.enable = true;
   services.avahi.enable = true;
   services.avahi.nssmdns = true;

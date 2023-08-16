@@ -3,6 +3,7 @@ with pkgs; [
   buildah-unwrapped
   nix-prefetch-github
   exa
+  pgweb
   du-dust
   hyperfine
   htop

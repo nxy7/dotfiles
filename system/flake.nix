@@ -5,24 +5,24 @@
     # hardware-info.url = "/etc/nixos/hardware-configuration.nix";
   };
 
-
   outputs = inputs@{ self, nixpkgs, betapkgs, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         config = {
           allowUnfree = true;
+          permittedInsecurePackages = [ "electron-12.2.3" ];
         };
-        overlays = [  ];
+        overlays = [ ];
       };
       betaPkgs = import betapkgs {
         config = {
           allowUnfree = true;
+          permittedInsecurePackages = [ "electron-12.2.3" "python-2.7.18.6" ];
         };
-        overlays = [  ];
+        overlays = [ ];
       };
-    in
-    {
+    in {
 
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
