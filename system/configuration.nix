@@ -20,44 +20,37 @@
   # windows vm options
   # boot.kernelModules = [ "vfio-pci" ];
   # boot.blacklistedKernelModules = [ "nouveau" ];
+  networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [ 6443 8132 80 8181 443 ];
+
   # boot.kernelParams = [ "intel_iommu=on" ];
   environment.systemPackages = with pkgs; [
-    kitty
+    k3s
     cifs-utils
     obsidian
     rpi-imager
     zip
     mysql
-    betaPkgs.etcher
-    yt-dlp
-    # distrobox
     libreoffice-qt
-    # betaPkgs.davinci-resolve
     pmutils
     obs-studio
-    ytmdesktop
     insomnia
-    ungoogled-chromium
-    libsForQt5.okular
 
     xclip
     wl-clipboard
-    brave
     firefox-devedition-bin
-    vivaldi
     firefox
     vlc
     lutris
 
     vscode
-    # (vscode.fhsWithPackages
-    #   (ps: with ps; [ rustc rustup zlib openssl.dev pkg-config ]))
 
     wget
     usbutils
     alacritty
     git
     helix
+    vim
   ];
   environment.shells = with betaPkgs; [ nushell ];
   # fileSystems."/mnt/share" = {
@@ -81,10 +74,6 @@
   hardware.opengl.enable = true;
 
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-
-  # environment.shellInit = ''
-  #   [ -n "$DISPLAY" ] && xhost +si:localuser:$USER || true
-  # '';
 
   # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
   hardware.nvidia.modesetting.enable = true;
@@ -147,17 +136,12 @@
     displayManager.autoLogin.user = "nxyt";
   };
 
-  # KDE
-
-  # Gnome
-
   # services.xserver.displayManager.defaultSession = "gnome";
 
   # Configure keymap in X11
   services.xserver = {
     layout = "pl";
     xkbVariant = "";
-
   };
 
   # Configure console keymap
@@ -175,25 +159,8 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # lowLatency = {
-    #   # enable this module      
-    #   enable = true;
-    #   # defaults (no need to be set unless modified)
-    #   quantum = 64;
-    #   rate = 48000;
-    # };
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
-  # security.rtkit.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
   fonts.fonts = with pkgs; [
     nerdfonts
     noto-fonts
@@ -207,7 +174,6 @@
     proggyfonts
   ];
 
-  # udev rules for embedded development
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", MODE="0666"
     SUBSYSTEM=="usb", ATTRS{idVendor}=="0xcafe", MODE="0666", GROUP="embeddev", SYMLINK+="picoprobe"
@@ -227,10 +193,9 @@
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.package = betaPkgs.docker_24;
   virtualisation.docker.extraOptions =
     ''--insecure-registry "http://noxy.ddns.net:5000"'';
-  # virtualisation.dockersocketActivation = false;
-  # virtualisation.docker;
 
   services.flatpak.enable = true;
   services.avahi.enable = true;
@@ -243,15 +208,6 @@
       true; # Open ports in the firewall for Source Dedicated Server
   };
   programs.gamemode.enable = true;
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   system.stateVersion = "22.11";
 

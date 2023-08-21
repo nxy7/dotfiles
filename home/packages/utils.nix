@@ -1,6 +1,7 @@
 { pkgs, ... }:
 with pkgs; [
   buildah-unwrapped
+  pomodoro
   nix-prefetch-github
   exa
   pgweb

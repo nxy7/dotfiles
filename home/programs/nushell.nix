@@ -16,6 +16,7 @@ in {
     alias home-switch = nix run . --impure switch -- --flake .
     alias system-switch = sudo nixos-rebuild --flake . --impure
     alias lg = lazygit
+    alias k = kubectl
 
 
 
