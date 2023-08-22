@@ -8,19 +8,16 @@
   outputs = inputs@{ self, nixpkgs, betapkgs, ... }:
     let
       system = "x86_64-linux";
+      overlays = [];
+      config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [ "electron-12.2.3"  "electron-12.2.3" "python-2.7.18.6" ];
+      };
       pkgs = import nixpkgs {
-        config = {
-          allowUnfree = true;
-          permittedInsecurePackages = [ "electron-12.2.3" ];
-        };
-        overlays = [ ];
+        inherit overlays config;
       };
       betaPkgs = import betapkgs {
-        config = {
-          allowUnfree = true;
-          permittedInsecurePackages = [ "electron-12.2.3" "python-2.7.18.6" ];
-        };
-        overlays = [ ];
+        inherit overlays config;
       };
     in {
 
