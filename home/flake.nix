@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     helix-master.url = "github:helix-editor/helix";
+    pomodorust.url = "github:nxy7/pomodorust";
     home-manager.url = "github:nix-community/home-manager";
     system-manager = {
       url = "github:numtide/system-manager";
@@ -18,19 +19,26 @@
       };
     };
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, utils, home-manager, system-manager, nixpkgs, helix-master
-    , rust-overlay }:
+  outputs = { self, utils, home-manager, system-manager, nixpkgs, rust-overlay
+    , ... }@inputs:
     utils.lib.eachDefaultSystem (system:
       let
-        helixOverlay = import overlays/helix.nix helix-master system;
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
           config.allowUnfreePredicate = (_: true);
-          overlays = [ helixOverlay (import rust-overlay) ];
+          overlays = [
+            (import rust-overlay)
+            (import ./overlays.nix { inherit inputs system; })
+            # (final: prev: {
+            #   helix = inputs.helix-master.packages.${system}.default;
+            #   pomodorust = inputs.pomodorust.packages.${system}.default;
+            # })
+          ];
         };
         pcConfiguration = name:
           home-manager.lib.homeManagerConfiguration {

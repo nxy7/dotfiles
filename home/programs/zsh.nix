@@ -3,8 +3,8 @@ pkgs: {
   autocd = true;
   # dotDir = ".config/zsh";
   enableCompletion = true;
+  syntaxHighlighting.enable = true;
   enableAutosuggestions = true;
-  enableSyntaxHighlighting = true;
   shellAliases = {
     lg = "lazygit";
     ls = "ls --color=auto";

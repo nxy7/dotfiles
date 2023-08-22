@@ -11,6 +11,9 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
@@ -25,6 +28,10 @@
 
   # boot.kernelParams = [ "intel_iommu=on" ];
   environment.systemPackages = with pkgs; [
+    # alsa is needed for programs that use audio
+    # alsa-lib
+    # pkg-config
+
     k3s
     cifs-utils
     obsidian
@@ -117,14 +124,21 @@
   };
   services.xserver = {
     enable = true;
+    displayManager = {
+      gdm.enable = true;
+      # gdm.nvidiaWayland = true;
+      autoLogin = {
+        enable = true;
+        user = "nxyt";
+      };
+    };
+    desktopManager.gnome.enable = true;
 
     # KDE
     # displayManager.sddm.enable = true;
     # desktopManager.plasma5.enable = true;
 
     # Gnome
-    desktopManager.gnome.enable = true;
-    # displayManager.gdm.enable = true;
     # displayManager.gdm.wayland = true;
 
     # Xfce
@@ -132,8 +146,6 @@
     # desktopManager.xfce.enable = true;
     # desktopManager.xterm.enable = false;
 
-    displayManager.autoLogin.enable = true;
-    displayManager.autoLogin.user = "nxyt";
   };
 
   # services.xserver.displayManager.defaultSession = "gnome";

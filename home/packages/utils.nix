@@ -1,13 +1,16 @@
 { pkgs, ... }:
 with pkgs; [
   buildah-unwrapped
-  pomodoro
+  pomodorust
+
   nix-prefetch-github
   exa
   pgweb
   du-dust
   hyperfine
   htop
+  gitui
+  # porsmo
 
   pueue
   keepassxc
