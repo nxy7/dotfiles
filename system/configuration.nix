@@ -1,12 +1,4 @@
-{ config, pkgs, betaPkgs, ... }:
-# let
-#   pkgs = import nixpkgs {
-#     config = {
-#       allowUnfree = true;
-#     };
-#   };
-# in
-{
+{ config, pkgs, betaPkgs, ... }: {
   imports = [ /etc/nixos/hardware-configuration.nix ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -20,18 +12,10 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" ];
   time.hardwareClockInLocalTime = true;
 
-  # windows vm options
-  # boot.kernelModules = [ "vfio-pci" ];
-  # boot.blacklistedKernelModules = [ "nouveau" ];
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 6443 8132 80 8181 443 ];
 
-  # boot.kernelParams = [ "intel_iommu=on" ];
   environment.systemPackages = with pkgs; [
-    # alsa is needed for programs that use audio
-    # alsa-lib
-    # pkg-config
-
     k3s
     cifs-utils
     obsidian
@@ -60,16 +44,6 @@
     vim
   ];
   environment.shells = with betaPkgs; [ nushell ];
-  # fileSystems."/mnt/share" = {
-  #   device = "//mainpi.local/hdd";
-  #   fsType = "cifs";
-  #   options = let
-  #     # this line prevents hanging on network split
-  #     automount_opts =
-  #       "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-
-  #   in [ "${automount_opts},credentials=/etc/nixos/smb-secrets" ];
-  # };
 
   # without this NixOS cannot hibernate properly
   security.protectKernelImage = false;
@@ -86,10 +60,6 @@
   hardware.nvidia.modesetting.enable = true;
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -112,9 +82,6 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  # xdg.portal.enable = true;
-
   # programs.sway.enable = true;
   services.syncthing = {
     enable = true;
@@ -133,22 +100,7 @@
       };
     };
     desktopManager.gnome.enable = true;
-
-    # KDE
-    # displayManager.sddm.enable = true;
-    # desktopManager.plasma5.enable = true;
-
-    # Gnome
-    # displayManager.gdm.wayland = true;
-
-    # Xfce
-    # displayManager.gdm.enable = true;
-    # desktopManager.xfce.enable = true;
-    # desktopManager.xterm.enable = false;
-
   };
-
-  # services.xserver.displayManager.defaultSession = "gnome";
 
   # Configure keymap in X11
   services.xserver = {

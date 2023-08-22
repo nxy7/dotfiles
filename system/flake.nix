@@ -8,17 +8,14 @@
   outputs = inputs@{ self, nixpkgs, betapkgs, ... }:
     let
       system = "x86_64-linux";
-      overlays = [];
+      overlays = [ ];
       config = {
         allowUnfree = true;
-        permittedInsecurePackages = [ "electron-12.2.3"  "electron-12.2.3" "python-2.7.18.6" ];
+        permittedInsecurePackages =
+          [ "electron-12.2.3" "electron-12.2.3" "python-2.7.18.6" ];
       };
-      pkgs = import nixpkgs {
-        inherit overlays config;
-      };
-      betaPkgs = import betapkgs {
-        inherit overlays config;
-      };
+      pkgs = import nixpkgs { inherit overlays config; };
+      betaPkgs = import betapkgs { inherit overlays config; };
     in {
 
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {

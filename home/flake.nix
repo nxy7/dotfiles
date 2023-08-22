@@ -8,9 +8,7 @@
     home-manager.url = "github:nix-community/home-manager";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs = { nixpkgs.follows = "nixpkgs"; };
     };
 
     flake-parts.url = "github:hercules-ci/flake-parts";
