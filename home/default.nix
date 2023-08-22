@@ -15,16 +15,16 @@
 
   programs = {
     home-manager.enable = true;
-    git = import ./programs/git.nix;
+    git = import ./programs/git;
     helix = import ./programs/helix;
-    neovim = import ./programs/neovim/neovim.nix;
-    zsh = import ./programs/zsh.nix pkgs;
-    starship = import ./programs/starship.nix;
-    nushell = import ./programs/nushell.nix pkgs;
-    zellij = import ./programs/zellij.nix;
-    zoxide = import ./programs/zoxide.nix;
-    bash = import ./programs/bash.nix;
-    oh-my-posh = import ./programs/oh-my-posh.nix;
+    neovim = import ./programs/neovim;
+    zsh = import ./programs/zsh pkgs;
+    starship = import ./programs/starship;
+    nushell = import ./programs/nushell pkgs;
+    zellij = import ./programs/zellij;
+    zoxide = import ./programs/zoxide;
+    bash = import ./programs/bash;
+    oh-my-posh = import ./programs/oh-my-posh;
     broot.enable = true;
 
     direnv.enable = true;
