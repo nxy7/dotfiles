@@ -10,6 +10,7 @@ with pkgs; [
   hyperfine
   htop
   gitui
+  lazygit
   # porsmo
 
   pueue

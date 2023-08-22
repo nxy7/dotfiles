@@ -1,7 +1,7 @@
 pkgs:
 let
   poshConfig =
-    builtins.toFile "posh-config.json" (builtins.readFile ./posh-config.json);
+    builtins.toFile "posh-config.json" (builtins.readFile ../oh-my-posh/posh-config.json);
 in {
   enable = true;
   package = pkgs.nushellFull;
