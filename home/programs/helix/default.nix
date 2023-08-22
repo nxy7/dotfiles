@@ -1,5 +1,5 @@
 let
-  settings = builtins.fromTOML (builtins.readFile ./../helix/config.toml);
+  settings = builtins.fromTOML (builtins.readFile ./config.toml);
 
   languages.language = [
     {
@@ -13,8 +13,7 @@ let
       formatter = { command = "nixfmt"; };
     }
   ];
-in
-{
+in {
   enable = true;
   inherit settings;
   inherit languages;

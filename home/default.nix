@@ -16,7 +16,7 @@
   programs = {
     home-manager.enable = true;
     git = import ./programs/git.nix;
-    helix = import ./programs/helix.nix;
+    helix = import ./programs/helix;
     neovim = import ./programs/neovim/neovim.nix;
     zsh = import ./programs/zsh.nix pkgs;
     starship = import ./programs/starship.nix;
