@@ -7,15 +7,23 @@
   systemd.services."autovt@tty1".enable = false;
 
   boot.loader.systemd-boot.enable = true;
+  boot.kernelParams = [
+    "cgroup_no_v1"
+    "cgroup_enable=memory"
+    "cgroup_enable=cpuset"
+    # "cgroup_memory=1"
+    # "systemd.unified_cgroup_hierarchy=1"
+  ];
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" ];
   time.hardwareClockInLocalTime = true;
 
   networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 6443 8132 80 8181 443 ];
+  networking.firewall.allowedTCPPorts = [ 53 6443 8132 80 8181 8472 6081 443 ];
 
   environment.systemPackages = with pkgs; [
+    nmap
     k3s
     cifs-utils
     obsidian
@@ -92,7 +100,8 @@
   services.xserver = {
     enable = true;
     displayManager = {
-      gdm.enable = true;
+      # gdm is causing some issues after restart and with autologin
+      # gdm.enable = true;
       # gdm.nvidiaWayland = true;
       autoLogin = {
         enable = true;

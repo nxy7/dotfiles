@@ -1,7 +1,7 @@
 pkgs:
 let
-  poshConfig =
-    builtins.toFile "posh-config.json" (builtins.readFile ../oh-my-posh/posh-config.json);
+  poshConfig = builtins.toFile "posh-config.json"
+    (builtins.readFile ../oh-my-posh/posh-config.json);
 in {
   enable = true;
   package = pkgs.nushellFull;
@@ -28,12 +28,12 @@ in {
     ${pkgs.freshfetch}/bin/freshfetch
   '';
   extraEnv = ''
-    let-env PATH = ($env.PATH | split row ":" | prepend $"($env.HOME)/.nix-profile/bin" | prepend "/nix/var/nix/profiles/default/bin");
+    $env.PATH = ($env.PATH | split row ":" | prepend $"($env.HOME)/.nix-profile/bin" | prepend "/nix/var/nix/profiles/default/bin");
 
-    let-env config = {
+    $env.config = {
       show_banner: false,
     };
-    let-env PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+    $env.PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
 
     ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu;
     # ${pkgs.oh-my-posh}/bin/oh-my-posh init nu -c ${poshConfig};
