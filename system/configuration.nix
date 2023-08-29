@@ -20,7 +20,10 @@
   time.hardwareClockInLocalTime = true;
 
   networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 53 6443 8132 80 8181 8472 6081 443 ];
+  networking.firewall.allowedTCPPorts =
+    [ 53 80 443 2380 6081 6443 8132 8132 8133 8181 8472 9443 10250 ];
+  networking.firewall.allowedUDPPorts =
+    [ 53 80 443 4789 6081 6443 8132 8181 8472 ];
 
   environment.systemPackages = with pkgs; [
     nmap

@@ -25,7 +25,8 @@
     zoxide = import ./programs/zoxide;
     bash = import ./programs/bash;
     oh-my-posh = import ./programs/oh-my-posh;
-    broot = import ./programs/broot;
+    # broot = import ./programs/broot;
+    wezterm = import ./programs/wezterm;
 
     direnv.enable = true;
     direnv.nix-direnv.enable = true;

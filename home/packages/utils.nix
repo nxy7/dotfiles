@@ -1,5 +1,6 @@
 { pkgs, ... }:
 with pkgs; [
+  lnav
   buildah-unwrapped
   pomodorust
 
