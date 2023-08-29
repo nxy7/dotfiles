@@ -1,6 +1,7 @@
 { pkgs, ... }:
 with pkgs; [
   lnav
+  lua-language-server
   buildah-unwrapped
   pomodorust
 
