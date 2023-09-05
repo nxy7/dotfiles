@@ -24,13 +24,11 @@ that's automatically generated on NixOS system, but I don't keep it in the repos
 configuration.
 
 ## Home Config
-To use home configuration you'll need to add `homeConfigurations.{your username} = pcConfigurations "your username";`
-to `dotfiles/home/flake.nix`. 
 ```bash
 git clone git@github.com:nxy7/dotfiles #or use https git clone
 
 # to clone user configuration
 cd dotfiles/home
-nix run flake . switch -- --flake . -b bk
+nix run . switch -- --flake . --impure # you might need to add -b bk
 ```
 

@@ -13,7 +13,7 @@ in {
     alias la = ls -a
     alias ll = ls -l
     alias kctl = sudo k3s kubectl
-    alias home-switch = nix run . --impure switch -- --flake .
+    alias home-switch = nix run . switch -- --flake . --impure 
     alias system-switch = sudo nixos-rebuild --flake . --impure
     alias lg = lazygit
     alias k = kubectl
@@ -22,6 +22,7 @@ in {
 
 
     source ~/.zoxide.nu
+    # use ~/.cache/starship/init.nu
     # source ~/.oh-my-posh.nu
 
 

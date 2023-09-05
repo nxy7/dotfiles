@@ -1,21 +1,29 @@
 { pkgs, ... }:
 with pkgs; [
+  x2goclient
   lnav
-  lua-language-server
+  insomnia
+  redis
+
+  gnumake
+  ginkgo
   buildah-unwrapped
   pomodorust
   fzf
+  gh
 
   cilium-cli
 
+  cmake
+  llvmPackages_latest.llvm
+  llvmPackages_rocm.clang
+
   nix-prefetch-github
-  exa
   pgweb
   du-dust
   hyperfine
   htop
   gitui
-  lazygit
   # porsmo
 
   pueue
@@ -23,8 +31,7 @@ with pkgs; [
   ventoy
   cachix
   freshfetch
-  rnix-lsp
-  nil
+
   hugo
   k9s
   kustomize

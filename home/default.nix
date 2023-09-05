@@ -1,4 +1,4 @@
-{ username, pkgs, ... }: {
+{ username, pkgs, inputs, ... }: {
 
   home = rec {
     inherit username;
@@ -16,7 +16,8 @@
   programs = {
     home-manager.enable = true;
     git = import ./programs/git;
-    helix = import ./programs/helix;
+    lazygit = import ./programs/lazygit;
+    helix = import ./programs/helix pkgs inputs;
     neovim = import ./programs/neovim;
     zsh = import ./programs/zsh pkgs;
     starship = import ./programs/starship;
@@ -25,7 +26,7 @@
     zoxide = import ./programs/zoxide;
     bash = import ./programs/bash;
     oh-my-posh = import ./programs/oh-my-posh;
-    # broot = import ./programs/broot;
+    broot = import ./programs/broot pkgs;
     wezterm = import ./programs/wezterm;
 
     direnv.enable = true;

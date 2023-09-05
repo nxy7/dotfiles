@@ -1,18 +1,7 @@
+pkgs: inputs:
 let
   settings = builtins.fromTOML (builtins.readFile ./config.toml);
-
-  languages.language = [
-    {
-      name = "tsx";
-      auto-format = true;
-    }
-    {
-      name = "nix";
-      auto-format = true;
-      # language-server = {command = "rnix-lsp"; };
-      formatter = { command = "nixfmt"; };
-    }
-  ];
+  languages = import ./languages.nix pkgs inputs;
 in {
   enable = true;
   inherit settings;
