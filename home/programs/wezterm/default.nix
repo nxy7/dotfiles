@@ -1,1 +1,4 @@
-{ enable = true; }
+{
+  enable = true;
+  extraConfig = (builtins.readFile ./config.lua);
+}

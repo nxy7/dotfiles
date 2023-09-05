@@ -4,6 +4,9 @@ with pkgs; [
   lua-language-server
   buildah-unwrapped
   pomodorust
+  fzf
+
+  cilium-cli
 
   nix-prefetch-github
   exa
