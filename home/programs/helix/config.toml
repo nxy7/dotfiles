@@ -25,7 +25,7 @@ display-inlay-hints = true
 
 [editor.file-picker]
 # hidden = false
-max-depth = 7
+max-depth = 14
 
 [keys.normal]
 X = "extend_line_above"

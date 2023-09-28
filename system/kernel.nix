@@ -1,6 +1,5 @@
 unstablepkgs:
-
-{
+{ config, ... }: {
   boot.kernelPackages = unstablepkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
   security.protectKernelImage = false;
@@ -45,6 +44,11 @@ unstablepkgs:
       SCHEDSTATS y
     '';
   }];
+
+  hardware.opengl.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia.modesetting.enable = true;
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
