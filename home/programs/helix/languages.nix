@@ -26,6 +26,10 @@ pkgs: inputs: {
       ];
     }
     {
+      name = "typescript";
+      auto-format = true;
+    }
+    {
       name = "svelte";
       roots = [ "package.json" ];
       auto-format = true;

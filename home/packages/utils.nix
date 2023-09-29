@@ -1,5 +1,6 @@
 { pkgs, ... }:
 with pkgs; [
+  busybox
   x2goclient
   lnav
   insomnia

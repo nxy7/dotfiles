@@ -1,6 +1,5 @@
-unstablepkgs:
-{ config, ... }: {
-  boot.kernelPackages = unstablepkgs.linuxPackages_latest;
+{ pkgs, config, ... }: {
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
   security.protectKernelImage = false;
 
