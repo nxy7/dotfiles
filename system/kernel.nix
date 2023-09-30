@@ -1,5 +1,5 @@
-{ pkgs, config, ... }: {
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+{ pkgs, lib, config, ... }: {
+  boot.kernelPackages = pkgs.linuxPackages_6_5;
   boot.kernelModules = [ "kvm-amd" ];
   security.protectKernelImage = false;
 
@@ -19,29 +19,29 @@
   boot.kernelPatches = [{
     name = "nft-custom-config";
     patch = null;
-    extraConfig = ''
-      NFT_SOCKET m
-      NFT_TPROXY m
-      NETFILTER_XT_TARGET_TPROXY m
-      NETFILTER_XT_TARGET_CT m
-      NETFILTER_XT_MATCH_MARK m
-      NETFILTER_XT_MATCH_SOCKET m
-      NETFILTER_XT_SET m
-      IP_SET m
-      IP_SET_HASH_IP m
-      BPF y
-      BPF_SYSCALL y
-      NET_CLS_BPF y
-      BPF_JIT y
-      NET_CLS_ACT y
-      NET_SCH_INGRESS y
-      CRYPTO_SHA1 y
-      CRYPTO_USER_API_HASH y
-      CGROUPS y
-      CGROUP_BPF y
-      PERF_EVENTS y
-      SCHEDSTATS y
-    '';
+    extraStructuredConfig = {
+      NFT_SOCKET = lib.kernel.module;
+      NFT_TPROXY = lib.kernel.module;
+      NETFILTER_XT_TARGET_TPROXY = lib.kernel.module;
+      NETFILTER_XT_TARGET_CT = lib.kernel.module;
+      NETFILTER_XT_MATCH_MARK = lib.kernel.module;
+      NETFILTER_XT_MATCH_SOCKET = lib.kernel.module;
+      NETFILTER_XT_SET = lib.kernel.module;
+      IP_SET = lib.kernel.module;
+      IP_SET_HASH_IP = lib.kernel.module;
+      BPF = lib.kernel.yes;
+      BPF_SYSCALL = lib.kernel.yes;
+      NET_CLS_BPF = lib.mkForce lib.kernel.yes;
+      BPF_JIT = lib.mkForce lib.kernel.yes;
+      NET_CLS_ACT = lib.mkForce lib.kernel.yes;
+      NET_SCH_INGRESS = lib.mkForce lib.kernel.yes;
+      CRYPTO_SHA1 = lib.mkForce lib.kernel.yes;
+      CRYPTO_USER_API_HASH = lib.mkForce lib.kernel.yes;
+      CGROUPS = lib.mkForce lib.kernel.yes;
+      CGROUP_BPF = lib.mkForce lib.kernel.yes;
+      PERF_EVENTS = lib.mkForce lib.kernel.yes;
+      SCHEDSTATS = lib.mkForce lib.kernel.yes;
+    };
   }];
 
   hardware.opengl.enable = true;

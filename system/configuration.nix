@@ -5,7 +5,7 @@
     ./kernel.nix
     ./firewall.nix
     ./packages.nix
-    (import ./users.nix pkgs unstablepkgs)
+    (import ./users.nix { inherit pkgs unstablepkgs; })
     ./programs.nix
     ./udev.nix
   ];
