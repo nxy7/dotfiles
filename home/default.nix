@@ -4,7 +4,6 @@
     inherit username;
     homeDirectory = "/home/" + username;
     stateVersion = "23.05";
-    shellAliases = { te = "ls"; };
 
     packages = import ./packages pkgs;
     sessionVariables = {
@@ -28,6 +27,7 @@
     oh-my-posh = import ./programs/oh-my-posh;
     broot = import ./programs/broot pkgs;
     wezterm = import ./programs/wezterm;
+    fish = import ./programs/fish;
 
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
