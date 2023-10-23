@@ -2,7 +2,8 @@
   description = "My system configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "nixpkgs/nixos-23.05";
+    unstablePkgs.url = "nixpkgs/nixos-unstable";
     helix-master.url = "github:helix-editor/helix";
     tailwindcss-lsp.url = "github:nxy7/tailwindcss-intellisense";
     pomodorust.url = "github:nxy7/pomodorust";
@@ -23,21 +24,11 @@
         inherit pkgs home-manager inputs;
       };
       currentUser = builtins.getEnv "USER";
-      pcConfiguration = name:
-        home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-
-          extraSpecialArgs = {
-            username = name;
-            inherit inputs;
-          };
-          modules = [ ./. ];
-        };
     in {
-      uname = currentUser;
       packages.${system} = {
         default = home-manager.defaultPackage.${system};
-        homeConfigurations.${currentUser} = pcConfiguration currentUser;
+        homeConfigurations.${currentUser} =
+          homeConfiguration.byName currentUser;
       };
     };
 }

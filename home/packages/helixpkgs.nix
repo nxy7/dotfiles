@@ -5,6 +5,7 @@ with pkgs; [
   lua-language-server
   rnix-lsp
   zls
+  taplo
 
   go_1_21
   gopls

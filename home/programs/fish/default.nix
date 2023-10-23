@@ -15,4 +15,9 @@
     ll = "ls -l";
     grep = "rg -S";
   };
+  interactiveShellInit = ''
+    kubectl completion fish | source
+    zoxide init fish | source
+    # {pkgs.freshfetch}/bin/freshfetch
+  '';
 }

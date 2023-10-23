@@ -1,5 +1,7 @@
-{ config, pkgs, unstablepkgs, ... }: {
+{ config, pkgs, unstablepkgs, inputs, ... }: {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+
   imports = [
     /etc/nixos/hardware-configuration.nix
     ./kernel.nix
@@ -14,7 +16,7 @@
   systemd.services."autovt@tty1".enable = false;
 
   time.hardwareClockInLocalTime = true;
-  environment.shells = with unstablepkgs; [ nushell ];
+  environment.shells = with unstablepkgs; [ fish nushell ];
 
   nixpkgs.config.allowUnfree = true;
 

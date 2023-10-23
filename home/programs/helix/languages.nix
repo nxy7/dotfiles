@@ -14,6 +14,10 @@ pkgs: inputs: {
       auto-format = true;
     }
     {
+      name = "toml";
+      auto-format = true;
+    }
+    {
       name = "vue";
       auto-format = true;
       language-servers = [
