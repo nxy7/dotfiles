@@ -13,22 +13,45 @@
 
   outputs = { self, flake-parts, home-manager, nixpkgs, ... }@inputs:
     let
+      system = "x86_64-linux";
+      currentUser = builtins.getEnv "USER";
+
+      # nixpkgs
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (_: true);
         overlays = import ./overlays.nix { inherit inputs system; };
       };
-      system = "x86_64-linux";
-      homeConfiguration = import ./home/homeConfiguration.nix {
-        inherit pkgs home-manager inputs;
+      unstablepkgs = import inputs.unstablePkgs {
+        inherit system;
+        config.allowUnfree = true;
+        config.allowUnfreePredicate = (_: true);
+        overlays = import ./overlays.nix { inherit inputs system; };
       };
-      currentUser = builtins.getEnv "USER";
+
+      # other utilities
+      homeConfiguration = import ./home/homeConfiguration.nix {
+        pkgs = unstablepkgs;
+        inherit home-manager inputs;
+      };
     in {
+      # run command below to switch home configuration
+      # nix run . switch -- --flake . --impure 
       packages.${system} = {
         default = home-manager.defaultPackage.${system};
         homeConfigurations.${currentUser} =
           homeConfiguration.byName currentUser;
       };
+
+      # run command below to switch system configuration
+      # sudo nixos-rebuild switch --flake . --impure
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = inputs // { inherit pkgs unstablepkgs inputs; };
+        modules = [ ./system/configuration.nix ];
+      };
+
+      nixosConfigurations.default = self.nixosConfigurations.nixos;
     };
 }

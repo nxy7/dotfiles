@@ -16,7 +16,7 @@ with pkgs; [
 
   cmake
   llvmPackages_latest.llvm
-  llvmPackages_rocm.clang
+  rocmPackages.llvm.clang
 
   nix-prefetch-github
   pgweb
