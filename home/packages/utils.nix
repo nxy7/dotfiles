@@ -4,6 +4,8 @@ with pkgs; [
   lnav
   insomnia
   redis
+  bashInteractive
+  sqlite
 
   gnumake
   ginkgo

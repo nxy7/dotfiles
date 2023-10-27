@@ -21,12 +21,14 @@
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (_: true);
+        config.permittedInsecurePackages = [ "electron-24.8.6" ];
         overlays = import ./overlays.nix { inherit inputs system; };
       };
       unstablepkgs = import inputs.unstablePkgs {
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (_: true);
+        config.permittedInsecurePackages = [ "electron-24.8.6" ];
         overlays = import ./overlays.nix { inherit inputs system; };
       };
 

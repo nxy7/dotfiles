@@ -9,6 +9,7 @@ with pkgs; [
 
   go_1_21
   gopls
+  golangci-lint
 
   rust-analyzer
   haskellPackages.haskell-language-server
