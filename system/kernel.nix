@@ -1,6 +1,18 @@
 { pkgs, lib, config, ... }: {
   boot.kernelPackages = pkgs.linuxPackages_6_5;
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [
+    "kvm-amd"
+    "ip6table_filter"
+    "iptable_raw"
+    "iptable_nat"
+    "iptable_filter"
+    "iptable_mangle"
+    "ip_set"
+    "ip_set_hash_ip"
+    "xt_socket"
+    "xt_mark"
+    "xt_set"
+  ];
   security.protectKernelImage = false;
 
   zramSwap = {
@@ -9,6 +21,7 @@
   };
 
   boot.loader.systemd-boot.enable = true;
+
   boot.kernelParams = [
     "cgroup_no_v1=all"
     "cgroup_enable=memory"
