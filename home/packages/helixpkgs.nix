@@ -6,6 +6,7 @@ with pkgs; [
   rnix-lsp
   zls
   taplo
+  ltex-ls
 
   go_1_21
   gopls

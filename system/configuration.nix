@@ -17,6 +17,9 @@
     ./kernel.nix
     ./firewall.nix
     ./packages.nix
+    ./hyprland.nix
+    ./gnome.nix
+    ./audio.nix
     (import ./users.nix { inherit pkgs unstablepkgs; })
     ./programs.nix
     ./udev.nix
@@ -52,35 +55,9 @@
     dataDir = "/home/nxyt/Sync";
     configDir = "/home/nxyt/.config/syncthing";
   };
-  services.xserver = {
-    enable = true;
-    displayManager = {
-      autoLogin = {
-        enable = true;
-        user = "nxyt";
-      };
-    };
-    desktopManager.gnome.enable = true;
-  };
-
-  services.xserver = {
-    layout = "pl";
-    xkbVariant = "";
-  };
 
   services.printing.enable = true;
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  services.avahi.enable = true;
-  services.avahi.nssmdns = true;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.package = unstablepkgs.docker_24;

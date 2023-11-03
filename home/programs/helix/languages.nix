@@ -34,6 +34,10 @@ pkgs: inputs: {
       auto-format = true;
     }
     {
+      name = "markdown";
+      language-servers = [ "marksman" "ltex-ls" ];
+    }
+    {
       name = "svelte";
       roots = [ "package.json" ];
       auto-format = true;
