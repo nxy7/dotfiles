@@ -1,4 +1,4 @@
-{ pkgs, unstablepkgs }: {
+{ pkgs, unstablepkgs, ... }: {
   users.users.nxyt = {
     isNormalUser = true;
     description = "nxyt";

@@ -1,9 +1,10 @@
-{ pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
+{ pkgs, unstablepkgs, ... }: {
+  environment.systemPackages = (with pkgs; [
     lsof
     unzip
     obsidian
 
+    stremio
     zip
     libreoffice-qt
     obs-studio
@@ -18,6 +19,7 @@
     wget
     usbutils
     alacritty
+    kitty
     git
     helix
 
@@ -25,5 +27,5 @@
     ungoogled-chromium
     brave
     firefox-devedition-bin
-  ];
+  ]) ++ (with unstablepkgs; [ goxlr-utility ]);
 }

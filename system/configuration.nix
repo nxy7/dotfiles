@@ -4,11 +4,6 @@
   nix.optimise.automatic = true;
   nix.gc = {
     automatic = true;
-    # interval = {
-    #   Weekday = 0;
-    #   Hour = 0;
-    #   Minute = 0;
-    # };
     options = "--delete-older-than 30d";
   };
 
@@ -17,10 +12,11 @@
     ./kernel.nix
     ./firewall.nix
     ./packages.nix
-    ./hyprland.nix
+    ./services.nix
+    # ./hyprland.nix
     ./gnome.nix
     ./audio.nix
-    (import ./users.nix { inherit pkgs unstablepkgs; })
+    (import ./users.nix)
     ./programs.nix
     ./udev.nix
   ];
