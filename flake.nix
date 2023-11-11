@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.05";
     unstablePkgs.url = "nixpkgs/nixos-unstable";
-    helix-master.url = "github:helix-editor/helix";
+    helix.url = "github:helix-editor/helix";
     tailwindcss-lsp.url = "github:nxy7/tailwindcss-intellisense";
     pomodorust.url = "github:nxy7/pomodorust";
     home-manager.url = "github:nix-community/home-manager";

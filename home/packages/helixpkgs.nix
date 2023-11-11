@@ -8,7 +8,7 @@ with pkgs; [
   taplo
   ltex-ls
 
-  go_1_21
+  go
   gopls
   golangci-lint
 

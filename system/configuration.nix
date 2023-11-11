@@ -52,6 +52,8 @@
     configDir = "/home/nxyt/.config/syncthing";
   };
 
+  services.earlyoom.enable = true;
+
   services.printing.enable = true;
   security.rtkit.enable = true;
 

@@ -7,6 +7,7 @@
       # ...
     };
     serviceConfig = {
+      User = "nxyt";
       ExecStart = "${unstablepkgs.goxlr-utility}/bin/goxlr-daemon";
       # ...
     };

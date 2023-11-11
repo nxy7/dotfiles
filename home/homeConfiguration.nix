@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs>, home-manager, inputs }: rec {
+{ pkgs, home-manager, inputs }: rec {
   byName = name:
     home-manager.lib.homeManagerConfiguration {
       inherit pkgs;

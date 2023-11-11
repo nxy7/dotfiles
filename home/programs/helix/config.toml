@@ -17,41 +17,28 @@ select = "block"
 [editor.soft-wrap]
 enable = true
 max-wrap = 25
-# wrap-indicator = ""
 
 [editor.lsp]
 display-messages = true
 display-inlay-hints = true
 
 [editor.file-picker]
-# hidden = false
 max-depth = 14
 
 [keys.normal]
 X = "extend_line_above"
 C-space = "completion"
-C-p = "file_picker"
-0 = "goto_line_start"
-"$" = "goto_line_end"
-G = "goto_file_end"
 V = ["select_mode", "extend_to_line_bounds"]
-S = "surround_add"
 C-left = ":bprev"
 C-right = ":bnext"
 C-j = "half_page_down"
 C-k = "half_page_up"
 
 
-# C-m = "match_mode"
-"M" = "select_textobject_inner"
-"A-M" = "select_textobject_around"
-
-
 [keys.insert]
 C-space = "completion"
 C-p = "file_picker"
 C-b = "buffer_picker"
-# j = { k = "normal_mode" } 
 C-left = ":bprev"
 C-right = ":bnext"
 
