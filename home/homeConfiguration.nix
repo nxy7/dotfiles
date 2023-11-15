@@ -7,7 +7,13 @@
         username = name;
         inherit inputs;
       };
-      modules = [ ./. ];
+      modules = [
+        ./.
+        ./modules/helix
+        # ./neovim
+        # ./wezterm
+        # ./others 
+      ];
     };
   currentUser = builtins.getEnv "USER";
   currentUserConfiguration = byName currentUser;

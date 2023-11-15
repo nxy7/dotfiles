@@ -16,7 +16,6 @@
     home-manager.enable = true;
     git = import ./programs/git;
     lazygit = import ./programs/lazygit;
-    helix = import ./programs/helix pkgs inputs;
     neovim = import ./programs/neovim;
     zsh = import ./programs/zsh pkgs;
     starship = import ./programs/starship;
