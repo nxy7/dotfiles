@@ -12,11 +12,10 @@
         ./modules/homesettings
         ./modules/helix
         ./modules/nodejs
-        ./modules/utilities
         ./modules/direnv
-        # ./neovim
-        # ./wezterm
-        # ./others 
+        ./modules/neovim
+        ./modules/wezterm
+        ./modules/utilities
       ];
     };
   currentUser = builtins.getEnv "USER";
