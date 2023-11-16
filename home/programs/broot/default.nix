@@ -1,8 +1,4 @@
-{ pkgs, ... }: {
-  enable = true;
-  package = pkgs.broot;
+{ pkgs, ... }:
+{
 
-  settings = {
-
-  };
 }

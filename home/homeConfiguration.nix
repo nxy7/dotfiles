@@ -15,6 +15,8 @@
         ./modules/direnv
         ./modules/neovim
         ./modules/wezterm
+        ./modules/zellij
+        ./modules/zoxide
         ./modules/utilities
       ];
     };
