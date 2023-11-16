@@ -17,6 +17,10 @@
         ./modules/wezterm
         ./modules/zellij
         ./modules/zoxide
+        ./modules/broot
+        ./modules/nushell
+        ./modules/fish
+        ./modules/oh-my-posh
         ./modules/utilities
       ];
     };
