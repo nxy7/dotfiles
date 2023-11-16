@@ -1,17 +1,5 @@
 { username, pkgs, inputs, ... }: {
 
-  home = rec {
-    inherit username;
-    homeDirectory = "/home/" + username;
-    stateVersion = "23.05";
-
-    packages = import ./packages pkgs;
-    sessionVariables = {
-      EDITOR = "hx";
-      PKG_CONFIG_PATH = pkgs.openssl;
-    };
-  };
-
   programs = {
     home-manager.enable = true;
     git = import ./programs/git;
@@ -27,11 +15,6 @@
     broot = import ./programs/broot pkgs;
     wezterm = import ./programs/wezterm;
     fish = import ./programs/fish;
-
-    direnv.enable = true;
-    direnv.nix-direnv.enable = true;
-    direnv.enableNushellIntegration = true;
-
   };
 
 }

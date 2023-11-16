@@ -9,9 +9,11 @@
       };
       modules = [
         ./.
+        ./modules/homesettings
         ./modules/helix
         ./modules/nodejs
         ./modules/utilities
+        ./modules/direnv
         # ./neovim
         # ./wezterm
         # ./others 
