@@ -8,20 +8,33 @@
         inherit inputs;
       };
       modules = [
+        # base
         ./.
         ./modules/homesettings
+
+        # editors
         ./modules/helix
-        ./modules/nodejs
-        ./modules/direnv
         ./modules/neovim
-        ./modules/wezterm
-        ./modules/zellij
-        ./modules/zoxide
-        ./modules/broot
+
+        # shells
         ./modules/nushell
         ./modules/fish
         ./modules/zsh
+        ./modules/bash
+
+        # shell stuff
+        ./modules/wezterm
+        ./modules/zellij
+        ./modules/zoxide
+
+        # programming
+        ./modules/git
+        ./modules/nodejs
+
+        # others
+        ./modules/direnv
         ./modules/oh-my-posh
+        ./modules/broot
         ./modules/utilities
       ];
     };
