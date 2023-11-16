@@ -20,6 +20,7 @@
         ./modules/broot
         ./modules/nushell
         ./modules/fish
+        ./modules/zsh
         ./modules/oh-my-posh
         ./modules/utilities
       ];
