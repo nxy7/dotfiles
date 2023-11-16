@@ -9,7 +9,6 @@
       };
       modules = [
         # base
-        ./.
         ./modules/homesettings
 
         # editors
@@ -32,6 +31,7 @@
         ./modules/nodejs
 
         # others
+        ./modules/starship
         ./modules/direnv
         ./modules/oh-my-posh
         ./modules/broot

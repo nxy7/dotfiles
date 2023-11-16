@@ -1,6 +1,7 @@
 { username, pkgs, inputs, ... }: {
 
   home = rec {
+    home-manager.enable = true;
     inherit username;
     homeDirectory = "/home/" + username;
     stateVersion = "23.05";
@@ -10,5 +11,6 @@
       PKG_CONFIG_PATH = pkgs.openssl;
     };
   };
+  programs.home-manager.enable = true;
 }
 
