@@ -10,6 +10,8 @@
       modules = [
         ./.
         ./modules/helix
+        ./modules/nodejs
+        ./modules/utilities
         # ./neovim
         # ./wezterm
         # ./others 
