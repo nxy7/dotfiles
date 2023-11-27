@@ -29,6 +29,8 @@
         # programming
         ./modules/git
         ./modules/nodejs
+        ./modules/rust
+        ./modules/golang
 
         # others
         ./modules/starship

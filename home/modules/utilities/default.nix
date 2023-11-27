@@ -1,6 +1,7 @@
 { pkgs, inputs, ... }: {
   home.packages = with pkgs; [
     x2goclient
+    wacomtablet
     lnav
     insomnia
     redis

@@ -1,4 +1,5 @@
 { unstablepkgs, ... }: {
+  # service exposed on port 14564
   systemd.services.goxlr = {
     enable = true;
     description = "GoXLR Utility";
