@@ -8,6 +8,8 @@
     bashInteractive
     sqlite
 
+    cura
+
     gnumake
     ginkgo
     buildah-unwrapped
@@ -34,6 +36,7 @@
     ventoy
     cachix
     freshfetch
+    vivaldi
 
     hugo
     k9s
