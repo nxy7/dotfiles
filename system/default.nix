@@ -5,16 +5,6 @@
     modules = [ ./configuration.nix ];
   };
 
-  environment.etc.test = {
-    text = "elo";
-    mode = "0440";
-  };
-
-  environment.etc.someotherfile = {
-    text = "elo";
-    mode = "0440";
-  };
-
   nixosConfigurations.default = nixosConfigurations.nixos;
 
 }

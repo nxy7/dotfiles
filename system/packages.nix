@@ -13,6 +13,7 @@
     wl-clipboard
     vlc
     lutris
+    heroic
 
     vscode
 

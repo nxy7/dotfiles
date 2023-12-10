@@ -20,6 +20,15 @@
     ./programs.nix
     ./udev.nix
   ];
+  environment.etc.test = {
+    text = "elo";
+    mode = "777";
+  };
+
+  environment.etc.someotherfile = {
+    text = "elo";
+    mode = "777";
+  };
 
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;

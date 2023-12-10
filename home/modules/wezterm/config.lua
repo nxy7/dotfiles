@@ -19,6 +19,15 @@ config.window_decorations = "NONE"
 config.hide_tab_bar_if_only_one_tab = true
 config.window_background_opacity = 0.93
 config.window_close_confirmation = 'NeverPrompt'
+config.keys = {
+  -- search for things that look like git hashes
+  {
+    key = 'F',
+    mods = 'SHIFT|CTRL|ALT',
+    action = wezterm.action.Search { CaseInSensitiveString = '' },
+  },
+}
+
 -- config.skip_close_confirmation_for_processes_named = {
 --   'bash',
 --   'sh',
