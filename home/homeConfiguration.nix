@@ -33,6 +33,7 @@
         ./modules/golang
 
         # others
+        ./modules/browsers
         ./modules/davinci_resolve
         ./modules/starship
         ./modules/direnv

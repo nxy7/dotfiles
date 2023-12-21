@@ -25,8 +25,6 @@
     helix
 
     ## browsers
-    ungoogled-chromium
-    brave
     firefox-devedition-bin
   ]) ++ (with unstablepkgs; [ goxlr-utility ]);
 }

@@ -37,7 +37,6 @@
     ventoy
     cachix
     freshfetch
-    vivaldi
 
     hugo
     k9s
