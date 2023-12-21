@@ -1,3 +1,3 @@
 { pkgs, ... }: {
-  home.programs = with pkgs; [ vivaldi ungoogled-chromium brave ];
+  home.packages = with pkgs; [ vivaldi ungoogled-chromium brave ];
 }
