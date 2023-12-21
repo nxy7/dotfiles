@@ -33,6 +33,7 @@
         ./modules/golang
 
         # others
+        ./modules/davinci_resolve
         ./modules/starship
         ./modules/direnv
         ./modules/oh-my-posh

@@ -7,6 +7,7 @@
     redis
     bashInteractive
     sqlite
+    kicad
 
     cura
 

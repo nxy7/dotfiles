@@ -5,6 +5,21 @@ let
 in {
   programs.helix = {
     enable = true;
+    defaultEditor = true;
+    themes = {
+      nxyt = let
+        transparent = "none";
+        # white = "#FFFFFF";
+      in {
+        inherits = "github_dark_dimmed";
+        "ui.background" = { bg = transparent; };
+        # "ui.window" = { bg = white; };
+        # "ui.text.fg" = transparent;
+        # "ui.virtual.fg" = transparent;
+        # "ui.menu.fg" = transparent;
+        # "ui.menu.bg" = transparent;
+      };
+    };
     inherit settings;
     inherit languages;
   };

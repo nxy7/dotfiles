@@ -9,6 +9,7 @@ in {
     extraConfig = ''
       alias z = zoxide
 
+      alias vi = nvim
       alias rm = ^rm -r
       alias cp = ^cp -r
       alias la = ls -a

@@ -1,4 +1,4 @@
-theme = "github_dark_dimmed"
+theme = "nxyt"
 
 [editor]
 line-number = "relative"
@@ -29,8 +29,10 @@ max-depth = 14
 X = "extend_line_above"
 C-space = "completion"
 V = ["select_mode", "extend_to_line_bounds"]
-C-left = ":bprev"
-C-right = ":bnext"
+S-left = ":bprev"
+S-h = ":bprev"
+S-right = ":bnext"
+S-l = ":bnext"
 C-j = "half_page_down"
 C-k = "half_page_up"
 

@@ -17,7 +17,7 @@ end
 config.color_scheme = 'zenbones_dark'
 config.window_decorations = "NONE"
 config.hide_tab_bar_if_only_one_tab = true
-config.window_background_opacity = 0.93
+config.window_background_opacity = 0.96
 config.window_close_confirmation = 'NeverPrompt'
 config.keys = {
   -- search for things that look like git hashes
