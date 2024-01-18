@@ -12,7 +12,10 @@
     "xt_socket"
     "xt_mark"
     "xt_set"
+    "v4l2loopback"
   ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+
   security.protectKernelImage = false;
 
   zramSwap = {
@@ -35,13 +38,19 @@
     extraStructuredConfig = {
       NFT_SOCKET = lib.kernel.module;
       NFT_TPROXY = lib.kernel.module;
+
+      # l7 proxy
       NETFILTER_XT_TARGET_TPROXY = lib.kernel.module;
       NETFILTER_XT_TARGET_CT = lib.kernel.module;
       NETFILTER_XT_MATCH_MARK = lib.kernel.module;
       NETFILTER_XT_MATCH_SOCKET = lib.kernel.module;
+
+      # cilium ip masquerading
       NETFILTER_XT_SET = lib.kernel.module;
       IP_SET = lib.kernel.module;
       IP_SET_HASH_IP = lib.kernel.module;
+
+      # base cilium requirements
       BPF = lib.kernel.yes;
       BPF_SYSCALL = lib.kernel.yes;
       NET_CLS_BPF = lib.mkForce lib.kernel.yes;
@@ -57,10 +66,17 @@
     };
   }];
 
-  hardware.opengl.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  hardware.nvidia.modesetting.enable = true;
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    modesetting.enable = true;
+    nvidiaSettings = true;
+  };
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";

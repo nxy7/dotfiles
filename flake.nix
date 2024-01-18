@@ -2,7 +2,7 @@
   description = "My system configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.05";
+    nixpkgs.url = "nixpkgs/nixos-23.11";
     unstablePkgs.url = "nixpkgs/nixos-unstable";
     helix.url = "github:helix-editor/helix";
     tailwindcss-lsp.url = "github:nxy7/tailwindcss-intellisense";
@@ -16,26 +16,27 @@
       system = "x86_64-linux";
       currentUser = builtins.getEnv "USER";
 
+      insecurePackages = [ "electron-25.9.0" "python-2.7.18.6" ];
+
       # nixpkgs
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (_: true);
-        config.permittedInsecurePackages = [ "electron-24.8.6" ];
+        config.permittedInsecurePackages = insecurePackages;
         overlays = import ./overlays.nix { inherit inputs system; };
       };
       unstablepkgs = import inputs.unstablePkgs {
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (_: true);
-        config.permittedInsecurePackages = [ "electron-24.8.6" ];
+        config.permittedInsecurePackages = insecurePackages;
         overlays = import ./overlays.nix { inherit inputs system; };
       };
 
       # other utilities
       homeConfiguration = import ./home/homeConfiguration.nix {
-        pkgs = unstablepkgs;
-        inherit home-manager inputs;
+        inherit home-manager inputs pkgs unstablepkgs;
       };
     in {
       # run command below to switch home configuration

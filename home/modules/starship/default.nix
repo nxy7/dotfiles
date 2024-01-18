@@ -3,6 +3,7 @@
     enable = true;
     enableNushellIntegration = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
     enableZshIntegration = true;
     settings = {
       time.disabled = false;

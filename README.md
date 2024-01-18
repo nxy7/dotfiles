@@ -31,6 +31,6 @@ git clone git@github.com:nxy7/dotfiles #or use https git clone
 cd dotfiles/home
 nix run . switch -- --flake . --impure # you might need to add -b bk
 ```
-# TODO
-move home configuration to module system
+# Additional notes
+This repository also contains some of my personal settings like files for my keyboard layout (I'm using split keyboard).
 

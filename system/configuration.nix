@@ -1,10 +1,18 @@
 { config, pkgs, unstablepkgs, inputs, ... }: {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.registry.nixpkgs.flake = inputs.nixpkgs;
-  nix.optimise.automatic = true;
-  nix.gc = {
-    automatic = true;
-    options = "--delete-older-than 30d";
+  nix = {
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    optimise.automatic = true;
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 30d";
+    };
+  };
+  hardware.keyboard.qmk.enable = true;
+  environment = {
+    sessionVariables = {
+      # NIXOS_OZONE_WL = "1";
+    };
   };
 
   imports = [
@@ -61,7 +69,11 @@
     configDir = "/home/nxyt/.config/syncthing";
   };
 
-  services.earlyoom.enable = true;
+  services.earlyoom = {
+    enable = true;
+    enableNotifications = true;
+    freeMemThreshold = 15;
+  };
 
   services.printing.enable = true;
   security.rtkit.enable = true;

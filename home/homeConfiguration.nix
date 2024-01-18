@@ -1,11 +1,13 @@
-{ pkgs, home-manager, inputs }: rec {
+{ home-manager, inputs, pkgs, unstablepkgs, ... }: rec {
   byName = name:
     home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+      pkgs = unstablepkgs;
 
       extraSpecialArgs = {
         username = name;
         inherit inputs;
+        pkgs = unstablepkgs;
+        legacypkgs = pkgs;
       };
       modules = [
         # base
@@ -34,10 +36,10 @@
 
         # others
         ./modules/browsers
-        ./modules/davinci_resolve
+        # ./modules/davinci_resolve
         ./modules/starship
         ./modules/direnv
-        ./modules/oh-my-posh
+        # ./modules/oh-my-posh
         ./modules/broot
         ./modules/utilities
       ];

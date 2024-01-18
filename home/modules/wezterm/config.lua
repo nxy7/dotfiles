@@ -26,6 +26,12 @@ config.keys = {
     mods = 'SHIFT|CTRL|ALT',
     action = wezterm.action.Search { CaseInSensitiveString = '' },
   },
+  {
+    key = 'w',
+    mods = 'CMD',
+    action = wezterm.action.CloseCurrentPane { confirm = true },
+  },
+  
 }
 
 -- config.skip_close_confirmation_for_processes_named = {

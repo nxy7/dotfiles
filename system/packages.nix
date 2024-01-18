@@ -1,13 +1,11 @@
-{ pkgs, unstablepkgs, ... }: {
+{ pkgs, unstablepkgs, config, ... }: {
   environment.systemPackages = (with pkgs; [
     lsof
     unzip
-    obsidian
 
     stremio
     zip
     libreoffice-qt
-    obs-studio
 
     xclip
     wl-clipboard
@@ -17,14 +15,14 @@
 
     vscode
 
-    wget
     usbutils
-    alacritty
-    kitty
     git
     helix
 
-    ## browsers
-    firefox-devedition-bin
-  ]) ++ (with unstablepkgs; [ goxlr-utility ]);
+    wineWowPackages.stable
+  ]) ++ (with unstablepkgs; [
+    goxlr-utility
+    obs-studio
+    config.boot.kernelPackages.v4l2loopback
+  ]);
 }

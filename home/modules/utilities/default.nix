@@ -8,8 +8,10 @@
     bashInteractive
     sqlite
     kicad
+    qmk
 
     cura
+    obsidian
 
     gnumake
     ginkgo
