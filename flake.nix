@@ -36,7 +36,7 @@
       };
 
       # other utilities
-      homeConfiguration = import ./home/homeConfiguration.nix {
+      homeConfiguration = import ./home-manager/homeConfiguration.nix {
         inherit home-manager inputs pkgs unstablepkgs;
       };
     in {
@@ -54,7 +54,7 @@
         inherit system;
         specialArgs = inputs // { inherit pkgs unstablepkgs inputs; };
         modules =
-          [ inputs.hyprland.nixosModules.default ./system/configuration.nix ];
+          [ inputs.hyprland.nixosModules.default ./nixos/configuration.nix ];
       };
 
       nixosConfigurations.default = self.nixosConfigurations.nixos;

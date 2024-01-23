@@ -1,4 +1,5 @@
 { pkgs, unstablepkgs, ... }: {
+  services.getty.autologinUser = "nxyt";
   users.users.nxyt = {
     isNormalUser = true;
     description = "nxyt";

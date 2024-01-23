@@ -2,6 +2,7 @@
   environment.systemPackages = (with pkgs; [
     lsof
     unzip
+    kitty
 
     stremio
     zip
