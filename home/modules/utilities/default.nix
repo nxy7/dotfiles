@@ -18,7 +18,6 @@
     buildah-unwrapped
     pomodorust
     fzf
-    gh
 
     cilium-cli
 

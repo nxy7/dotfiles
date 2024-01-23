@@ -1,8 +1,7 @@
 { pkgs, inputs, ... }: {
   programs.hyprland = {
     enable = true;
-    enableNvidiaPatches = true;
-    xwayland = true;
+    xwayland = { enable = true; };
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -20,6 +19,6 @@
   ];
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+    # extraPortals = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal ];
   };
 }

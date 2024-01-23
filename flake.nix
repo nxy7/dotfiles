@@ -5,6 +5,7 @@
     nixpkgs.url = "nixpkgs/nixos-23.11";
     unstablePkgs.url = "nixpkgs/nixos-unstable";
     helix.url = "github:helix-editor/helix";
+    hyprland.url = "github:hyprwm/Hyprland";
     tailwindcss-lsp.url = "github:nxy7/tailwindcss-intellisense";
     pomodorust.url = "github:nxy7/pomodorust";
     home-manager.url = "github:nix-community/home-manager";
@@ -52,7 +53,8 @@
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = inputs // { inherit pkgs unstablepkgs inputs; };
-        modules = [ ./system/configuration.nix ];
+        modules =
+          [ inputs.hyprland.nixosModules.default ./system/configuration.nix ];
       };
 
       nixosConfigurations.default = self.nixosConfigurations.nixos;

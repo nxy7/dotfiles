@@ -19,11 +19,15 @@
     /etc/nixos/hardware-configuration.nix
     ./kernel.nix
     ./firewall.nix
+
+    # display
+    ./hyprland.nix
+    # ./gnome.nix
+
+    ./audio.nix
+
     ./packages.nix
     ./services.nix
-    # ./hyprland.nix
-    ./gnome.nix
-    ./audio.nix
     (import ./users.nix)
     ./programs.nix
     ./udev.nix
@@ -38,8 +42,8 @@
     mode = "777";
   };
 
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
+  # systemd.services."getty@tty1".enable = false;
+  # systemd.services."autovt@tty1".enable = false;
 
   time.hardwareClockInLocalTime = true;
   environment.shells = with unstablepkgs; [ fish nushell ];

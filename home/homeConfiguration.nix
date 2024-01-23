@@ -13,6 +13,9 @@
         # base
         ./modules/homesettings
 
+        # display
+        ./modules/hyprland
+
         # editors
         ./modules/helix
         ./modules/neovim
