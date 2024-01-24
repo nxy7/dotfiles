@@ -1,4 +1,6 @@
 {
-  enable = true;
-  configDir = ./.;
+  programs.eww = {
+    enable = true;
+    configDir = ./.;
+  };
 }

@@ -13,7 +13,8 @@
       # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
       # Execute your favorite apps at launch
-      exec-once = eww & hyprpaper & mako & polkit-kde-agent & tofi
+      exec-once = eww & hyprpaper & mako & polkit-kde-agent 
+
 
       # Source a file (multi-file configs)
       # source = ~/.config/hypr/myColors.conf
@@ -115,7 +116,8 @@
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind = $mainMod, Q, exec, kitty
       bind = $mainMod, W, exec, wezterm
-        bind=SUPER, R,       exec, ags -t applauncher
+        # bind=SUPER, R,       exec, ags -t applauncher
+        bind = $mainMod, R, exec, tofi-drun | xargs hyprctl dispatch exec --
         bind=SUPER, Tab,     exec, ags -t overview
       bind = $mainMod, C, killactive, 
       bind = $mainMod, M, exit, 

@@ -5,22 +5,22 @@ let
   username = "nxyt";
 in {
 
-  services.greetd = {
-    enable = true;
-    restart = false;
-    settings = rec {
-      initial_session = {
-        command = "${hyprlandPackage}/bin/Hyprland";
-        user = username;
-      };
-      default_session = {
-        command =
-          "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time -cmd ${hyprlandPackage}/bin/Hyprland";
-        user = "greeter";
-      };
+  services.getty = { autologinUser = "nxyt"; };
+  # services.greetd = {
+  #   enable = true;
+  #   settings = rec {
+  #     initial_session = {
+  #       command = "${hyprlandPackage}/bin/Hyprland";
+  #       user = username;
+  #     };
+  #     default_session = {
+  #       command =
+  #         "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time -cmd ${hyprlandPackage}/bin/Hyprland";
+  #       user = "greeter";
+  #     };
 
-    };
-  };
+  #   };
+  # };
 
   programs.hyprland = {
     enable = true;
