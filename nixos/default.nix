@@ -14,6 +14,7 @@
       # NIXOS_OZONE_WL = "1";
     };
   };
+  fonts.fontconfig.enable = true;
 
   imports = [
     /etc/nixos/hardware-configuration.nix

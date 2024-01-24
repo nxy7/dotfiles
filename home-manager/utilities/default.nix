@@ -8,6 +8,7 @@
     bashInteractive
     sqlite
     kicad
+    yazi
     qmk
 
     cura

@@ -15,7 +15,8 @@
 
         # display
         ./hyprland
-        ./hyprland/eww
+        # ./hyprland/eww
+        ./hyprland/ags
 
         # editors
         ./helix

@@ -10,6 +10,7 @@
     pomodorust.url = "github:nxy7/pomodorust";
     home-manager.url = "github:nix-community/home-manager";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    ags.url = "github:Aylur/ags";
   };
 
   outputs = { self, flake-parts, home-manager, nixpkgs, ... }@inputs:
