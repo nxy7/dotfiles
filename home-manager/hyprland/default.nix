@@ -1,5 +1,4 @@
 {
-    m
   wayland.windowManager.hyprland = {
     enable = true;
     # settings = { };
@@ -15,8 +14,8 @@
 
       # Execute your favorite apps at launch
       exec-once = hyprpaper & mako & polkit-kde-agent 
-        exec-once = eww daemon
-      exec-once = ${../eww/launch_bar}
+      exec-once = eww daemon
+      exec-once = ${./eww/launch_bar}
 
 
       # Source a file (multi-file configs)
@@ -27,97 +26,97 @@
 
       # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
       input {
-          kb_layout = pl
-          kb_variant =
-          kb_model =
-          kb_options =
-          kb_rules =
+        kb_layout = pl
+        kb_variant =
+        kb_model =
+        kb_options =
+        kb_rules =
 
-          follow_mouse = 1
+        follow_mouse = 1
 
-          touchpad {
-              natural_scroll = no
-          }
+        touchpad {
+            natural_scroll = no
+        }
 
-          sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+        sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
       }
 
-          # dracula/hyprland
-          general {
-              col.active_border = rgb(44475a) rgb(bd93f9) 90deg
-              col.inactive_border = rgba(44475aaa)
-              col.nogroup_border = rgba(282a36dd)
-              col.nogroup_border_active = rgb(bd93f9) rgb(44475a) 90deg
-              no_border_on_floating = false
-              border_size = 2
+        # dracula/hyprland
+        general {
+            col.active_border = rgb(44475a) rgb(bd93f9) 90deg
+            col.inactive_border = rgba(44475aaa)
+            col.nogroup_border = rgba(282a36dd)
+            col.nogroup_border_active = rgb(bd93f9) rgb(44475a) 90deg
+            no_border_on_floating = false
+            border_size = 2
 
-              # non-gradient alternative
-              #col.active_border = rgb(bd93f9)
-              #col.inactive_border = rgba(44475aaa)
-              #col.group_border = rgba(282a36dd)
-              #col.group_border_active = rgb(bd93f9)
+            # non-gradient alternative
+            #col.active_border = rgb(bd93f9)
+            #col.inactive_border = rgba(44475aaa)
+            #col.group_border = rgba(282a36dd)
+            #col.group_border_active = rgb(bd93f9)
 
-              # darker alternative
-              #col.active_border = rgb(44475a) # or rgb(6272a4)
-              #col.inactive_border = rgb(282a36)
-              #col.group_border = rgb(282a36)
-              #col.group_border_active = rgb(44475a) # or rgb(6272a4)
+            # darker alternative
+            #col.active_border = rgb(44475a) # or rgb(6272a4)
+            #col.inactive_border = rgb(282a36)
+            #col.group_border = rgb(282a36)
+            #col.group_border_active = rgb(44475a) # or rgb(6272a4)
 
-          }
-          decoration {
-              col.shadow = rgba(1E202966)
+        }
+        decoration {
+            col.shadow = rgba(1E202966)
 
-              # suggested shadow setting
-              #drop_shadow = yes
-              #shadow_range = 60
-              #shadow_offset = 1 2
-              #shadow_render_power = 3
-              #shadow_scale = 0.97
-          }
+            # suggested shadow setting
+            #drop_shadow = yes
+            #shadow_range = 60
+            #shadow_offset = 1 2
+            #shadow_render_power = 3
+            #shadow_scale = 0.97
+        }
 
-          group {
-              groupbar {
-                  col.active = rgb(bd93f9) rgb(44475a) 90deg
-                  col.inactive = rgba(282a36dd)
-              }
-          }
-          windowrulev2 = bordercolor rgb(ff5555),xwayland:1 # check if window is xwayland
+        group {
+            groupbar {
+                col.active = rgb(bd93f9) rgb(44475a) 90deg
+                col.inactive = rgba(282a36dd)
+            }
+        }
+        windowrulev2 = bordercolor rgb(ff5555),xwayland:1 # check if window is xwayland
 
       animations {
-          enabled = yes
+        enabled = yes
 
-          # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
+        # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
 
-          bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+        bezier = myBezier, 0.05, 0.9, 0.1, 1.05
 
-          animation = windows, 1, 7, myBezier
-          animation = windowsOut, 1, 7, default, popin 80%
-          animation = border, 1, 10, default
-          animation = borderangle, 1, 8, default
-          animation = fade, 1, 7, default
-          animation = workspaces, 1, 6, default
+        animation = windows, 1, 7, myBezier
+        animation = windowsOut, 1, 7, default, popin 80%
+        animation = border, 1, 10, default
+        animation = borderangle, 1, 8, default
+        animation = fade, 1, 7, default
+        animation = workspaces, 1, 6, default
       }
 
       dwindle {
-          # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-          pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-          preserve_split = yes # you probably want this
+        # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
+        pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+        preserve_split = yes # you probably want this
       }
 
       master {
-          # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-          new_is_master = true
+        # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+        new_is_master = true
       }
 
       gestures {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          workspace_swipe = off
+        # See https://wiki.hyprland.org/Configuring/Variables/ for more
+        workspace_swipe = off
       }
 
       # Example per-device config
       # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
       device:epic-mouse-v1 {
-          sensitivity = -0.5
+        sensitivity = -0.5
       }
 
       # Example windowrule v1
@@ -133,9 +132,9 @@
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind = $mainMod, Q, exec, kitty
       bind = $mainMod, W, exec, wezterm
-        # bind=SUPER, R,       exec, ags -t applauncher
-        bind = $mainMod, R, exec, tofi-drun | xargs hyprctl dispatch exec --
-        bind=SUPER, Tab,     exec, ags -t overview
+      # bind=SUPER, R,       exec, ags -t applauncher
+      bind = $mainMod, R, exec, tofi-drun | xargs hyprctl dispatch exec --
+      bind=SUPER, Tab,     exec, ags -t overview
       bind = $mainMod, C, killactive, 
       bind = $mainMod, M, exit, 
       bind = $mainMod, E, exec, dolphin

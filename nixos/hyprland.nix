@@ -37,6 +37,8 @@ in {
   environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
   environment.systemPackages = with pkgs; [
     eww
+    jq
+
     mako
     libnotify
     polkit-kde-agent
