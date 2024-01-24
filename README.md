@@ -1,6 +1,11 @@
 My personal system and user configuration using NixOS and Nix package manager.
 All configurations are made using flakes, feel free to bootstrap your system
-configuration using my `/system` folder :-) 
+configuration using my `/nixos` folder :-) 
+
+## Software used in my config
+- Hyprland
+- eww
+- tofi
 
 ## Prerequisites
 - nix: for home configuration
@@ -28,7 +33,7 @@ configuration.
 git clone git@github.com:nxy7/dotfiles #or use https git clone
 
 # to clone user configuration
-cd dotfiles/home
+cd dotfiles/home-manager
 nix run . switch -- --flake . --impure # you might need to add -b bk
 ```
 # Additional notes

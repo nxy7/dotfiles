@@ -15,7 +15,6 @@
       # Execute your favorite apps at launch
       exec-once = hyprpaper & mako & polkit-kde-agent 
       exec-once = eww daemon
-      exec-once = ${./eww/launch_bar}
 
 
       # Source a file (multi-file configs)

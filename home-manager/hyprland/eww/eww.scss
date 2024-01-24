@@ -1,7 +1,17 @@
-@import "scss/index.scss";
-@import "scss/variables.scss";
-@import "scss/sidebar/apatheia.scss";
-@import "scss/sidebar/clipboard.scss";
-@import "scss/sidebar/music.scss";
-@import "scss/sidebar/sys-tray.scss";
-@import "scss/widgets/widgets.scss";
+img {
+  all: unset;
+}
+
+.desktop-icons {
+  all: unset;
+}
+
+.overlay {
+  background: transparent;
+  color: #f8f8f2;
+  font-weight: bold;
+  text-shadow: 0 0 0.075em #272822;
+  font-size: 32px;
+  opacity: 0.1;
+}
+
