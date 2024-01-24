@@ -1,6 +1,16 @@
 { pkgs, ... }: {
-  fonts.fonts = with pkgs; [
-    nerdfonts
+  fonts.packages = with pkgs; [
+    # nerdfonts
+    (pkgs.nerdfonts.override {
+      fonts = [
+        "Ubuntu"
+        "UbuntuMono"
+        "CascadiaCode"
+        "FantasqueSansMono"
+        "FiraCode"
+        "Mononoki"
+      ];
+    })
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji

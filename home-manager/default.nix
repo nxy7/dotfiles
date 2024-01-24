@@ -15,6 +15,7 @@
 
         # display
         ./hyprland
+        ./hyprland/theme.nix
         # ./hyprland/eww
         ./hyprland/ags
 

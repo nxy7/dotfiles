@@ -13,8 +13,10 @@
       # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
       # Execute your favorite apps at launch
-      exec-once = hyprpaper & mako & polkit-kde-agent 
+      exec-once = hyprpaper
+      # exec-once = mako
       # exec-once = eww daemon
+      exec-once = ags
 
 
       # Source a file (multi-file configs)
@@ -42,12 +44,12 @@
 
         # dracula/hyprland
         general {
-            col.active_border = rgb(44475a) rgb(bd93f9) 90deg
+            col.active_border = rgba(bd93f944)
             col.inactive_border = rgba(44475aaa)
             col.nogroup_border = rgba(282a36dd)
             col.nogroup_border_active = rgb(bd93f9) rgb(44475a) 90deg
             no_border_on_floating = false
-            border_size = 2
+            border_size = 1
 
             # non-gradient alternative
             #col.active_border = rgb(bd93f9)
@@ -65,12 +67,21 @@
         decoration {
             col.shadow = rgba(1E202966)
 
+            rounding = 4
+            inactive_opacity = 0.92
+
             # suggested shadow setting
-            #drop_shadow = yes
-            #shadow_range = 60
-            #shadow_offset = 1 2
-            #shadow_render_power = 3
-            #shadow_scale = 0.97
+            drop_shadow = yes
+            shadow_range = 60
+            shadow_offset = 1 2
+            shadow_render_power = 3
+            shadow_scale = 0.97
+
+
+            blur {
+              enabled = true
+              popups = true
+            }
         }
 
         group {
@@ -130,13 +141,14 @@
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind = $mainMod, Q, exec, kitty
+      bind=CTRL SHIFT, R,  exec, ags -q; ags
       bind = $mainMod, W, exec, wezterm
-      # bind=SUPER, R,       exec, ags -t applauncher
-      bind = $mainMod, R, exec, tofi-drun | xargs hyprctl dispatch exec --
+      bind=SUPER, R,       exec, ags -t applauncher
+      # bind = $mainMod, R, exec, tofi-drun | xargs hyprctl dispatch exec --
       bind=SUPER, Tab,     exec, ags -t overview
       bind = $mainMod, C, killactive, 
-      bind = $mainMod, M, exit, 
-      bind = $mainMod, E, exec, dolphin
+      # bind = $mainMod, M, exit, 
+      bind = $mainMod, E, exec, nautilus
       bind = $mainMod, V, togglefloating, 
       bind = $mainMod, R, exec, wofi --show drun
       bind = $mainMod, P, pseudo, # dwindle
@@ -181,5 +193,8 @@
       bindm = $mainMod, mouse:273, resizewindow
     '';
   };
+  home.file."hypr/hyprpaper.conf".text = ''
+    someconf
+  '';
 
 }

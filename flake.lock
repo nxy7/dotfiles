@@ -351,6 +351,22 @@
         "type": "github"
       }
     },
+    "more-waita": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1706023418,
+        "narHash": "sha256-FrqDMx7O57evlzxR7f/PGrGzDHiJvVRuDssoBHawyDs=",
+        "owner": "somepaulo",
+        "repo": "MoreWaita",
+        "rev": "91c9d22bc46c0cdc985b76cfccc6aec5133e977d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "somepaulo",
+        "repo": "MoreWaita",
+        "type": "github"
+      }
+    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -649,6 +665,7 @@
         "helix": "helix",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "more-waita": "more-waita",
         "nixpkgs": "nixpkgs_5",
         "pomodorust": "pomodorust",
         "tailwindcss-lsp": "tailwindcss-lsp",

@@ -23,6 +23,7 @@
 
     # display
     ./hyprland.nix
+    ./fonts.nix
     # ./gnome.nix
 
     ./audio.nix

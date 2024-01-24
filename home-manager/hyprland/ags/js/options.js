@@ -18,9 +18,9 @@ export default {
     apply: apply,
     list: getOptions,
 
-    spacing: Option(9),
-    padding: Option(8),
-    radii: Option(9),
+    spacing: Option(7),
+    padding: Option(10),
+    radii: Option(7),
 
     popover_padding_multiplier: Option(1.4, {
         'category': 'General',
@@ -166,7 +166,7 @@ export default {
             'enums': ['top', 'bottom'],
             'type': 'enum',
         }),
-        style: Option('normal', {
+        style: Option('floating', {
             'enums': ['floating', 'normal', 'separated'],
             'type': 'enum',
         }),

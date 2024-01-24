@@ -38,13 +38,13 @@ in {
   environment.systemPackages = with pkgs; [
     eww
     jq
+    swww
 
-    mako
-    libnotify
     polkit-kde-agent
 
     where-is-my-sddm-theme
-    dolphin
+
+    nautilus
 
     hyprpaper
     rofi-wayland
