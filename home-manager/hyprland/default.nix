@@ -1,4 +1,5 @@
 {
+    m
   wayland.windowManager.hyprland = {
     enable = true;
     # settings = { };
@@ -13,7 +14,9 @@
       # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
       # Execute your favorite apps at launch
-      exec-once = eww & hyprpaper & mako & polkit-kde-agent 
+      exec-once = hyprpaper & mako & polkit-kde-agent 
+        exec-once = eww daemon
+      exec-once = ${../eww/launch_bar}
 
 
       # Source a file (multi-file configs)
@@ -39,32 +42,46 @@
           sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
       }
 
-      general {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
+          # dracula/hyprland
+          general {
+              col.active_border = rgb(44475a) rgb(bd93f9) 90deg
+              col.inactive_border = rgba(44475aaa)
+              col.nogroup_border = rgba(282a36dd)
+              col.nogroup_border_active = rgb(bd93f9) rgb(44475a) 90deg
+              no_border_on_floating = false
+              border_size = 2
 
-          gaps_in = 5
-          gaps_out = 20
-          border_size = 2
-          col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-          col.inactive_border = rgba(595959aa)
+              # non-gradient alternative
+              #col.active_border = rgb(bd93f9)
+              #col.inactive_border = rgba(44475aaa)
+              #col.group_border = rgba(282a36dd)
+              #col.group_border_active = rgb(bd93f9)
 
-          layout = dwindle
-      }
+              # darker alternative
+              #col.active_border = rgb(44475a) # or rgb(6272a4)
+              #col.inactive_border = rgb(282a36)
+              #col.group_border = rgb(282a36)
+              #col.group_border_active = rgb(44475a) # or rgb(6272a4)
 
-      decoration {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
+          }
+          decoration {
+              col.shadow = rgba(1E202966)
 
-          rounding = 10
-          # blur = yes
-          # blur_size = 3
-          # blur_passes = 1
-          # blur_new_optimizations = on
+              # suggested shadow setting
+              #drop_shadow = yes
+              #shadow_range = 60
+              #shadow_offset = 1 2
+              #shadow_render_power = 3
+              #shadow_scale = 0.97
+          }
 
-          drop_shadow = yes
-          shadow_range = 4
-          shadow_render_power = 3
-          col.shadow = rgba(1a1a1aee)
-      }
+          group {
+              groupbar {
+                  col.active = rgb(bd93f9) rgb(44475a) 90deg
+                  col.inactive = rgba(282a36dd)
+              }
+          }
+          windowrulev2 = bordercolor rgb(ff5555),xwayland:1 # check if window is xwayland
 
       animations {
           enabled = yes

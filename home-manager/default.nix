@@ -14,8 +14,8 @@
         ./homesettings
 
         # display
-        ./eww
         ./hyprland
+        ./hyprland/eww
 
         # editors
         ./helix
