@@ -11,40 +11,41 @@
       };
       modules = [
         # base
-        ./modules/homesettings
+        ./homesettings
 
         # display
-        ./modules/hyprland
+        ./eww
+        ./hyprland
 
         # editors
-        ./modules/helix
-        ./modules/neovim
+        ./helix
+        ./neovim
 
         # shells
-        ./modules/nushell
-        ./modules/fish
-        ./modules/zsh
-        ./modules/bash
+        ./nushell
+        ./fish
+        ./zsh
+        ./bash
 
         # shell stuff
-        ./modules/wezterm
-        ./modules/zellij
-        ./modules/zoxide
+        ./wezterm
+        ./zellij
+        ./zoxide
 
         # programming
-        ./modules/git
-        ./modules/nodejs
-        ./modules/rust
-        ./modules/golang
+        ./git
+        ./nodejs
+        ./rust
+        ./golang
 
         # others
-        ./modules/browsers
-        # ./modules/davinci_resolve
-        ./modules/starship
-        ./modules/direnv
-        # ./modules/oh-my-posh
-        ./modules/broot
-        ./modules/utilities
+        ./browsers
+        # ./davinci_resolve
+        ./starship
+        ./direnv
+        # ./oh-my-posh
+        ./broot
+        ./utilities
       ];
     };
   currentUser = builtins.getEnv "USER";

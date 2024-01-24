@@ -1,8 +1,31 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+let
+  hyprlandPackage = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+  username = "nxyt";
+in {
+
+  services.greetd = {
+    enable = true;
+    restart = false;
+    settings = rec {
+      initial_session = {
+        command = "${hyprlandPackage}/bin/Hyprland";
+        user = username;
+      };
+      default_session = {
+        command =
+          "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time -cmd ${hyprlandPackage}/bin/Hyprland";
+        user = "greeter";
+      };
+
+    };
+  };
+
   programs.hyprland = {
     enable = true;
     xwayland = { enable = true; };
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = hyprlandPackage;
   };
 
   services.xserver.enable = true;

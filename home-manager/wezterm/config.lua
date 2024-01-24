@@ -14,6 +14,7 @@ end
 
 -- For example, changing the color scheme:
 -- config.tab_bar_style = ""
+config.front_end = "WebGpu"
 config.color_scheme = 'zenbones_dark'
 config.window_decorations = "NONE"
 config.hide_tab_bar_if_only_one_tab = true
