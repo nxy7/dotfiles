@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     x2goclient
     wacomtablet
+    mission-center
     lnav
     insomnia
     redis
