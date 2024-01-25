@@ -15,10 +15,11 @@
       # Execute your favorite apps at launch
       # exec-once = hyprpaper
       exec-once = ags
-      exec-once = swww-daemon
-      exec-once = swww-daemon
+      exec-once = swww init
+      exec-once = swww img ~/.local/share/wallpapers/1.jpg
       exec-once = hyprctl setcursor Qogir 24
-      exec-once = transmission-gtk
+
+      # exec-once = transmission-gtk
 
 
       # Source a file (multi-file configs)
@@ -44,14 +45,15 @@
         sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
       }
 
-        # dracula/hyprland
         general {
-            col.active_border = rgba(bd93f944)
-            col.inactive_border = rgba(44475aaa)
-            col.nogroup_border = rgba(282a36dd)
-            col.nogroup_border_active = rgb(bd93f9) rgb(44475a) 90deg
+            # allow_tearing = true
+
+            # col.active_border = rgba(bd93f934)
+            # col.inactive_border = rgba(44475aaa)
+            # col.nogroup_border = rgba(282a36dd)
+            # col.nogroup_border_active = rgb(bd93f9) rgb(44475a) 90deg
             no_border_on_floating = false
-            border_size = 1
+            border_size = 0
 
             # non-gradient alternative
             #col.active_border = rgb(bd93f9)
@@ -67,17 +69,18 @@
 
         }
         decoration {
-            col.shadow = rgba(1E202966)
+            col.shadow_inactive = rgba(1E202900)
 
             rounding = 4
             inactive_opacity = 0.92
 
             # suggested shadow setting
+            col.shadow = rgba(111111aa)
             drop_shadow = yes
-            shadow_range = 60
-            shadow_offset = 1 2
-            shadow_render_power = 3
-            shadow_scale = 0.97
+            shadow_range = 27
+            # shadow_offset = 0 0
+            shadow_render_power = 2
+            # shadow_scale = 0.97
 
 
             blur {
@@ -132,7 +135,9 @@
       }
 
       # Example windowrule v1
-      # windowrule = float, ^(kitty)$
+
+      windowrule = monitor 0, ^(kitty)$
+
       # Example windowrule v2
       # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
       # See https://wiki.hyprland.org/Configuring/Window-Rules/ for more

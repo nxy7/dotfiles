@@ -19,7 +19,8 @@ config.front_end = "WebGpu"
 config.color_scheme = 'zenbones_dark'
 config.window_decorations = "NONE"
 config.hide_tab_bar_if_only_one_tab = true
-config.window_background_opacity = 0.96
+-- config.use_fancy_tab_bar = false
+config.window_background_opacity = 0.76
 config.window_close_confirmation = 'NeverPrompt'
 config.keys = {
   -- search for things that look like git hashes
@@ -61,8 +62,17 @@ config.window_frame = {
 config.colors = {
   tab_bar = {
     inactive_tab_edge = '#575757',
+    background = 'none',
+    -- active_tab = {
+    --   bg_color = 'none',
+    -- },
+    inactive_tab = {
+      fg_color = '#DDDDDD',
+      bg_color = 'none',
+    }
   },
 }
+
 
 
 config.freetype_load_target = "Light"

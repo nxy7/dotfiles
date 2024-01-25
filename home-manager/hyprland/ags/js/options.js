@@ -110,7 +110,7 @@ export default {
             'title': 'Border Opacity',
             'unit': '',
         }),
-        width: Option(1, {
+        width: Option(0, {
             'category': 'Border',
             'title': 'Border Width',
         }),

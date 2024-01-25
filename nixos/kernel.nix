@@ -14,6 +14,9 @@
     "xt_set"
     "v4l2loopback"
   ];
+  # boot.extraModprobeConfig = ''
+  #   options nvidia NVreg_PreserveVideoMemoryAllocations=1
+  # '';
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
   security.protectKernelImage = false;
@@ -66,7 +69,10 @@
     };
   }];
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver = {
+    displayManager.sddm.enable = true;
+    videoDrivers = [ "nvidia" ];
+  };
   hardware.opengl = {
     enable = true;
     driSupport = true;

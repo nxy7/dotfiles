@@ -71,7 +71,7 @@ in {
         '';
       };
       ".local/share/icons/MoreWaita" = { source = "${moreWaita}/share/icons"; };
-      ".local/share/wallpapers" = { source = "./wallpapers"; };
+      ".local/share/wallpapers" = { source = ./wallpapers; };
     };
   };
 
