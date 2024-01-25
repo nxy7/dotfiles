@@ -14,9 +14,9 @@
 
       # Execute your favorite apps at launch
       exec-once = hyprpaper
-      # exec-once = mako
-      # exec-once = eww daemon
       exec-once = ags
+      exec-once = hyprctl setcursor Qogir 24
+      exec-once = transmission-gtk
 
 
       # Source a file (multi-file configs)

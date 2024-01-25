@@ -11,6 +11,10 @@
     kicad
     yazi
     qmk
+    gnome.nautilus
+
+    grim
+    slurp
 
     cura
     obsidian

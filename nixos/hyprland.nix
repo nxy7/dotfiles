@@ -44,8 +44,6 @@ in {
 
     where-is-my-sddm-theme
 
-    nautilus
-
     hyprpaper
     rofi-wayland
 
