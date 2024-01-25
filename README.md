@@ -2,14 +2,13 @@ My personal system and user configuration using NixOS and Nix package manager.
 All configurations are made using flakes, feel free to bootstrap your system
 configuration using my `/nixos` folder :-) 
 
-## Software used in my config
-- Hyprland
-- eww
-- tofi
-
 ## Prerequisites
 - nix: for home configuration
 - nixos: if you want to use my whole system configuration
+
+## Projects used in my config
+- Hyprland
+- ags
 
 ## System configuration
 I'm using flakified system configuration with 2 channels enabled: 22-11 and 23-05.
