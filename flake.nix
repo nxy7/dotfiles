@@ -11,6 +11,10 @@
     home-manager.url = "github:nix-community/home-manager";
     flake-parts.url = "github:hercules-ci/flake-parts";
     ags.url = "github:Aylur/ags";
+    wezterm = {
+      url = "github:wez/wezterm?dir=nix";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
     more-waita = {
       url = "github:somepaulo/MoreWaita";
       flake = false;

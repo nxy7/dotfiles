@@ -24,7 +24,7 @@
   ]) ++ (with unstablepkgs; [
     goxlr-utility
     obs-studio
-    qtwayland
+    qt6.qtwayland
     config.boot.kernelPackages.v4l2loopback
   ]);
 }

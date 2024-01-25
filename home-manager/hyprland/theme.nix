@@ -27,18 +27,20 @@ let
 in {
   home = {
     packages = with pkgs; [
+      swww
       adw-gtk3
       font-awesome
       nerdfonts
       moreWaita
-      # papirus-icon-theme
-      # qogir-icon-theme
-      # whitesur-icon-theme
-      # colloid-icon-theme
-      # qogir-theme
-      # yaru-theme
-      # whitesur-gtk-theme
-      # orchis-theme
+      adw-gtk3
+      papirus-icon-theme
+      qogir-icon-theme
+      whitesur-icon-theme
+      colloid-icon-theme
+      qogir-theme
+      yaru-theme
+      whitesur-gtk-theme
+      orchis-theme
     ];
     sessionVariables = {
       XCURSOR_THEME = cursor-theme;
@@ -69,6 +71,7 @@ in {
         '';
       };
       ".local/share/icons/MoreWaita" = { source = "${moreWaita}/share/icons"; };
+      ".local/share/wallpapers" = { source = "./wallpapers"; };
     };
   };
 

@@ -13,8 +13,10 @@
       # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
       # Execute your favorite apps at launch
-      exec-once = hyprpaper
+      # exec-once = hyprpaper
       exec-once = ags
+      exec-once = swww-daemon
+      exec-once = swww-daemon
       exec-once = hyprctl setcursor Qogir 24
       exec-once = transmission-gtk
 
@@ -193,8 +195,4 @@
       bindm = $mainMod, mouse:273, resizewindow
     '';
   };
-  home.file."hypr/hyprpaper.conf".text = ''
-    someconf
-  '';
-
 }

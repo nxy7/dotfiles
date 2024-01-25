@@ -1,10 +1,11 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   home.packages = with pkgs; [
     sassc
     (python311.withPackages (p: [ p.python-pam ]))
   ];
   programs.ags = {
     enable = true;
+    package = inputs.ags.packages.${pkgs.system}.default;
 
     # null or path, leave as null if you don't want hm to manage the config
     configDir = ./.;

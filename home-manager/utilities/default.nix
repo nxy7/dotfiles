@@ -11,6 +11,10 @@
     kicad
     yazi
     qmk
+
+    gtk3
+    papirus-icon-theme
+    transmission_4-gtk
     gnome.nautilus
 
     grim
