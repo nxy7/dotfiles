@@ -1,63 +1,68 @@
-{ pkgs, inputs, ... }: {
-  home.packages = with pkgs; [
-    x2goclient
-    wacomtablet
-    mission-center
-    lnav
-    insomnia
-    redis
-    bashInteractive
-    sqlite
-    kicad
-    yazi
-    qmk
+{ stablepkgs, pkgs, inputs, ... }: {
+  home.packages = with pkgs;
+    [
+      x2goclient
+      wacomtablet
 
-    gtk3
-    papirus-icon-theme
-    transmission_4-gtk
-    gnome.nautilus
+      lnav
+      insomnia
+      redis
+      bashInteractive
+      sqlite
+      kicad
+      yazi
+      qmk
+      hwinfo
+      mangohud
 
-    grim
-    slurp
+      gtk3
+      papirus-icon-theme
+      transmission_4-gtk
+      gnome.nautilus
 
-    cura
-    obsidian
+      grim
+      slurp
 
-    gnumake
-    ginkgo
-    buildah-unwrapped
-    pomodorust
-    fzf
+      cura
 
-    cilium-cli
+      libglvnd
+      lxqt.libqtxdg
+      egl-wayland
 
-    cmake
-    llvmPackages_latest.llvm
-    rocmPackages.llvm.clang
+      gnumake
+      ginkgo
+      buildah-unwrapped
+      pomodorust
+      fzf
 
-    nix-prefetch-github
-    pgweb
-    du-dust
-    hyperfine
-    htop
-    gitui
-    # porsmo
+      cilium-cli
 
-    pueue
-    keepassxc
-    ventoy
-    cachix
-    freshfetch
+      cmake
+      llvmPackages_latest.llvm
+      rocmPackages.llvm.clang
 
-    hugo
-    k9s
-    kustomize
-    kube3d
-    kubectl
-    colorls
-    bat
-    ripgrep
+      nix-prefetch-github
+      pgweb
+      du-dust
+      hyperfine
+      htop
+      gitui
+      # porsmo
 
-  ];
+      pueue
+      keepassxc
+      ventoy
+      cachix
+      freshfetch
+
+      k9s
+      kustomize
+      kube3d
+      kubectl
+      colorls
+      bat
+      ripgrep
+
+    ] ++ (with stablepkgs; [ obsidian hugo ]);
 }
 

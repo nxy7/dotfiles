@@ -1,8 +1,7 @@
-{ pkgs, unstablepkgs, config, ... }: {
-  environment.systemPackages = (with pkgs; [
+{ pkgs, stablepkgs, config, ... }: {
+  environment.systemPackages = (with stablepkgs; [
     lsof
     unzip
-    kitty
 
     stremio
     zip
@@ -11,19 +10,22 @@
     xclip
     wl-clipboard
     vlc
-    lutris
-    heroic
-
-    vscode
 
     usbutils
     git
     helix
 
     wineWowPackages.stable
-  ]) ++ (with unstablepkgs; [
+  ]) ++ (with pkgs; [
+    # wezterm
+    kitty
+
     goxlr-utility
     obs-studio
+
+    mission-center
+    nvtop-nvidia
+
     qt6.qtwayland
     config.boot.kernelPackages.v4l2loopback
   ]);

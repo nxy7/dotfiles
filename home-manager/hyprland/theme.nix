@@ -25,6 +25,7 @@ let
   cursor-theme = "Qogir";
   cursor-package = pkgs.qogir-icon-theme;
 in {
+  imports = [ ];
   home = {
     packages = with pkgs; [
       swww
@@ -32,6 +33,8 @@ in {
       font-awesome
       nerdfonts
       moreWaita
+      adwaita-qt
+
       adw-gtk3
       papirus-icon-theme
       qogir-icon-theme

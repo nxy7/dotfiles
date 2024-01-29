@@ -1,7 +1,7 @@
-{ config, pkgs, unstablepkgs, inputs, ... }: {
+{ config, pkgs, stablepkgs, inputs, ... }: {
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
-    registry.nixpkgs.flake = inputs.nixpkgs;
+    registry.nixpkgs.flake = inputs.stablePkgs;
     optimise.automatic = true;
     gc = {
       automatic = true;
@@ -9,11 +9,7 @@
     };
   };
   hardware.keyboard.qmk.enable = true;
-  environment = {
-    sessionVariables = {
-      # NIXOS_OZONE_WL = "1";
-    };
-  };
+  environment = { sessionVariables = { NIXOS_OZONE_WL = "1"; }; };
   fonts.fontconfig.enable = true;
 
   imports = [
@@ -44,11 +40,11 @@
     mode = "777";
   };
 
-  # systemd.services."getty@tty1".enable = false;
-  # systemd.services."autovt@tty1".enable = false;
+  # systemd.services."getty@tty1".enable = true;
+  # systemd.services."autovt@tty1".enable = true;
 
   time.hardwareClockInLocalTime = true;
-  environment.shells = with unstablepkgs; [ fish nushell ];
+  environment.shells = with pkgs; [ fish nushell ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -85,7 +81,7 @@
   security.rtkit.enable = true;
 
   virtualisation.docker.enable = true;
-  virtualisation.docker.package = unstablepkgs.docker_24;
+  virtualisation.docker.package = pkgs.docker_24;
   virtualisation.docker.extraOptions = ''
     --insecure-registry "http://noxy.ddns.net:5000"
     }"'';

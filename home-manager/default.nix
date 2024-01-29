@@ -1,55 +1,59 @@
-{ home-manager, inputs, pkgs, unstablepkgs, ... }: rec {
-  byName = name:
-    home-manager.lib.homeManagerConfiguration {
-      pkgs = unstablepkgs;
+{ home-manager, inputs, pkgs, stablepkgs, ... }:
+let
+  username = builtins.getEnv "USER";
+  theme = "test";
 
-      extraSpecialArgs = {
-        username = name;
-        inherit inputs;
-        pkgs = unstablepkgs;
-        legacypkgs = pkgs;
-      };
-      modules = [
-        # base
-        ./homesettings
+in home-manager.lib.homeManagerConfiguration {
+  inherit pkgs;
 
-        # display
-        ./hyprland
-        ./hyprland/theme.nix
-        # ./hyprland/eww
-        ./hyprland/ags
+  extraSpecialArgs = { inherit inputs pkgs stablepkgs username theme; };
 
-        # editors
-        ./helix
-        ./neovim
+  modules = [
+    # inputs.anyrun.homeManagerModules.default
+    inputs.nix-colors.homeManagerModules.default
+    {
+      config.colorScheme = inputs.nix-colors.colorSchemes.dracula;
+    }
 
-        # shells
-        ./nushell
-        ./fish
-        ./zsh
-        ./bash
+    # base
+    ./homesettings
 
-        # shell stuff
-        ./wezterm
-        ./zellij
-        ./zoxide
+    # display
+    ./hyprland
+    ./hyprland/theme.nix
+    # ./hyprland/eww
+    ./hyprland/ags
 
-        # programming
-        ./git
-        ./nodejs
-        ./rust
-        ./golang
+    # editors
+    ./helix
+    ./neovim
 
-        # others
-        ./browsers
-        # ./davinci_resolve
-        ./starship
-        ./direnv
-        # ./oh-my-posh
-        ./broot
-        ./utilities
-      ];
-    };
-  currentUser = builtins.getEnv "USER";
-  currentUserConfiguration = byName currentUser;
+    # shells
+    ./nushell
+    ./fish
+    ./zsh
+    ./bash
+
+    # shell stuff
+    ./wezterm
+    ./zellij
+    ./zoxide
+
+    # programming
+    ./git
+    ./nodejs
+    ./rust
+    ./golang
+
+    ./gamelaunchers
+
+    # others
+    ./browsers
+    # ./davinci_resolve
+    ./starship
+    ./direnv
+    # ./oh-my-posh
+    ./broot
+    ./utilities
+  ];
 }

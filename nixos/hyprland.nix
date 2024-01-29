@@ -5,7 +5,10 @@ let
   username = "nxyt";
 in {
 
-  services.getty = { autologinUser = "nxyt"; };
+  services.getty = {
+    autologinUser = "nxyt";
+    greetingLine = "Wanna try some 'inux";
+  };
   # services.greetd = {
   #   enable = true;
   #   settings = rec {
@@ -29,9 +32,15 @@ in {
   };
 
   services.xserver.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.displayManager.sddm.wayland.enable = true;
-  services.xserver.displayManager.sddm.theme = "where_is_my_sddm_theme";
+  services.xserver.displayManager = {
+    sddm.enable = true;
+    sddm.wayland.enable = true;
+    sddm.theme = "where_is_my_sddm_theme";
+    autoLogin = {
+      enable = true;
+      user = "nxyt";
+    };
+  };
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
@@ -43,7 +52,6 @@ in {
     where-is-my-sddm-theme
 
     hyprpaper
-    rofi-wayland
 
     # audio gui
     pavucontrol
@@ -52,7 +60,7 @@ in {
     tofi
 
     # screen sharing
-    pipewire
+    # pipewire
     wireplumber
     # swaybg
     # wpaperd
@@ -61,6 +69,10 @@ in {
   ];
   xdg.portal = {
     enable = true;
-    # extraPortals = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal ];
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal
+      # xdg-desktop-portal-hyprland
+    ];
   };
 }

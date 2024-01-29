@@ -41,6 +41,9 @@ const Popups = parent => {
         box.children = Array.from(map.values()).reverse();
         Utils.timeout(10, () => {
             parent.reveal_child = true;
+            Utils.timeout(5000, () => {
+                onDismissed({}, id, false)
+            })
         });
     };
 

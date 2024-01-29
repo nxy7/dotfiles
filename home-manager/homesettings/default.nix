@@ -1,4 +1,4 @@
-{ username, pkgs, inputs, ... }: {
+{ username, pkgs, inputs, config, ... }: {
 
   home = rec {
     inherit username;

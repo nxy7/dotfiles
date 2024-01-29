@@ -1,26 +1,18 @@
--- Pull in the wezterm API
 local wezterm = require 'wezterm'
 
--- This table will hold the configuration.
-local config = {}
+local config = wezterm.config_builder()
 
--- In newer versions of wezterm, use the config_builder which will
--- help provide clearer error messages
-if wezterm.config_builder then
-  config = wezterm.config_builder()
-end
-
--- This is where you actually apply your config choices
 
 -- For example, changing the color scheme:
 -- config.tab_bar_style = ""
 config.enable_wayland = false
+-- config.text_background_opacity = 0.0
 config.front_end = "WebGpu"
 config.color_scheme = 'zenbones_dark'
 config.window_decorations = "NONE"
 config.hide_tab_bar_if_only_one_tab = true
--- config.use_fancy_tab_bar = false
-config.window_background_opacity = 0.76
+config.window_background_opacity = 0.75
+config.text_background_opacity = 0.75
 config.window_close_confirmation = 'NeverPrompt'
 config.keys = {
   -- search for things that look like git hashes
@@ -37,45 +29,39 @@ config.keys = {
   
 }
 
--- config.skip_close_confirmation_for_processes_named = {
---   'bash',
---   'sh',
---   'zsh',
---   'fish',
---   'tmux',
---   'nu',
---   'cmd.exe',
---   'pwsh.exe',
---   'powershell.exe',
---   'hx',
---   'docker',
--- }
 
 
 config.window_frame = {
   font = wezterm.font { family = 'Roboto', weight = 'Bold' },
-  font_size = 12.0,
-  active_titlebar_bg = '#333333',
-  inactive_titlebar_bg = '#333333',
+  font_size = 15.0,
+  -- active_titlebar_bg = 'none',
+  -- inactive_titlebar_bg = 'none',
+  -- button_bg = 'none',
+  -- inactive_titlebar_border_bottom = 'none',
+  -- active_titlebar_border_bottom = 'none',
 }
 
+config.use_fancy_tab_bar = false
 config.colors = {
   tab_bar = {
-    inactive_tab_edge = '#575757',
-    background = 'none',
-    -- active_tab = {
-    --   bg_color = 'none',
-    -- },
+    -- inactive_tab_edge = 'none',
+    background = '#1c1917',
+    active_tab = {
+      fg_color = '#FFFFFF',
+      bg_color = '#1c1917',
+    },
     inactive_tab = {
-      fg_color = '#DDDDDD',
-      bg_color = 'none',
-    }
+      fg_color = '#AAAAAA',
+      bg_color = '#1c1917',
+    },
+    new_tab = {
+      fg_color = '#1c1917',
+      bg_color = '#1c1917',
+    },
   },
 }
 
 
-
 config.freetype_load_target = "Light"
 
--- and finally, return the configuration to wezterm
 return config

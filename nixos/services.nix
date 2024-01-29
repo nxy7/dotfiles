@@ -1,4 +1,4 @@
-{ unstablepkgs, ... }: {
+{ pkgs, ... }: {
   # service exposed on port 14564
   systemd.services.goxlr = {
     enable = true;
@@ -9,7 +9,7 @@
     };
     serviceConfig = {
       User = "nxyt";
-      ExecStart = "${unstablepkgs.goxlr-utility}/bin/goxlr-daemon";
+      ExecStart = "${pkgs.goxlr-utility}/bin/goxlr-daemon";
       # ...
     };
     wantedBy = [ "multi-user.target" ];

@@ -112,13 +112,13 @@ export default notification => {
         class_name: `notification ${notification.urgency}`,
         vexpand: false,
         on_primary_click: () => notification.dismiss(),
-        on_hover() {
-            actionsbox.reveal_child = true;
-        },
-        on_hover_lost() {
-            actionsbox.reveal_child = true;
-            notification.dismiss();
-        },
+        // on_hover() {
+        //     actionsbox.reveal_child = true;
+        // },
+        // on_hover_lost() {
+        //     actionsbox.reveal_child = true;
+        //     notification.dismiss();
+        // },
         child: Widget.Box({
             vertical: true,
             children: [

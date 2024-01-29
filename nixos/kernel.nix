@@ -1,5 +1,5 @@
-{ pkgs, lib, config, ... }: {
-  boot.kernelPackages = pkgs.linuxPackages_6_5;
+{ pkgs, stablepkgs, lib, config, ... }: {
+  boot.kernelPackages = stablepkgs.linuxPackages_6_5;
   boot.kernelModules = [
     "kvm-amd"
     "ip6table_filter"
@@ -14,9 +14,6 @@
     "xt_set"
     "v4l2loopback"
   ];
-  # boot.extraModprobeConfig = ''
-  #   options nvidia NVreg_PreserveVideoMemoryAllocations=1
-  # '';
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
   security.protectKernelImage = false;
@@ -33,6 +30,9 @@
     "cgroup_enable=memory"
     "cgroup_enable=cpuset"
     "systemd.unified_cgroup_hierarchy=1"
+
+    # wayland suspend fix
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
   ];
 
   boot.kernelPatches = [{
@@ -69,20 +69,18 @@
     };
   }];
 
-  services.xserver = {
-    displayManager.sddm.enable = true;
-    videoDrivers = [ "nvidia" ];
-  };
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl = {
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
   };
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
     open = false;
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
     modesetting.enable = true;
-    nvidiaSettings = true;
   };
 
   boot.loader.efi.canTouchEfiVariables = true;

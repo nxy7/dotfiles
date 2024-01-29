@@ -1,29 +1,24 @@
-{
+{ inputs, pkgs, ... }: {
   wayland.windowManager.hyprland = {
     enable = true;
     # settings = { };
     extraConfig = ''
-      # See https://wiki.hyprland.org/Configuring/Monitors/
-      # monitor=,preferred,auto,auto
-      monitor = HDMI-A-1, preferred,auto, 1, transform, 3
-      monitor = DP-2, 2560x1440@240, auto, 1
-
-
-
-      # See https://wiki.hyprland.org/Configuring/Keywords/ for more
+      monitor=DP-2,2560x1440@240,auto,1
+      monitor=HDMI-A-1,preferred,0x0,1,transform,3
+      monitor=,preferred,auto,1
 
       # Execute your favorite apps at launch
-      # exec-once = hyprpaper
       exec-once = ags
       exec-once = swww init
       exec-once = swww img ~/.local/share/wallpapers/1.jpg
       exec-once = hyprctl setcursor Qogir 24
+      exec-once = xrandr --output DP-2 --primary
 
-      # exec-once = transmission-gtk
+      exec-once = keepassxc
+      # exec-once = wezterm
+      exec-once = discord
+      # exec-once = keepassxc
 
-
-      # Source a file (multi-file configs)
-      # source = ~/.config/hypr/myColors.conf
 
       # Some default env vars.
       env = XCURSOR_SIZE,24
@@ -135,8 +130,19 @@
       }
 
       # Example windowrule v1
+      workspace=1,monitor:DP-2
+      workspace=2,monitor:DP-2
+      workspace=3,monitor:DP-2
+      workspace=4,monitor:DP-2
+      workspace=5,monitor:DP-2
+      workspace=6,monitor:HDMI-A-1
+      workspace=7,monitor:HDMI-A-1
+      workspace=8,monitor:HDMI-A-1
 
-      windowrule = monitor 0, ^(kitty)$
+
+      windowrule = workspace 6, title:^(OBS)
+      windowrule = workspace 7, title:(KeePassXC)
+      windowrule = workspace 8, title:(Discord)
 
       # Example windowrule v2
       # windowrulev2 = float,class:^(kitty)$,title:^(kitty)$
@@ -149,15 +155,15 @@
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       bind = $mainMod, Q, exec, kitty
       bind=CTRL SHIFT, R,  exec, ags -q; ags
+      bind=SUPER,F,fullscreen
+      bind=,Print,exec,grim -g "$(slurp)"
+
       bind = $mainMod, W, exec, wezterm
       bind=SUPER, R,       exec, ags -t applauncher
-      # bind = $mainMod, R, exec, tofi-drun | xargs hyprctl dispatch exec --
       bind=SUPER, Tab,     exec, ags -t overview
       bind = $mainMod, C, killactive, 
-      # bind = $mainMod, M, exit, 
       bind = $mainMod, E, exec, nautilus
       bind = $mainMod, V, togglefloating, 
-      bind = $mainMod, R, exec, wofi --show drun
       bind = $mainMod, P, pseudo, # dwindle
       bind = $mainMod, J, togglesplit, # dwindle
 
@@ -200,4 +206,8 @@
       bindm = $mainMod, mouse:273, resizewindow
     '';
   };
+
+  home.packages = with pkgs; [ hyprpicker ];
+  programs.rofi = { enable = true; };
+
 }

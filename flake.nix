@@ -2,8 +2,9 @@
   description = "My system configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-23.11";
     unstablePkgs.url = "nixpkgs/nixos-unstable";
+    stablePkgs.url = "nixpkgs/nixos-23.11";
+
     helix.url = "github:helix-editor/helix";
     hyprland.url = "github:hyprwm/Hyprland";
     tailwindcss-lsp.url = "github:nxy7/tailwindcss-intellisense";
@@ -19,25 +20,28 @@
       url = "github:somepaulo/MoreWaita";
       flake = false;
     };
+    nix-colors.url = "github:misterio77/nix-colors";
+
+    anyrun.url = "github:Kirottu/anyrun";
+    anyrun.inputs.nixpkgs.follows = "unstablePkgs";
 
   };
 
-  outputs = { self, flake-parts, home-manager, nixpkgs, ... }@inputs:
+  outputs = { self, flake-parts, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       currentUser = builtins.getEnv "USER";
 
       insecurePackages = [ "electron-25.9.0" "python-2.7.18.6" ];
 
-      # nixpkgs
-      pkgs = import nixpkgs {
+      pkgs = import inputs.unstablePkgs {
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (_: true);
         config.permittedInsecurePackages = insecurePackages;
         overlays = import ./overlays.nix { inherit inputs system; };
       };
-      unstablepkgs = import inputs.unstablePkgs {
+      stablepkgs = import inputs.stablePkgs {
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (_: true);
@@ -45,24 +49,22 @@
         overlays = import ./overlays.nix { inherit inputs system; };
       };
 
-      # other utilities
-      homeConfiguration = import ./home-manager {
-        inherit home-manager inputs pkgs unstablepkgs;
-      };
+      homeConfiguration =
+        import ./home-manager { inherit home-manager inputs pkgs stablepkgs; };
+
     in {
       # run command below to switch home configuration
       # nix run . switch -- --flake . --impure 
       packages.${system} = {
         default = home-manager.defaultPackage.${system};
-        homeConfigurations.${currentUser} =
-          homeConfiguration.byName currentUser;
+        homeConfigurations.${currentUser} = homeConfiguration;
       };
 
       # run command below to switch system configuration
       # sudo nixos-rebuild switch --flake . --impure
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.nixos = inputs.unstablePkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = inputs // { inherit pkgs unstablepkgs inputs; };
+        specialArgs = inputs // { inherit pkgs stablepkgs inputs; };
         modules = [ inputs.hyprland.nixosModules.default ./nixos ];
       };
 

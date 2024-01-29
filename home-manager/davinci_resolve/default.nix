@@ -1,1 +1,1 @@
-{ legacypkgs, ... }: { home.packages = with legacypkgs; [ davinci-resolve ]; }
+{ stablepkgs, ... }: { home.packages = with stablepkgs; [ davinci-resolve ]; }
