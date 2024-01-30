@@ -1,16 +1,19 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, config, ... }: rec {
   home.packages = with pkgs; [
     sassc
+    brightnessctl
     (python311.withPackages (p: [ p.python-pam ]))
   ];
+
+  home.file.".local/share/ags/colors.json".text =
+    builtins.toJSON config.colorScheme.palette;
+
   programs.ags = {
     enable = true;
     package = inputs.ags.packages.${pkgs.system}.default;
 
-    # null or path, leave as null if you don't want hm to manage the config
     configDir = ./.;
 
-    # additional packages to add to gjs's runtime
     extraPackages = with pkgs; [ libsoup_3 papirus-icon-theme ];
   };
 }

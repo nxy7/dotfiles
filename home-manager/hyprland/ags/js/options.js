@@ -11,6 +11,10 @@
 import { Option, resetOptions, getValues, apply, getOptions } from './settings/option.js';
 import { USER } from 'resource:///com/github/Aylur/ags/utils.js';
 import themes from './themes.js';
+import Utils from 'resource:///com/github/Aylur/ags/utils.js';
+
+const path = `/home/${Utils.USER}/.local/share/ags/colors.json`;
+const colors = JSON.parse(Utils.readFile(path));
 
 export default {
     reset: resetOptions,
@@ -30,13 +34,19 @@ export default {
     }),
 
     color: {
-        red: Option('#e55f86', { 'scss': 'red' }),
-        green: Option('#00D787', { 'scss': 'green' }),
-        yellow: Option('#EBFF71', { 'scss': 'yellow' }),
-        blue: Option('#51a4e7', { 'scss': 'blue' }),
-        magenta: Option('#9077e7', { 'scss': 'magenta' }),
-        teal: Option('#51e6e6', { 'scss': 'teal' }),
-        orange: Option('#E79E64', { 'scss': 'orange' }),
+        primary: Option(`#${colors.base06}`, { 'scss': 'primary' }),
+        light: Option(`#${colors.base06}`, { 'scss': 'light' }),
+        secondary: Option(`#${colors.base06}`, { 'scss': 'secondary' }),
+        accent: Option(`#${colors.base06}`, { 'scss': 'accent' }),
+        background:Option(`#${colors.base00}`, { 'scss': 'background' }), 
+        foreground:Option(`#${colors.base05}`, { 'scss': 'foreground' }), 
+        red: Option(`#${colors.red}`, { 'scss': 'red' }),
+        green: Option(`#${colors.green}`, { 'scss': 'green' }),
+        yellow: Option(`#${colors.yellow}`, { 'scss': 'yellow' }),
+        blue: Option(`#${colors.blue}`, { 'scss': 'blue' }),
+        magenta: Option(`#${colors.magenta}`, { 'scss': 'magenta' }),
+        teal: Option(`#${colors.teal}`, { 'scss': 'teal' }),
+        orange: Option(`#${colors.orange}`, { 'scss': 'orange' }),
     },
 
     theme: {
@@ -57,17 +67,17 @@ export default {
             'title': 'Color Scheme',
             'scss': 'color-scheme',
         }),
-        bg: Option('#171717', {
+        bg: Option('$background', {
             'title': 'Background Color',
             'scss': 'bg-color',
         }),
-        fg: Option('#eeeeee', {
+        fg: Option('$foreground', {
             'title': 'Foreground Color',
             'scss': 'fg-color',
         }),
 
         accent: {
-            accent: Option('$blue', {
+            accent: Option('$accent', {
                 'category': 'Theme',
                 'title': 'Accent Color',
                 'scss': 'accent',
@@ -162,7 +172,7 @@ export default {
     },
 
     bar: {
-        position: Option('top', {
+        position: Option('bottom', {
             'enums': ['top', 'bottom'],
             'type': 'enum',
         }),
@@ -259,7 +269,7 @@ export default {
         }),
     },
 
-    workspaces: Option(7, {
+    workspaces: Option(9, {
         'category': 'Bar',
         'title': 'No. workspaces on bar and overview',
         'note': 'Set it to 0 to make it dynamic',

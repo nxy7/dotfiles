@@ -138,6 +138,7 @@
       workspace=6,monitor:HDMI-A-1
       workspace=7,monitor:HDMI-A-1
       workspace=8,monitor:HDMI-A-1
+      workspace=9,monitor:HDMI-A-1
 
 
       windowrule = workspace 6, title:^(OBS)

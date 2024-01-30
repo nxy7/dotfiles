@@ -16,10 +16,6 @@
 
         image {
             margin: $padding;
-
-            @if $color-scheme == 'light' {
-                -gtk-icon-shadow: $text-shadow;
-            }
         }
 
         .indicator {

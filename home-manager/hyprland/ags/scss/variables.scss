@@ -1,8 +1,8 @@
 // variables are defined in options.js
 // these ones are derived from those
 
-$hover: transparentize($_widget-bg, ($widget-opacity * 0.9) / 100);
-$widget-bg: transparentize($_widget-bg, $widget-opacity / 100);
+$hover: transparentize($bg-color, ($widget-opacity * 0.9) / 100);
+$widget-bg: transparentize($bg-color, $widget-opacity / 100);
 $active-gradient: linear-gradient($accent-gradient);
 
 $hover-fg: if($color-scheme == 'dark', lighten($fg-color, 10%), darken($fg-color, 8%));

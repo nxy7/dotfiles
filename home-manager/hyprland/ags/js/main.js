@@ -36,6 +36,7 @@ const windows = () => [
     About(),
 ];
 
+
 export default {
     onConfigParsed: init,
     windows: windows().flat(1),

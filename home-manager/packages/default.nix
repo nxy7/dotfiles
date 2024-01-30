@@ -14,6 +14,7 @@
       qmk
       hwinfo
       mangohud
+      gimp-with-plugins
 
       gtk3
       papirus-icon-theme

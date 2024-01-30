@@ -9,7 +9,7 @@
 
       config.enable_wayland = false
       config.front_end = "WebGpu"
-      config.color_scheme = "${config.colorScheme.name}"
+      # config.color_scheme = "${config.colorScheme.slug}"
       config.window_decorations = "NONE"
       config.hide_tab_bar_if_only_one_tab = true
       config.window_background_opacity = 0.75

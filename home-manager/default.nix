@@ -1,7 +1,16 @@
 { home-manager, inputs, pkgs, stablepkgs, ... }:
 let
   username = builtins.getEnv "USER";
-  theme = "test";
+  theme = inputs.nix-colors.colorSchemes.nord;
+  # theme.palette = theme.palette // {
+  #   palette.colors.red = "ffffff";
+  #   # palette.colors.green = "ffffff";
+  #   # palette.colors.yellow = "ffffff";
+  #   # palette.colors.blue = "ffffff";
+  #   # palette.colors.magenta = "ffffff";
+  #   # palette.colors.teal = "ffffff";
+  #   # palette.colors.orange = "ffffff";
+  # };
 
 in home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
@@ -11,8 +20,9 @@ in home-manager.lib.homeManagerConfiguration {
   modules = [
     # inputs.anyrun.homeManagerModules.default
     inputs.nix-colors.homeManagerModules.default
+    inputs.stylix.homeManagerModules.stylix
     {
-      config.colorScheme = inputs.nix-colors.colorSchemes.dracula;
+      config.colorScheme = theme;
     }
 
     # base
@@ -54,6 +64,6 @@ in home-manager.lib.homeManagerConfiguration {
     ./direnv
     # ./oh-my-posh
     ./broot
-    ./utilities
+    ./packages
   ];
 }

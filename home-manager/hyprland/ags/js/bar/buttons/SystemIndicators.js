@@ -90,8 +90,8 @@ export default () => PanelButton({
     },
     content: Widget.Box({
         children: [
-            Asusctl?.available && ProfileIndicator(),
-            Asusctl?.available && ModeIndicator(),
+            // Asusctl?.available && ProfileIndicator(),
+            // Asusctl?.available && ModeIndicator(),
             DNDIndicator(),
             BluetoothDevicesIndicator(),
             BluetoothIndicator(),

@@ -49,9 +49,7 @@ $button-radius: if($bar-style == 'floating', max(0, $radii - $bar-spacing), $rad
 }
 
 .panel {
-    @if $bar-style == 'normal' {
-        background-color: $bg-color;
-    }
+    background-color: transparentize($bg-color, 0.7);
 
     @if not $screen-corners and $bar-style == 'normal' {
         @if $bar-position == 'bottom' {
