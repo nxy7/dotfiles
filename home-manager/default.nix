@@ -1,32 +1,30 @@
 { home-manager, inputs, pkgs, stablepkgs, ... }:
-let
-  username = builtins.getEnv "USER";
-  theme = inputs.nix-colors.colorSchemes.nord;
-  # theme.palette = theme.palette // {
-  #   palette.colors.red = "ffffff";
-  #   # palette.colors.green = "ffffff";
-  #   # palette.colors.yellow = "ffffff";
-  #   # palette.colors.blue = "ffffff";
-  #   # palette.colors.magenta = "ffffff";
-  #   # palette.colors.teal = "ffffff";
-  #   # palette.colors.orange = "ffffff";
-  # };
+let username = builtins.getEnv "USER";
 
 in home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
 
-  extraSpecialArgs = { inherit inputs pkgs stablepkgs username theme; };
+  extraSpecialArgs = { inherit inputs pkgs stablepkgs username; };
 
   modules = [
-    # inputs.anyrun.homeManagerModules.default
-    inputs.nix-colors.homeManagerModules.default
     inputs.stylix.homeManagerModules.stylix
-    {
-      config.colorScheme = theme;
-    }
 
     # base
     ./homesettings
+    ./stylix
+
+    # merge stylix base16 with some extra colors
+    # ({ config, ... }: rec {
+    #   config.colorPalette = config.lib.stylix.colors // {
+    #     red = "cd3263";
+    #     green = "6bcd32";
+    #     yellow = "c8cd32";
+    #     blue = "32a4cd";
+    #     magenta = "cd32cb";
+    #     teal = "32cdac";
+    #     orange = "cd9432";
+    #   };
+    # })
 
     # display
     ./hyprland

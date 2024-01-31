@@ -9,7 +9,6 @@
 
       config.enable_wayland = false
       config.front_end = "WebGpu"
-      # config.color_scheme = "${config.colorScheme.slug}"
       config.window_decorations = "NONE"
       config.hide_tab_bar_if_only_one_tab = true
       config.window_background_opacity = 0.75
@@ -45,18 +44,18 @@
       config.use_fancy_tab_bar = false
       config.colors = {
         tab_bar = {
-          background = "#${config.colorScheme.palette.base00}",
+          background = "#${config.lib.stylix.colors.base00}",
           active_tab = {
             fg_color = "#FFFFFF",
-            bg_color = "#${config.colorScheme.palette.base00}",
+            bg_color = "#${config.lib.stylix.colors.base00}",
           },
           inactive_tab = {
             fg_color = "#AAAAAA",
-            bg_color = "#${config.colorScheme.palette.base00}",
+            bg_color = "#${config.lib.stylix.colors.base00}",
           },
           new_tab = {
             fg_color = "#1c1917",
-            bg_color = "#${config.colorScheme.palette.base00}",
+            bg_color = "#${config.lib.stylix.colors.base00}",
           },
         },
       }

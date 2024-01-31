@@ -101,7 +101,7 @@
         }
     }
 
-    &.spotify { @include player-color($green); }
-    &.firefox { @include player-color($orange); }
+    &.spotify { @include player-color($primary); }
+    &.firefox { @include player-color($primary); }
     &.mpv { @include player-color($magenta); }
 }

@@ -205,7 +205,7 @@ export default {
 
     desktop: {
         wallpaper: {
-            fg: Option('#fff', { 'scss': 'wallpaper-fg' }),
+            fg: Option('$primary', { 'scss': 'wallpaper-fg' }),
             img: Option(themes[0].options['desktop.wallpaper.img'], {
                 'scssFormat': v => `"${v}"`,
                 'type': 'img',

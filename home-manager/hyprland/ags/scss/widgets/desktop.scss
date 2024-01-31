@@ -12,7 +12,7 @@ window.desktop {
     }
 
     .clock-box-shadow {
-        border: 5px solid $wallpaper-fg;
+        border: 5px solid $primary;
         border-radius: $radii;
 
         .clock-box {
@@ -20,7 +20,7 @@ window.desktop {
             padding: 0 14px;
 
             .clock {
-                color: $wallpaper-fg;
+                color: $primary;
                 font-size: 140px;
                 font-family: $mono-font;
             }
@@ -32,14 +32,14 @@ window.desktop {
                     border-radius: $radii;
                     min-width: 16px;
                     min-height: 16px;
-                    background-color: $wallpaper-fg;
+                    background-color: $primary;
                 }
             }
         }
     }
 
     .date {
-        color: $wallpaper-fg;
+        color: $primary;
         font-size: 48px;
     }
 

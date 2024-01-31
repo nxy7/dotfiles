@@ -120,12 +120,12 @@ $button-radius: if($bar-style == 'floating', max(0, $radii - $bar-spacing), $rad
 
     .media {
         &.spotify image { color: $green; }
-        &.firefox image { color: $orange; }
+        &.firefox image { color: $primary; }
         &.mpv image { color: $magenta; }
     }
 
     .notifications {
-        image { color: $yellow; }
+        image { color: $primary; }
     }
 
     .battery-bar {

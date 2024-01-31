@@ -1,3 +1,5 @@
+[desktop screenshot](blob:https://imgur.com/08c774ce-8a97-408d-b15e-200881397aee)
+
 My personal system and user configuration using NixOS and Nix package manager.
 All configurations are made using flakes, feel free to bootstrap your system
 configuration using my `/nixos` folder :-) 

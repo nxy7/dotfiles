@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, lib, ... }:
 let
   settings = builtins.fromTOML (builtins.readFile ./config.toml);
   languages = import ./languages.nix pkgs inputs;
@@ -20,7 +20,7 @@ in {
         # "ui.menu.bg" = transparent;
       };
     };
-    inherit settings;
+    settings = settings // { theme = lib.mkForce "nxyt"; };
     inherit languages;
   };
 
