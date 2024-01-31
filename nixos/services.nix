@@ -1,4 +1,7 @@
 { pkgs, ... }: {
+  # services.systembus-notify.enable = true;
+  services.gvfs.enable = true;
+  security.polkit.enable = true;
   # service exposed on port 14564
   systemd.services.goxlr = {
     enable = true;

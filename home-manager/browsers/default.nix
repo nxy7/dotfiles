@@ -1,8 +1,8 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     # vivaldi
-    # ungoogled-chromium
-    firefox-devedition
+    ungoogled-chromium
+    firefox
     brave
   ];
 

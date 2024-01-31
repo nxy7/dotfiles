@@ -16,34 +16,35 @@ import { init } from './settings/setup.js';
 import { forMonitors } from './utils.js';
 import { initWallpaper } from './settings/wallpaper.js';
 import options from './options.js';
+import { hyprlandInit } from './settings/hyprland.js';
 
-initWallpaper();
 
 const windows = () => [
-    forMonitors(Desktop),
-    forMonitors(FloatingDock),
-    forMonitors(Lockscreen),
-    forMonitors(Notifications),
-    forMonitors(OSD),
-    forMonitors(ScreenCorners),
-    forMonitors(TopBar),
-    Applauncher(),
-    Dashboard(),
-    Overview(),
-    PowerMenu(),
-    QuickSettings(),
-    Verification(),
-    About(),
+  forMonitors(Desktop),
+  forMonitors(FloatingDock),
+  forMonitors(Lockscreen),
+  forMonitors(Notifications),
+  forMonitors(OSD),
+  forMonitors(ScreenCorners),
+  forMonitors(TopBar),
+
+  Applauncher(),
+  Dashboard(),
+  Overview(),
+  PowerMenu(),
+  QuickSettings(),
+  Verification(),
+  About(),
 ];
 
+// hyprlandInit();
 
 export default {
-    onConfigParsed: init,
-    windows: windows().flat(1),
-    maxStreamVolume: 1.05,
-    cacheNotificationActions: false,
-    closeWindowDelay: {
-        'quicksettings': options.transition.value,
-        'dashboard': options.transition.value,
-    },
+  onConfigParsed: init,
+  windows: windows().flat(1),
+  maxStreamVolume: 1,
+  closeWindowDelay: {
+    'quicksettings': options.transition.value,
+    'dashboard': options.transition.value,
+  },
 };

@@ -15,10 +15,10 @@ let
     fonts = [
       "Ubuntu"
       "UbuntuMono"
-      "CascadiaCode"
-      "FantasqueSansMono"
-      "FiraCode"
-      "Mononoki"
+      #     "CascadiaCode"
+      #     "FantasqueSansMono"
+      #     "FiraCode"
+      #     "Mononoki"
     ];
   });
 
@@ -28,21 +28,22 @@ in {
   imports = [ ];
   home = {
     packages = with pkgs; [
-      swww
-      font-awesome
       nerdfonts
-      moreWaita
-      adwaita-qt
+      swww
+      # font-awesome
+      # moreWaita
+      # adwaita-qt
+      kora-icon-theme
 
       adw-gtk3
-      papirus-icon-theme
-      qogir-icon-theme
-      whitesur-icon-theme
-      colloid-icon-theme
-      qogir-theme
-      yaru-theme
-      whitesur-gtk-theme
-      orchis-theme
+      # papirus-icon-theme
+      # qogir-icon-theme
+      # whitesur-icon-theme
+      # colloid-icon-theme
+      # qogir-theme
+      # yaru-theme
+      # whitesur-gtk-theme
+      # orchis-theme
     ];
     sessionVariables = {
       XCURSOR_THEME = cursor-theme;
@@ -55,14 +56,14 @@ in {
     #   gtk.enable = true;
     # };
     file = {
-      ".local/share/fonts" = {
-        recursive = true;
-        source = "${nerdfonts}/share/fonts/truetype/NerdFonts";
-      };
-      ".fonts" = {
-        recursive = true;
-        source = "${nerdfonts}/share/fonts/truetype/NerdFonts";
-      };
+      # ".local/share/fonts" = {
+      #   recursive = true;
+      #   source = "${nerdfonts}/share/fonts/truetype/NerdFonts";
+      # };
+      # ".fonts" = {
+      #   recursive = true;
+      #   source = "${nerdfonts}/share/fonts/truetype/NerdFonts";
+      # };
       # ".config/gtk-4.0/gtk.css" = {
       #   text = ''
       #     window.messagedialog .response-area > button,
@@ -72,30 +73,24 @@ in {
       #     }
       #   '';
       # };
-      ".local/share/icons/MoreWaita" = { source = "${moreWaita}/share/icons"; };
+      # ".local/share/icons/MoreWaita" = { source = "${moreWaita}/share/icons"; };
+      # ".local/share/icons/Kora" = {
+      #   source = "${pkgs.kora-icon-theme}/share/icons";
+      # };
       ".local/share/wallpapers" = { source = ./wallpapers; };
     };
   };
 
   gtk = {
     enable = true;
-    # font.name = "Ubuntu Nerd Font";
     # theme.name = gtk-theme;
-    # cursorTheme = {
-    #   name = cursor-theme;
-    #   package = cursor-package;
-    # };
-    # iconTheme.name = moreWaita.name;
-    # gtk3.extraCss = ''
-    #   headerbar, .titlebar,
-    #   .csd:not(.popup):not(tooltip):not(messagedialog) decoration{
-    #     border-radius: 0;
-    #   }
-    # '';
+    iconTheme.name = "kora";
+    # iconTheme.package = pkgs.kora-icon-theme;
+    iconTheme.package = pkgs.kora-icon-theme;
   };
 
   qt = {
     enable = true;
-    platformTheme = "kde";
+    # platformTheme = "kde";
   };
 }

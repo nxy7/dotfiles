@@ -9,13 +9,19 @@
     };
   };
   hardware.keyboard.qmk.enable = true;
-  environment = { sessionVariables = { NIXOS_OZONE_WL = "1"; }; };
+  environment = {
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
+    };
+  };
   fonts.fontconfig.enable = true;
 
   imports = [
     /etc/nixos/hardware-configuration.nix
     ./kernel.nix
     ./firewall.nix
+    ./samba.nix
 
     # display
     ./hyprland.nix
@@ -69,6 +75,7 @@
     user = "nxyt";
     dataDir = "/home/nxyt/Sync";
     configDir = "/home/nxyt/.config/syncthing";
+    guiAddress = "127.0.0.1:8384";
   };
 
   services.earlyoom = {

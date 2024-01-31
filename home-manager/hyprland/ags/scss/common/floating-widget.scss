@@ -5,7 +5,7 @@
 
     margin: max($spacing, 8px);
     border: $border-width solid $popover-border-color;
-    background-color: $bg-color;
+    background-color: transparentize($bg-color, .35);
     color: $fg-color;
     border-radius: $popover-radius;
     padding: $popover-padding;

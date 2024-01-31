@@ -7,7 +7,7 @@ window#applauncher .window-content {
         margin-bottom: $spacing;
 
         label, image {
-            color: $fg-color;
+            color: $primary;
         }
     }
 
@@ -32,11 +32,11 @@ window#applauncher .window-content {
             transition: $transition;
 
             &.title {
-                color: $fg-color;
+                color: $primary;
             }
 
             &.description {
-                color: transparentize($fg-color, 0.3);
+                color: transparentize($primary, 0.3);
             }
         }
 

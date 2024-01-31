@@ -21,7 +21,6 @@
     kitty
 
     goxlr-utility
-    obs-studio
 
     mission-center
     nvtop-nvidia

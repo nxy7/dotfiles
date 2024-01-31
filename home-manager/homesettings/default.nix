@@ -1,5 +1,4 @@
 { username, pkgs, inputs, config, ... }: {
-
   home = rec {
     inherit username;
     homeDirectory = "/home/" + username;
@@ -8,9 +7,10 @@
     sessionVariables = {
       EDITOR = "hx";
       PKG_CONFIG_PATH = pkgs.openssl;
+      LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
     };
   };
-  imports = [ inputs.ags.homeManagerModules.default ];
+
   programs.home-manager.enable = true;
 }
 

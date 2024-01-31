@@ -4,23 +4,26 @@
     (pkgs.nerdfonts.override {
       fonts = [
         "Ubuntu"
-        "UbuntuMono"
-        "CascadiaCode"
-        "FantasqueSansMono"
+        "DejaVuSansMono"
+        # "UbuntuMono"
+        # "CascadiaCode"
+        # "FantasqueSansMono"
         "FiraCode"
-        "Mononoki"
+        # "Mononoki"
+        # "Iosevka"
       ];
     })
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
+    dejavu_fonts
+    # noto-fonts
+    # noto-fonts-cjk
+    # noto-fonts-emoji
 
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    mplus-outline-fonts.githubRelease
-    dina-font
-    proggyfonts
+    # liberation_ttf
+    # fira-code
+    # fira-code-symbols
+    # mplus-outline-fonts.githubRelease
+    # dina-font
+    # proggyfonts
   ];
 
 }

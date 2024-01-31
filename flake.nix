@@ -20,8 +20,9 @@
       url = "github:somepaulo/MoreWaita";
       flake = false;
     };
-    nix-colors.url = "github:misterio77/nix-colors";
+
     stylix.url = "github:danth/stylix";
+    base16.url = "github:SenchoPens/base16.nix";
 
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "unstablePkgs";
@@ -33,7 +34,8 @@
       system = "x86_64-linux";
       currentUser = builtins.getEnv "USER";
 
-      insecurePackages = [ "electron-25.9.0" "python-2.7.18.6" ];
+      insecurePackages =
+        [ "electron-24.8.6" "electron-25.9.0" "python-2.7.18.6" ];
 
       pkgs = import inputs.unstablePkgs {
         inherit system;

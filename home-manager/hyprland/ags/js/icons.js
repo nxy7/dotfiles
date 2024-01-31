@@ -91,7 +91,7 @@ export default {
         close: 'window-close-symbolic',
         info: 'info-symbolic',
         menu: 'open-menu-symbolic',
-        link: 'external-link-symbolic',
+        link: 'sensors-temperature-symbolic',
         settings: 'emblem-system-symbolic',
         tick: 'object-select-symbolic',
         arrow: {
@@ -104,7 +104,7 @@ export default {
     system: {
         cpu: 'org.gnome.SystemMonitor-symbolic',
         ram: 'drive-harddisk-solidstate-symbolic',
-        temp: 'temperature-symbolic',
+        temp: 'sensors-temperature-symbolic',
     },
     dialog: {
         Search: '',

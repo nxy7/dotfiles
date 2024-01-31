@@ -1,4 +1,4 @@
-[desktop screenshot](https://imgur.com/08c774ce-8a97-408d-b15e-200881397aee)
+![desktop screenshot](https://i.imgur.com/QDRmI8r.png)
 
 My personal system and user configuration using NixOS and Nix package manager.
 All configurations are made using flakes, feel free to bootstrap your system

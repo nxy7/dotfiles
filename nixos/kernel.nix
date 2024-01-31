@@ -1,5 +1,5 @@
 { pkgs, stablepkgs, lib, config, ... }: {
-  boot.kernelPackages = stablepkgs.linuxPackages_6_5;
+  boot.kernelPackages = pkgs.linuxPackages_6_5;
   boot.kernelModules = [
     "kvm-amd"
     "ip6table_filter"
@@ -79,7 +79,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.production;
     open = false;
     powerManagement.enable = true;
-    powerManagement.finegrained = false;
+    # powerManagement.finegrained = false;
     modesetting.enable = true;
   };
 

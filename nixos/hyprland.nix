@@ -1,28 +1,10 @@
 { pkgs, inputs, ... }:
-let
-  hyprlandPackage = inputs.hyprland.packages.${pkgs.system}.hyprland;
-  tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
-  username = "nxyt";
+let hyprlandPackage = inputs.hyprland.packages.${pkgs.system}.hyprland;
 in {
 
-  services.getty = {
-    autologinUser = "nxyt";
-    greetingLine = "Wanna try some 'inux";
-  };
-  # services.greetd = {
-  #   enable = true;
-  #   settings = rec {
-  #     initial_session = {
-  #       command = "${hyprlandPackage}/bin/Hyprland";
-  #       user = username;
-  #     };
-  #     default_session = {
-  #       command =
-  #         "${tuigreet} --greeting 'Welcome to NixOS!' --asterisks --remember --remember-user-session --time -cmd ${hyprlandPackage}/bin/Hyprland";
-  #       user = "greeter";
-  #     };
-
-  #   };
+  # services.getty = {
+  #   autologinUser = "nxyt";
+  #   greetingLine = "Wanna try some 'inux";
   # };
 
   programs.hyprland = {
@@ -46,33 +28,16 @@ in {
   environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
   environment.systemPackages = with pkgs; [
     jq
-
-    polkit-kde-agent
-
     where-is-my-sddm-theme
-
     hyprpaper
-
     # audio gui
     pavucontrol
-
     # program launcher
     tofi
-
-    # screen sharing
-    # pipewire
-    wireplumber
-    # swaybg
-    # wpaperd
-    # mpvpaper
-    # eww
   ];
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal
-      # xdg-desktop-portal-hyprland
-    ];
+    wlr.enable = true;
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk xdg-desktop-portal ];
   };
 }

@@ -8,6 +8,7 @@ export function initWallpaper() {
 
         options.desktop.wallpaper.img.connect('changed', wallpaper);
     }
+    wallpaper()
 }
 
 export function wallpaper() {

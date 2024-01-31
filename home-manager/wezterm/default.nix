@@ -1,7 +1,7 @@
 { pkgs, inputs, config, ... }: {
   programs.wezterm = {
     enable = true;
-    package = inputs.wezterm.packages.${pkgs.system}.default;
+    package = pkgs.wezterm;
     extraConfig = ''
       local wezterm = require "wezterm"
 
@@ -40,6 +40,7 @@
         -- inactive_titlebar_border_bottom = "none",
         -- active_titlebar_border_bottom = "none",
       }
+      config.font_size = 18.0
 
       config.use_fancy_tab_bar = false
       config.colors = {

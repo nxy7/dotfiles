@@ -7,9 +7,7 @@ in {
     enable = true;
     defaultEditor = true;
     themes = {
-      nxyt = let
-        transparent = "none";
-        # white = "#FFFFFF";
+      nxyt = let transparent = "none";
       in {
         inherits = "github_dark_dimmed";
         "ui.background" = { bg = transparent; };
@@ -32,6 +30,10 @@ in {
     zls
     taplo
     ltex-ls
+
+    golangci-lint-langserver
+    yaml-language-server
+    python311Packages.python-lsp-server
 
     haskellPackages.haskell-language-server
     ocamlPackages.ocaml-lsp

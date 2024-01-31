@@ -5,7 +5,7 @@ local config = wezterm.config_builder()
 
 -- For example, changing the color scheme:
 -- config.tab_bar_style = ""
-config.enable_wayland = false
+config.enable_wayland = true
 -- config.text_background_opacity = 0.0
 config.front_end = "WebGpu"
 config.color_scheme = 'zenbones_dark'
@@ -26,7 +26,9 @@ config.keys = {
     mods = 'CMD',
     action = wezterm.action.CloseCurrentPane { confirm = true },
   },
-  
+{ key = 'UpArrow',   mods = 'ALT', action = wezterm.action.ScrollToPrompt(-1) },
+{ key = 'DownArrow', mods = 'ALT', action = wezterm.action.ScrollToPrompt(1) },
+
 }
 
 

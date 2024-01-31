@@ -7,39 +7,32 @@ in home-manager.lib.homeManagerConfiguration {
   extraSpecialArgs = { inherit inputs pkgs stablepkgs username; };
 
   modules = [
+    # merge stylix base16 with some extra colors
+    inputs.base16.homeManagerModule
+    ({ config, ... }: { config.scheme = ../theme.yaml; })
+
     inputs.stylix.homeManagerModules.stylix
+    ./stylix
+    ./services.nix
 
     # base
     ./homesettings
-    ./stylix
-
-    # merge stylix base16 with some extra colors
-    # ({ config, ... }: rec {
-    #   config.colorPalette = config.lib.stylix.colors // {
-    #     red = "cd3263";
-    #     green = "6bcd32";
-    #     yellow = "c8cd32";
-    #     blue = "32a4cd";
-    #     magenta = "cd32cb";
-    #     teal = "32cdac";
-    #     orange = "cd9432";
-    #   };
-    # })
 
     # display
+    inputs.ags.homeManagerModules.default
     ./hyprland
     ./hyprland/theme.nix
-    # ./hyprland/eww
     ./hyprland/ags
 
+    ./obs-studio
     # editors
     ./helix
-    ./neovim
+    # ./neovim
 
     # shells
     ./nushell
-    ./fish
-    ./zsh
+    # ./fish
+    # ./zsh
     ./bash
 
     # shell stuff

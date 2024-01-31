@@ -1,69 +1,56 @@
-{ stablepkgs, pkgs, inputs, ... }: {
-  home.packages = with pkgs;
-    [
-      x2goclient
-      wacomtablet
+{ stablepkgs, pkgs, inputs, ... }:
+let
+  stable = with stablepkgs; [ hugo ];
+  unstable = with pkgs; [
+    (obsidian.override { electron = stablepkgs.electron_24; })
+    xonsh
+    xxh
 
-      lnav
-      insomnia
-      redis
-      bashInteractive
-      sqlite
-      kicad
-      yazi
-      qmk
-      hwinfo
-      mangohud
-      gimp-with-plugins
+    wacomtablet
 
-      gtk3
-      papirus-icon-theme
-      transmission_4-gtk
-      gnome.nautilus
+    lnav
+    insomnia
+    kicad
+    yazi
+    qmk
+    hwinfo
+    mangohud
+    gimp-with-plugins
 
-      grim
-      slurp
+    gtk3
+    transmission_4-gtk
+    gnome.nautilus
 
-      cura
+    cura
 
-      libglvnd
-      lxqt.libqtxdg
-      egl-wayland
+    pomodorust
+    fzf
 
-      gnumake
-      ginkgo
-      buildah-unwrapped
-      pomodorust
-      fzf
+    cilium-cli
 
-      cilium-cli
+    cmake
+    llvmPackages_latest.llvm
+    rocmPackages.llvm.clang
 
-      cmake
-      llvmPackages_latest.llvm
-      rocmPackages.llvm.clang
+    pgweb
+    du-dust
+    hyperfine
+    htop
+    gitui
 
-      nix-prefetch-github
-      pgweb
-      du-dust
-      hyperfine
-      htop
-      gitui
-      # porsmo
+    pueue
+    keepassxc
+    # ventoy
+    cachix
 
-      pueue
-      keepassxc
-      ventoy
-      cachix
-      freshfetch
+    k9s
+    kustomize
+    kube3d
+    kubectl
+    colorls
+    bat
+    ripgrep
 
-      k9s
-      kustomize
-      kube3d
-      kubectl
-      colorls
-      bat
-      ripgrep
-
-    ] ++ (with stablepkgs; [ obsidian hugo ]);
-}
+  ];
+in { home.packages = stable ++ unstable; }
 

@@ -52,9 +52,9 @@ window.desktop {
             box-shadow: inset 2px 2px 2px 0 $shadow;
         }
 
-        label {
-            text-shadow: $text-shadow;
-        }
+        // label {
+        //     text-shadow: $text-shadow;
+        // }
     } @else {
         .clock-box-shadow{
             box-shadow: 0 0 0 $border-width $border-color,
