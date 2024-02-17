@@ -60,8 +60,8 @@ let
             enabled = true
             popups = true
             new_optimizations = on
-            # size = 6
-            # passes = 1
+            size = 8
+            passes = 3
           }
       }
 
@@ -120,7 +120,7 @@ let
     bind = $mainMod, K, exec, kitty
     bind = $mainMod, W, exec, wezterm
 
-    bind=CTRL SHIFT, R,  exec, ags -q; ags
+    bind=$mainMod SHIFT, R,  exec, ags -q; ags
     bind=SUPER,F,fullscreen
     bind=,Print,exec,grimblast copy area
 

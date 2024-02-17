@@ -29,13 +29,11 @@ function getColor(scss) {
 
 export function hyprlandInit() {
   print("Initializing Hyprland")
-  let batch = Array.from(App.windows).flatMap(([name]) => {
-    return [
-      `layerrule blur, ${name}`,
-      noIgnorealpha.some(skip => name.includes(skip))
-        ? '' : `layerrule ignorealpha 0.7, ${name}`,
-    ]
-  })
+  let batch = App.windows.flatMap(({ name }) => [
+    `layerrule blur, ${name}`,
+    noIgnorealpha.some(skip => name?.includes(skip))
+      ? '' : `layerrule ignorealpha 0.6, ${name}`,
+  ])
   sendBatch(batch);
 }
 
@@ -50,6 +48,7 @@ export async function setupHyprland() {
   const accent = getColor(options.theme.accent.accent.value);
 
   const batch = [];
+  print("creating batch")
 
   JSON.parse(await Hyprland.messageAsync('j/monitors')).forEach(({ name }) => {
     const v = bar_pos === 'top' ? `-${wm_gaps},0,0,0` : `0,-${wm_gaps},0,0`;

@@ -18,5 +18,6 @@
     wantedBy = [ "multi-user.target" ];
     # ...
   };
+  # networking.hosts."127.0.0.1:14564" = [ "goxlr" ];
 
 }

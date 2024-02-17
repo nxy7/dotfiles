@@ -20,7 +20,12 @@ in {
       alias lg = lazygit
       alias k = kubectl
       alias grep = rg -S
+      alias just = just --unstable
 
+
+      def getArgoPw [] {
+         kubectl get secret -n argocd argocd-initial-admin-secret -o yaml | from yaml | get data.password | base64 -d 
+      }
 
 
       source ~/.zoxide.nu

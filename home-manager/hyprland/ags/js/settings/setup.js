@@ -11,99 +11,101 @@ import { showAbout } from '../about/about.js';
 import Gtk from 'gi://Gtk';
 
 export function init() {
-    initWallpaper();
-    notificationBlacklist();
-    warnOnLowBattery();
-    globals();
-    tmux();
-    gsettigsColorScheme();
-    gtkFontSettings();
-    scssWatcher();
-    dependandOptions();
+  initWallpaper();
+  notificationBlacklist();
+  warnOnLowBattery();
+  globals();
+  tmux();
+  gsettigsColorScheme();
+  gtkFontSettings();
+  scssWatcher();
+  dependandOptions();
 
-    reloadScss();
-    setupHyprland();
-    wallpaper();
-    showAbout();
+  reloadScss();
+  setupHyprland().catch((e) => {
+    print("encountered error", e)
+  });
+  wallpaper();
+  showAbout();
 }
 
 function dependandOptions() {
-    options.bar.style.connect('changed', ({ value }) => {
-        if (value !== 'normal')
-            options.desktop.screen_corners.setValue(false, true);
-    });
+  options.bar.style.connect('changed', ({ value }) => {
+    if (value !== 'normal')
+      options.desktop.screen_corners.setValue(false, true);
+  });
 }
 
 function tmux() {
-    if (!Utils.exec('which tmux'))
-        return;
+  if (!Utils.exec('which tmux'))
+    return;
 
-    /** @param {string} scss */
-    function getColor(scss) {
-        if (scss.includes('#'))
-            return scss;
+  /** @param {string} scss */
+  function getColor(scss) {
+    if (scss.includes('#'))
+      return scss;
 
-        if (scss.includes('$')) {
-            const opt = options.list().find(opt => opt.scss === scss.replace('$', ''));
-            return opt?.value;
-        }
+    if (scss.includes('$')) {
+      const opt = options.list().find(opt => opt.scss === scss.replace('$', ''));
+      return opt?.value;
     }
+  }
 
-    options.theme.accent.accent.connect('changed', ({ value }) => Utils
-        .execAsync(`tmux set @main_accent ${getColor(value)}`)
-        .catch(err => console.error(err.message)));
+  options.theme.accent.accent.connect('changed', ({ value }) => Utils
+    .execAsync(`tmux set @main_accent ${getColor(value)}`)
+    .catch(err => console.error(err.message)));
 }
 
 function gsettigsColorScheme() {
-    if (!Utils.exec('which gsettings'))
-        return;
+  if (!Utils.exec('which gsettings'))
+    return;
 
-    options.theme.scheme.connect('changed', ({ value }) => {
-        const gsettings = 'gsettings set org.gnome.desktop.interface color-scheme';
-        Utils.execAsync(`${gsettings} "prefer-${value}"`)
-            .catch(err => console.error(err.message));
-    });
+  options.theme.scheme.connect('changed', ({ value }) => {
+    const gsettings = 'gsettings set org.gnome.desktop.interface color-scheme';
+    Utils.execAsync(`${gsettings} "prefer-${value}"`)
+      .catch(err => console.error(err.message));
+  });
 }
 
 function gtkFontSettings() {
-    const settings = Gtk.Settings.get_default();
-    if (!settings) {
-        console.error(Error('Gtk.Settings unavailable'));
-        return;
-    }
+  const settings = Gtk.Settings.get_default();
+  if (!settings) {
+    console.error(Error('Gtk.Settings unavailable'));
+    return;
+  }
 
-    const callback = () => {
-        const { size, font } = options.font;
-        settings.gtk_font_name = `${font.value} ${size.value}`;
-    };
+  const callback = () => {
+    const { size, font } = options.font;
+    settings.gtk_font_name = `${font.value} ${size.value}`;
+  };
 
-    options.font.font.connect('notify::value', callback);
-    options.font.size.connect('notify::value', callback);
+  options.font.font.connect('notify::value', callback);
+  options.font.size.connect('notify::value', callback);
 }
 
 function notificationBlacklist() {
-    Notifications.connect('notified', (_, id) => {
-        const n = Notifications.getNotification(id);
-        options.notifications.black_list.value.forEach(item => {
-            if (n?.app_name.includes(item) || n?.app_entry?.includes(item))
-                n.close();
-        });
+  Notifications.connect('notified', (_, id) => {
+    const n = Notifications.getNotification(id);
+    options.notifications.black_list.value.forEach(item => {
+      if (n?.app_name.includes(item) || n?.app_entry?.includes(item))
+        n.close();
     });
+  });
 }
 
 function warnOnLowBattery() {
-    Battery.connect('notify::percent', () => {
-        const low = options.battery.low.value;
-        if (Battery.percent !== low ||
-            Battery.percent !== low / 2 ||
-            !Battery.charging)
-            return;
+  Battery.connect('notify::percent', () => {
+    const low = options.battery.low.value;
+    if (Battery.percent !== low ||
+      Battery.percent !== low / 2 ||
+      !Battery.charging)
+      return;
 
-        Utils.execAsync([
-            'notify-send',
-            `${Battery.percent}% Battery Percentage`,
-            '-i', icons.battery.warning,
-            '-u', 'critical',
-        ]);
-    });
+    Utils.execAsync([
+      'notify-send',
+      `${Battery.percent}% Battery Percentage`,
+      '-i', icons.battery.warning,
+      '-u', 'critical',
+    ]);
+  });
 }

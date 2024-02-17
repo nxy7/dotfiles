@@ -26,7 +26,6 @@
           mods = "CMD",
           action = wezterm.action.CloseCurrentPane { confirm = true },
         },
-        
       }
 
 

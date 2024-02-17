@@ -1,7 +1,10 @@
 {
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
-  networking.extraHosts = "";
+  networking.extraHosts = ''
+    127.0.0.1:14564 goxlr
+    127.0.0.1:8384 syncthing
+  '';
 
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [
@@ -39,4 +42,5 @@
   ];
   networking.firewall.allowedUDPPorts =
     [ 53 80 137 443 4789 6081 6443 8132 8181 8472 51871 ];
+
 }

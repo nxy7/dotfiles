@@ -14,6 +14,7 @@ config.hide_tab_bar_if_only_one_tab = true
 config.window_background_opacity = 0.75
 config.text_background_opacity = 0.75
 config.window_close_confirmation = 'NeverPrompt'
+config.leader = { key = 'a', mods = 'CTRL' }
 config.keys = {
   -- search for things that look like git hashes
   {
@@ -26,10 +27,26 @@ config.keys = {
     mods = 'CMD',
     action = wezterm.action.CloseCurrentPane { confirm = true },
   },
-{ key = 'UpArrow',   mods = 'ALT', action = wezterm.action.ScrollToPrompt(-1) },
-{ key = 'DownArrow', mods = 'ALT', action = wezterm.action.ScrollToPrompt(1) },
-
+  { key = 'UpArrow',   mods = 'ALT', action = wezterm.action.ScrollToPrompt(-1) },
+  { key = 'DownArrow', mods = 'ALT', action = wezterm.action.ScrollToPrompt(1) },
+  {
+    key = 'H',
+    mods = 'SHIFT|CTRL|ALT',
+    action = wezterm.action.AdjustPaneSize { 'Left', 5 },
+  },
+  {
+    key = 'J',
+    mods = 'SHIFT|CTRL|ALT',
+    action = wezterm.action.AdjustPaneSize { 'Down', 5 },
+  },
+  { key = 'K', mods = 'SHIFT|CTRL|ALT', action = wezterm.action.AdjustPaneSize { 'Up', 5 } },
+  {
+    key = 'L',
+    mods = 'SHIFT|CTRL|ALT',
+    action = wezterm.action.AdjustPaneSize { 'Right', 5 },
+  },
 }
+
 
 
 

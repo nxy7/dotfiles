@@ -1,6 +1,12 @@
 { config, pkgs, stablepkgs, inputs, ... }: {
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.trusted-substituters =
+      [ "https://ai.cachix.org" "https://nix-community.cachix.org" ];
+    settings.trusted-public-keys =
+      [ "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc=" ];
+    settings.trusted-users = [ "root" "nxyt" ];
+
     registry.nixpkgs.flake = inputs.stablePkgs;
     optimise.automatic = true;
     gc = {
@@ -77,6 +83,7 @@
     configDir = "/home/nxyt/.config/syncthing";
     guiAddress = "127.0.0.1:8384";
   };
+  # networking.hosts."127.0.0.1:8384" = [ "syncthing" ];
 
   services.earlyoom = {
     enable = true;
