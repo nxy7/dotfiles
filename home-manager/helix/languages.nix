@@ -71,7 +71,9 @@ pkgs: inputs: {
   };
   language-server.tailwind = {
     args = [ "--stdio" ];
-    command = "${inputs.tailwindcss-lsp}/bin/tailwindcss-language-server";
+    command = "${
+        pkgs.nodePackages."@tailwindcss/language-server"
+      }/bin/tailwindcss-language-server";
     config = { };
   };
 }

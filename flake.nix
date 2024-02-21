@@ -7,7 +7,6 @@
 
     helix.url = "github:helix-editor/helix";
     hyprland.url = "github:hyprwm/Hyprland";
-    tailwindcss-lsp.url = "github:nxy7/tailwindcss-intellisense";
     pomodorust.url = "github:nxy7/pomodorust";
     home-manager.url = "github:nix-community/home-manager";
     flake-parts.url = "github:hercules-ci/flake-parts";

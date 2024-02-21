@@ -8,6 +8,7 @@ true-color = true
 bufferline = "always"
 idle-timeout = 40
 color-modes = true
+text-width = 90
 
 [editor.cursor-shape]
 insert = "bar"
@@ -24,6 +25,20 @@ display-inlay-hints = true
 
 [editor.file-picker]
 max-depth = 14
+
+# [editor.auto-pairs]
+# '<!--' = '-->'
+# '/*' = '*/'
+
+[editor.indent-guides]
+render = true
+character = "┊" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 3
+
+[editor.statusline]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
 
 [keys.normal]
 X = "extend_line_above"

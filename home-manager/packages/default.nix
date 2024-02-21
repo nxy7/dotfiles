@@ -3,6 +3,8 @@ let
   stable = with stablepkgs; [ hugo ];
   unstable = with pkgs; [
     (obsidian.override { electron = stablepkgs.electron_24; })
+    activitywatch
+
     xonsh
     xxh
 
