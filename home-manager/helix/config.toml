@@ -26,10 +26,6 @@ display-inlay-hints = true
 [editor.file-picker]
 max-depth = 14
 
-# [editor.auto-pairs]
-# '<!--' = '-->'
-# '/*' = '*/'
-
 [editor.indent-guides]
 render = true
 character = "┊" # Some characters that work well: "▏", "┆", "┊", "⸽"
@@ -45,24 +41,9 @@ X = "extend_line_above"
 C-space = "completion"
 V = ["select_mode", "extend_to_line_bounds"]
 S-left = ":bprev"
-S-h = ":bprev"
 S-right = ":bnext"
-S-l = ":bnext"
 C-j = "half_page_down"
 C-k = "half_page_up"
 
-
 [keys.insert]
 C-space = "completion"
-C-p = "file_picker"
-C-b = "buffer_picker"
-C-left = ":bprev"
-C-right = ":bnext"
-
-[keys.select]
-C-p = "file_picker"
-C-b = "buffer_picker"
-0 = "goto_line_start"
-"$" = "goto_line_end"
-C-left = ":bprev"
-C-right = ":bnext"

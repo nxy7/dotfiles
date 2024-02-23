@@ -15,8 +15,9 @@ in {
       alias la = ls -a
       alias ll = ls -l
       alias kctl = sudo k3s kubectl
-      alias home-switch = nix run . switch -- --flake . --impure 
-      alias system-switch = sudo nixos-rebuild switch --flake . --impure
+      alias homeswitch = home-manager switch --flake . --impure 
+      alias sysswitch = sudo nixos-rebuild switch --flake . --impure
+      alias lsysswitch = sudo systemd-run --property=MemoryMax=10G nixos-rebuild switch --flake . --impure
       alias lg = lazygit
       alias k = kubectl
       alias grep = rg -S
@@ -43,6 +44,9 @@ in {
         show_banner: false,
       };
       $env.PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+      $env.PRISMA_QUERY_ENGINE_LIBRARY = "${pkgs.prisma-engines}/lib/libquery_engine.node";
+      $env.PRISMA_QUERY_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/query-engine";
+      $env.PRISMA_SCHEMA_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
 
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu;
       # ${pkgs.oh-my-posh}/bin/oh-my-posh init nu -c ${poshConfig};

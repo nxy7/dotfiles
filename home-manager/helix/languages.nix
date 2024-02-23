@@ -1,4 +1,4 @@
-pkgs: inputs: {
+{ pkgs, inputs, ... }: {
   language = [
     {
       name = "tsx";
@@ -32,6 +32,11 @@ pkgs: inputs: {
     {
       name = "typescript";
       auto-format = true;
+      language-servers = [ "typescript" ];
+      formatter = {
+        command = "${pkgs.nodePackages_latest.prettier}/bin/prettier";
+        args = [ "--parser" "typescript" ];
+      };
     }
     {
       name = "javascript";
@@ -39,19 +44,25 @@ pkgs: inputs: {
     }
     {
       name = "markdown";
+      auto-format = true;
       language-servers = [ "marksman" "ltex-ls" ];
     }
     {
       name = "svelte";
-      roots = [ "package.json" ];
+      # roots = [ "package.json" ];
       auto-format = true;
-      language-servers = [ { name = "svelteserver"; } "tailwind" "eslint" ];
+      language-servers = [ "svelteserver" "tailwind" "eslint" ];
     }
   ];
 
   language-server.typescript = {
     command =
       "${pkgs.nodePackages_latest.typescript-language-server}/bin/typescript-language-server";
+    args = [ "--stdio" ];
+  };
+  language-server.svelteserver = {
+    command =
+      "${pkgs.nodePackages_latest.svelte-language-server}/bin/svelteserver";
     args = [ "--stdio" ];
   };
   language-server.volar = {

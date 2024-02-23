@@ -1,10 +1,9 @@
 {
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
-  networking.extraHosts = ''
-    127.0.0.1:14564 goxlr
-    127.0.0.1:8384 syncthing
-  '';
+  networking.networkmanager.enableStrongSwan = true;
+
+  networking.extraHosts = "";
 
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [
@@ -19,6 +18,7 @@
     4245
     4250
     4251
+    4500
     6060
     6061
     6062

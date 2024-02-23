@@ -1,4 +1,4 @@
-{ config, pkgs, stablepkgs, inputs, ... }: {
+{ config, pkgs, inputs, ... }: {
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
     settings.trusted-substituters =
@@ -7,7 +7,6 @@
       [ "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc=" ];
     settings.trusted-users = [ "root" "nxyt" ];
 
-    registry.nixpkgs.flake = inputs.stablePkgs;
     optimise.automatic = true;
     gc = {
       automatic = true;
@@ -23,11 +22,17 @@
   };
   fonts.fontconfig.enable = true;
 
+  systemd.services.nix-daemon.serviceConfig = {
+    MemoryHigh = "10G";
+    MemoryMax = "12G";
+  };
+
   imports = [
     /etc/nixos/hardware-configuration.nix
     ./kernel.nix
     ./firewall.nix
     ./samba.nix
+    ./vpn.nix
 
     # display
     ./hyprland.nix
@@ -51,9 +56,6 @@
     text = "elo";
     mode = "777";
   };
-
-  # systemd.services."getty@tty1".enable = true;
-  # systemd.services."autovt@tty1".enable = true;
 
   time.hardwareClockInLocalTime = true;
   environment.shells = with pkgs; [ fish nushell ];
@@ -83,12 +85,11 @@
     configDir = "/home/nxyt/.config/syncthing";
     guiAddress = "127.0.0.1:8384";
   };
-  # networking.hosts."127.0.0.1:8384" = [ "syncthing" ];
 
   services.earlyoom = {
     enable = true;
     enableNotifications = true;
-    freeMemThreshold = 15;
+    freeMemThreshold = 7;
   };
 
   services.printing.enable = true;

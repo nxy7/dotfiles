@@ -1,5 +1,5 @@
-{ pkgs, stablepkgs, lib, config, ... }: {
-  boot.kernelPackages = pkgs.linuxPackages_6_5;
+{ pkgs, lib, config, ... }: {
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [
     "kvm-amd"
     "ip6table_filter"
@@ -20,7 +20,8 @@
 
   zramSwap = {
     enable = true;
-    algorithm = "lz4";
+    algorithm = "zstd";
+    memoryPercent = 200;
   };
 
   boot.loader.systemd-boot.enable = true;
@@ -76,7 +77,7 @@
     driSupport32Bit = true;
   };
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    # package = config.boot.kernelPackages.nvidiaPackages.production;
     open = false;
     powerManagement.enable = true;
     # powerManagement.finegrained = false;

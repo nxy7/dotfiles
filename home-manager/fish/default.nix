@@ -4,8 +4,8 @@
     enable = true;
 
     shellAbbrs = {
-      "home-switch" = "nix run . switch -- --flake . --impure ";
-      "system-switch" = "sudo nixos-rebuild --flake . --impure";
+      "homeswitch" = "home-manager switch --flake . --impure ";
+      "sysswitch" = "sudo nixos-rebuild switch --flake . --impure";
       lg = "lazygit";
       k = "kubectl";
     };
@@ -13,15 +13,31 @@
       z = "zoxide";
       rm = "rm -r";
       cp = "cp -r";
-      la = "ls -a";
-      ll = "ls -l";
-      grep = "rg -S";
+      ls = "exa";
+      la = "exa -a";
+      ll = "exa -l";
+      just = "just --unstable";
     };
     interactiveShellInit = ''
-      kubectl completion fish | source
-      zoxide init fish | source
-      # {pkgs.freshfetch}/bin/freshfetch
-    '';
 
+      function getArgoPw 
+         kubectl get secret -n argocd argocd-initial-admin-secret -o yaml | from yaml | get data.password | base64 -d 
+      end
+
+      function fish_greeting
+        echo sup nerd
+      end
+
+      ${pkgs.kubectl}/bin/kubectl completion fish | source
+
+      ${pkgs.gh}/bin/gh completion -s fish | source
+
+      ${pkgs.just}/bin/just --completions fish | source
+
+      zoxide init fish | source
+
+      ${pkgs.freshfetch}/bin/freshfetch
+    '';
   };
+  home.packages = with pkgs; [ fishPlugins.autopair-fish ];
 }

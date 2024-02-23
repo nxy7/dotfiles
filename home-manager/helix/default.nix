@@ -1,21 +1,17 @@
 { pkgs, inputs, lib, ... }:
 let
   settings = builtins.fromTOML (builtins.readFile ./config.toml);
-  languages = import ./languages.nix pkgs inputs;
+  languages = import ./languages.nix { inherit pkgs inputs; };
 in {
   programs.helix = {
     enable = true;
+    # package = inputs
     defaultEditor = true;
     themes = {
       nxyt = let transparent = "none";
       in {
         inherits = "github_dark_dimmed";
         "ui.background" = { bg = transparent; };
-        # "ui.window" = { bg = white; };
-        # "ui.text.fg" = transparent;
-        # "ui.virtual.fg" = transparent;
-        # "ui.menu.fg" = transparent;
-        # "ui.menu.bg" = transparent;
       };
     };
     settings = settings // { theme = lib.mkForce "nxyt"; };
@@ -26,10 +22,13 @@ in {
     nil
     nixfmt
     lua-language-server
-    rnix-lsp
+
     zls
     taplo
     ltex-ls
+
+    buf-language-server
+    pb
 
     golangci-lint-langserver
     yaml-language-server

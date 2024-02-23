@@ -1,138 +1,236 @@
-{ pkgs, lib, ... }: {
-  home.shellAliases.vi = "nvim";
-  programs.neovim = {
+{ inputs, pkgs, lib, ... }: {
+
+  # imports = [ inputs.nixvim.homeManagerModules.nixvim ];
+  programs.nixvim = {
     enable = true;
-    plugins = with pkgs.vimPlugins; [ lazy-nvim ];
-    extraPackages = with pkgs; [
-      # LazyVim
-      lua-language-server
-      stylua
-      # Telescope
-      ripgrep
-    ];
-    extraLuaConfig = let
-      plugins = with pkgs.vimPlugins; [
-        # LazyVim
-        LazyVim
-        bufferline-nvim
-        cmp-buffer
-        cmp-nvim-lsp
-        cmp-path
-        cmp_luasnip
-        conform-nvim
-        dashboard-nvim
-        dressing-nvim
-        flash-nvim
-        friendly-snippets
-        gitsigns-nvim
-        indent-blankline-nvim
-        lualine-nvim
-        neo-tree-nvim
-        neoconf-nvim
-        neodev-nvim
-        noice-nvim
-        nui-nvim
-        nvim-cmp
-        nvim-lint
-        nvim-lspconfig
-        nvim-notify
-        nvim-spectre
-        nvim-treesitter
-        nvim-treesitter-context
-        nvim-treesitter-textobjects
-        nvim-ts-autotag
-        nvim-ts-context-commentstring
-        nvim-web-devicons
-        persistence-nvim
-        plenary-nvim
-        telescope-fzf-native-nvim
-        telescope-nvim
-        todo-comments-nvim
-        tokyonight-nvim
-        trouble-nvim
-        vim-illuminate
-        vim-startuptime
-        which-key-nvim
-        {
-          name = "LuaSnip";
-          path = luasnip;
-        }
-        {
-          name = "catppuccin";
-          path = catppuccin-nvim;
-        }
-        {
-          name = "mini.ai";
-          path = mini-nvim;
-        }
-        {
-          name = "mini.bufremove";
-          path = mini-nvim;
-        }
-        {
-          name = "mini.comment";
-          path = mini-nvim;
-        }
-        {
-          name = "mini.indentscope";
-          path = mini-nvim;
-        }
-        {
-          name = "mini.pairs";
-          path = mini-nvim;
-        }
-        {
-          name = "mini.surround";
-          path = mini-nvim;
-        }
-      ];
-      mkEntryFromDrv = drv:
-        if lib.isDerivation drv then {
-          name = "${lib.getName drv}";
-          path = drv;
-        } else
-          drv;
-      lazyPath =
-        pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
-    in ''
-      require("lazy").setup({
-        defaults = {
-          lazy = true,
-        },
-        dev = {
-          -- reuse files from pkgs.vimPlugins.*
-          path = "${lazyPath}",
-          patterns = { "." },
-          -- fallback to download
-          fallback = true,
-        },
-        spec = {
-          { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-          -- The following configs are needed for fixing lazyvim on nix
-          -- force enable telescope-fzf-native.nvim
-          { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
-          -- disable mason.nvim, use programs.neovim.extraPackages
-          { "williamboman/mason-lspconfig.nvim", enabled = false },
-          { "williamboman/mason.nvim", enabled = false },
-          -- import/override with your plugins
-          { import = "plugins" },
-          -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
-          { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = {} } },
-        },
-      })
-    '';
-  };
+    clipboard.providers.wl-copy.enable = true;
+    colorschemes.vscode.enable = true;
+    globals.mapleader = " ";
+    globals.maplocalleader = " ";
 
-  # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-  xdg.configFile."nvim/parser".source = let
-    parsers = pkgs.symlinkJoin {
-      name = "treesitter-parsers";
-      paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins
-        (plugins: with plugins; [ c lua ])).dependencies;
+    options = {
+      number = true;
+      clipboard = "unnamedplus";
+      relativenumber = true;
+      ignorecase = true;
+      smartcase = true;
     };
-  in "${parsers}/parser";
 
-  # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-  xdg.configFile."nvim/lua".source = ./lua;
+    extraConfigLua = ''
+      -- Print a little welcome message when nvim is opened!
+      print("Hello world!")
+      -- auto format
 
+    '';
+    autoCmd = [{
+      event = "BufWritePre";
+      command = "lua vim.lsp.buf.format()";
+    }];
+
+    keymaps = [
+      {
+        action = "+yg_";
+        key = "<leader>Y";
+      }
+      {
+        action = "<cmd>BufferLineCycleNext<CR>";
+        key = "<C-Right>";
+      }
+      {
+        action = "<cmd>BufferLineCyclePrev<CR>";
+        key = "<C-Left>";
+      }
+      {
+        action = "<cmd>Neotree toggle<CR>";
+        key = "<leader>e";
+      }
+      {
+        action = "<cmd>lua vim.lsp.buf.code_action()<CR>";
+        key = "<leader>a";
+      }
+      {
+        action = "<cmd>lua vim.diagnostic.goto_prev()<CR>";
+        key = "[d";
+      }
+      {
+        action = "<cmd>lua vim.diagnostic.goto_next()<CR>";
+        key = "]d";
+      }
+      {
+        action = "<cmd>FzfLua diagnostics_document<CR>";
+        key = "<leader>d";
+      }
+      {
+        action = "<cmd>FzfLua live_grep<CR>";
+        key = "<leader>/";
+      }
+      {
+        action = "<cmd>FzfLua diagnostics_workspace<CR>";
+        key = "<leader>D";
+      }
+    ];
+    plugins = {
+
+      lsp = {
+        enable = true;
+        servers = {
+          csharp-ls.enable = true;
+          tsserver.enable = true;
+          nil_ls.enable = true;
+          lua-ls.enable = true;
+          nushell.enable = true;
+          svelte.enable = true;
+          gopls.enable = true;
+          tailwindcss.enable = true;
+          taplo.enable = true;
+          typos-lsp.enable = true;
+          rust-analyzer.enable = true;
+          rust-analyzer.installCargo = true;
+          rust-analyzer.installRustc = true;
+        };
+        keymaps.lspBuf = {
+          "<leader>k" = "hover";
+          gr = "references";
+          gd = "definition";
+          gi = "implementation";
+          gt = "type_definition";
+          # gy = "type_definition";
+        };
+      };
+      lspkind.enable = true;
+
+      comment-nvim = { enable = true; };
+      neotest = {
+        enable = true;
+        adapters = {
+          go.enable = true;
+          rust.enable = true;
+          jest.enable = true;
+        };
+      };
+      dap = { enable = true; };
+      neo-tree.enable = true;
+      neo-tree.filesystem.followCurrentFile.enabled = true;
+      # neorg.enable = true;
+      bufferline.enable = true;
+      lsp-format = { enable = true; };
+      none-ls = {
+        enable = true;
+        enableLspFormat = true;
+        # debug = true;
+        sources = {
+          formatting = {
+            prettier.enable = true;
+            prettier.disableTsServerFormatter = true;
+            nixfmt.enable = true;
+          };
+          diagnostics = {
+            statix.enable = true;
+            deadnix.enable = true;
+          };
+        };
+      };
+      fzf-lua = {
+        enable = true;
+        keymaps = {
+          "<leader>s" = {
+            action = "lsp_document_symbols";
+            options = { silent = true; };
+            settings = {
+              previewers = {
+                cat = {
+                  cmd =
+                    "/nix/store/mb488rr560vq1xnl10hinnyfflcrd51n-coreutils-9.4/bin/cat";
+                };
+              };
+              winopts = { height = 0.5; };
+            };
+          };
+          "<leader>S" = {
+            action = "lsp_workspace_symbols";
+            options = { silent = true; };
+            settings = {
+              previewers = {
+                cat = {
+                  cmd =
+                    "/nix/store/mb488rr560vq1xnl10hinnyfflcrd51n-coreutils-9.4/bin/cat";
+                };
+              };
+              winopts = { height = 0.5; };
+            };
+          };
+          "<leader>f" = {
+            action = "git_files";
+            options = {
+              desc = "Fzf-Lua Git Files";
+              silent = true;
+            };
+            settings = {
+              previewers = {
+                cat = {
+                  cmd =
+                    "/nix/store/mb488rr560vq1xnl10hinnyfflcrd51n-coreutils-9.4/bin/cat";
+                };
+              };
+              winopts = { height = 0.5; };
+            };
+          };
+        };
+      };
+      cursorline.enable = true;
+      gitblame = {
+        enable = true;
+        delay = 3500;
+      };
+      gitgutter.enable = true;
+      gitlinker.enable = true;
+
+      luasnip.enable = true;
+      # lint.enable = true;
+      # airline.enable = true;
+      lualine.enable = true;
+      cmp = {
+        enable = true;
+        cmdline = {
+          "/" = {
+            mapping = { __raw = "cmp.mapping.preset.cmdline()"; };
+            sources = [{ name = "buffer"; }];
+          };
+          ":" = {
+            mapping = { __raw = "cmp.mapping.preset.cmdline()"; };
+            sources = [
+              { name = "path"; }
+              {
+                name = "cmdline";
+                option = { ignore_cmds = [ "Man" "!" ]; };
+              }
+            ];
+          };
+        };
+        filetype = {
+          python = { sources = [{ name = "nvim_lsp"; }]; };
+          ts = { sources = [{ name = "nvim_lsp"; }]; };
+        };
+      };
+      cmp-nvim-lsp.enable = true;
+      cmp-nvim-lsp-document-symbol.enable = true;
+      cmp-tabnine.enable = true;
+
+      surround.enable = true;
+      treesitter.enable = true;
+      which-key = { enable = true; };
+
+      nvim-autopairs.enable = true;
+      auto-session = {
+        enable = true;
+        autoSession.enabled = true;
+        autoSave.enabled = true;
+        autoRestore.enabled = true;
+      };
+      # auto-save.enable = true;
+      # auto-save.triggerEvents = [ "BufWritePre" ];
+
+    };
+
+  };
 }

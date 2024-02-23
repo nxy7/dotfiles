@@ -1,5 +1,13 @@
 ![desktop screenshot](https://i.imgur.com/QDRmI8r.png)
 
+```mermaid
+  graph TDqww;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+```
+
 My personal system and user configuration using NixOS and Nix package manager.
 All configurations are made using flakes, feel free to bootstrap your system
 configuration using my `/nixos` folder :-) 

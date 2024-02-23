@@ -1,7 +1,8 @@
-{ pkgs, stablepkgs, config, ... }: {
-  environment.systemPackages = (with stablepkgs; [
+{ pkgs, config, ... }: {
+  environment.systemPackages = (with pkgs; [
     lsof
     unzip
+    strongswan
 
     stremio
     zip
@@ -16,7 +17,6 @@
     helix
 
     wineWowPackages.stable
-  ]) ++ (with pkgs; [
     # wezterm
     kitty
 

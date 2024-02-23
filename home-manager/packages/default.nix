@@ -1,13 +1,24 @@
-{ stablepkgs, pkgs, inputs, ... }:
+{ pkgs, inputs, ... }:
 let
-  stable = with stablepkgs; [ hugo ];
-  unstable = with pkgs; [
-    (obsidian.override { electron = stablepkgs.electron_24; })
-    activitywatch
+  packages = with pkgs; [
+    obsidian
+    jetbrains.datagrip
+    chatgpt-cli
+    buf
+    fd
+    tlrc
+    eza
+    yazi
+    omnisharp-roslyn
+    slack
 
     xonsh
-    xxh
+    elvish
 
+    vscode
+
+    grpcui
+    grpcurl
     wacomtablet
 
     lnav
@@ -17,11 +28,14 @@ let
     qmk
     hwinfo
     mangohud
-    gimp-with-plugins
+    gimp
 
     gtk3
     transmission_4-gtk
     gnome.nautilus
+
+    nheko
+    fractal
 
     cura
 
@@ -36,23 +50,21 @@ let
 
     pgweb
     du-dust
-    hyperfine
+    hyperfine # cli benchmarking tool
+    k6 # http benchmarking tool
     htop
     gitui
 
-    pueue
     keepassxc
-    # ventoy
     cachix
 
     k9s
     kustomize
     kube3d
     kubectl
-    colorls
     bat
     ripgrep
 
   ];
-in { home.packages = stable ++ unstable; }
+in { home.packages = packages; }
 

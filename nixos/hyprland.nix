@@ -1,16 +1,8 @@
-{ pkgs, inputs, ... }:
-let hyprlandPackage = inputs.hyprland.packages.${pkgs.system}.hyprland;
-in {
-
-  # services.getty = {
-  #   autologinUser = "nxyt";
-  #   greetingLine = "Wanna try some 'inux";
-  # };
+{ pkgs, inputs, ... }: {
 
   programs.hyprland = {
     enable = true;
     xwayland = { enable = true; };
-    package = hyprlandPackage;
   };
 
   services.xserver.enable = true;

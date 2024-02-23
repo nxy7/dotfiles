@@ -1,14 +1,14 @@
-{ home-manager, inputs, pkgs, stablepkgs, ... }:
-let username = builtins.getEnv "USER";
-
-in home-manager.lib.homeManagerConfiguration {
+username:
+{ inputs, pkgs, ... }:
+inputs.home-manager.lib.homeManagerConfiguration {
   inherit pkgs;
 
-  extraSpecialArgs = { inherit inputs pkgs stablepkgs username; };
+  extraSpecialArgs = { inherit inputs pkgs username; };
 
   modules = [
     # merge stylix base16 with some extra colors
     inputs.base16.homeManagerModule
+    inputs.nixvim.homeManagerModules.nixvim
     ({ config, ... }: { config.scheme = ../theme.yaml; })
 
     inputs.stylix.homeManagerModules.stylix
@@ -25,13 +25,14 @@ in home-manager.lib.homeManagerConfiguration {
     ./hyprland/ags
 
     ./obs-studio
+
     # editors
     ./helix
     # ./neovim
 
     # shells
     ./nushell
-    # ./fish
+    ./fish
     # ./zsh
     ./bash
 

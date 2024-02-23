@@ -1,5 +1,41 @@
 {
-  description = "My system configuration";
+  description = "nxyt NixOS and Home Manager configuration";
+
+  outputs = { self, flake-parts, home-manager, ... }@inputs:
+    let
+      currentUser = builtins.getEnv "USER";
+      system = "x86_64-linux";
+
+      pkgs = import inputs.unstablePkgs {
+        inherit system;
+        config.allowUnfree = true;
+        config.allowUnfreePredicate = (_: true);
+        config.permittedInsecurePredicate = (_: true);
+        overlays = import ./overlays.nix { inherit inputs system; };
+      };
+
+      homeConfig =
+        import ./home-manager currentUser { inherit home-manager inputs pkgs; };
+      inherit (inputs.unstablePkgs.lib) nixosSystem;
+    in flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ ];
+      systems = [ "x86_64-linux" ];
+      perSystem = { config, system, pkgs, self', ... }: { };
+      flake = {
+        homeConfigurations = {
+          default = inputs.home-manager.defaultPackage.${system};
+          "${currentUser}" = homeConfig;
+        };
+
+        nixosConfigurations = {
+          nixos = nixosSystem {
+            inherit system;
+            specialArgs = inputs // { inherit pkgs inputs; };
+            modules = [ inputs.hyprland.nixosModules.default ./nixos ];
+          };
+        };
+      };
+    };
 
   inputs = {
     unstablePkgs.url = "nixpkgs/nixos-unstable";
@@ -26,50 +62,16 @@
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "unstablePkgs";
 
-  };
+    nvim-github-theme.url = "github:projekt0n/github-nvim-theme";
+    nvim-github-theme.flake = false;
 
-  outputs = { self, flake-parts, home-manager, ... }@inputs:
-    let
-      system = "x86_64-linux";
-      currentUser = builtins.getEnv "USER";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
+      # url = "github:nix-community/nixvim/nixos-23.05";
 
-      insecurePackages =
-        [ "electron-24.8.6" "electron-25.9.0" "python-2.7.18.6" ];
-
-      pkgs = import inputs.unstablePkgs {
-        inherit system;
-        config.allowUnfree = true;
-        config.allowUnfreePredicate = (_: true);
-        config.permittedInsecurePackages = insecurePackages;
-        overlays = import ./overlays.nix { inherit inputs system; };
-      };
-      stablepkgs = import inputs.stablePkgs {
-        inherit system;
-        config.allowUnfree = true;
-        config.allowUnfreePredicate = (_: true);
-        config.permittedInsecurePackages = insecurePackages;
-        overlays = import ./overlays.nix { inherit inputs system; };
-      };
-
-      homeConfiguration =
-        import ./home-manager { inherit home-manager inputs pkgs stablepkgs; };
-
-    in {
-      # run command below to switch home configuration
-      # nix run . switch -- --flake . --impure 
-      packages.${system} = {
-        default = home-manager.defaultPackage.${system};
-        homeConfigurations.${currentUser} = homeConfiguration;
-      };
-
-      # run command below to switch system configuration
-      # sudo nixos-rebuild switch --flake . --impure
-      nixosConfigurations.nixos = inputs.unstablePkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = inputs // { inherit pkgs stablepkgs inputs; };
-        modules = [ inputs.hyprland.nixosModules.default ./nixos ];
-      };
-
-      nixosConfigurations.default = self.nixosConfigurations.nixos;
+      # inputs.nixpkgs.follows = "stablePkgs";
     };
+
+  };
 }
