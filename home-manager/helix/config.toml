@@ -45,5 +45,7 @@ S-right = ":bnext"
 C-j = "half_page_down"
 C-k = "half_page_up"
 
+space = { q = { a = ":pipe echo elo" } }
+
 [keys.insert]
 C-space = "completion"

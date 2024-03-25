@@ -1,1 +1,6 @@
-{ pkgs, ... }: { programs.zellij.enable = true; }
+{ pkgs, ... }: {
+  programs.zellij = {
+    enable = true;
+    settings = { };
+  };
+}

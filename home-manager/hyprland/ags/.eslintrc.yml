@@ -16,21 +16,10 @@ rules:
     - error
     - before: false
       after: true
-  comma-style:
-    - error
-    - last
-  curly:
-    - error
-    - multi-or-nest
-    - consistent
   dot-location:
     - error
     - property
   eol-last: error
-  indent:
-    - error
-    - 4
-    - SwitchCase: 1
   keyword-spacing:
     - error
     - before: true
@@ -43,18 +32,9 @@ rules:
     - never
     - allowSingleLineBlocks: false
   prefer-const: error
-  quotes:
-    - error
-    - single
-    - avoidEscape: true
-  semi:
-    - error
-    - always
   nonblock-statement-body-position:
     - error
     - below
-  no-trailing-spaces:
-    - error
   array-bracket-spacing:
     - error
     - never

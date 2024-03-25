@@ -32,7 +32,7 @@
     {
       name = "typescript";
       auto-format = true;
-      language-servers = [ "typescript" ];
+      language-servers = [ "eslint" "typescript" ];
       formatter = {
         command = "${pkgs.nodePackages_latest.prettier}/bin/prettier";
         args = [ "--parser" "typescript" ];
@@ -41,6 +41,11 @@
     {
       name = "javascript";
       auto-format = true;
+      language-servers = [ "eslint" "typescript" ];
+      formatter = {
+        command = "${pkgs.nodePackages_latest.prettier}/bin/prettier";
+        args = [ "--parser" "typescript" ];
+      };
     }
     {
       name = "markdown";
@@ -75,10 +80,31 @@
     };
   };
   language-server.eslint = {
-    args = [ "--stdin" ];
-    command = "${pkgs.nodePackages_latest.eslint}/bin/eslint";
-    # command =
-    #   "${pkgs.nodePackages_latest.vscode-langservers-extracted}/bin/vscode-eslint-language-server";
+    command = "vscode-eslint-language-server";
+    args = [ "--stdio" ];
+    config = {
+      validate = "on";
+      format = true;
+      quiet = false;
+      onIgnoredFiles = "off";
+      rulesCustomizations = [ ];
+      run = "onType";
+      # nodePath configures the directory in which the eslint server should start its node_modules resolution.
+      # This path is relative to the workspace folder (root dir) of the server instance.
+      nodePath = "";
+      # use the workspace folder location or the file location (if no workspace folder is open) as the working directory
+
+      workingDirectory.mode = "auto";
+      experimental = { };
+      problems.shortenToSingleLine = false;
+      codeAction = {
+        disableRuleComment = {
+          enable = true;
+          location = "separateLine";
+        };
+        showDocumentation.enable = true;
+      };
+    };
   };
   language-server.tailwind = {
     args = [ "--stdio" ];

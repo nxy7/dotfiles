@@ -48,6 +48,14 @@ config.keys = {
 }
 
 
+for i = 1, 8 do
+  -- CTRL+ALT + number to activate that tab
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = 'CTRL|ALT',
+    action = wezterm.action.ActivateTab(i - 1),
+  })
+end
 
 
 config.window_frame = {

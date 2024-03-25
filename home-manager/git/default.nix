@@ -2,13 +2,13 @@
   programs.git = {
     enable = true;
     userName = "nxy7";
-    userEmail = "lolnoxy@gmail.com";
+    userEmail = "danielukd@gmail.com";
     extraConfig = { credential = { helper = "cache"; }; };
   };
   programs.lazygit = {
     enable = true;
     settings.git.commit.signOff = true;
-    settings.os.editPreset = "helix";
+    settings.os.editPreset = "hx";
   };
   programs.gh = {
     enable = true;

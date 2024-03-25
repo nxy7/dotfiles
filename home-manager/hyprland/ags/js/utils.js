@@ -31,6 +31,12 @@ export function forMonitors(widget) {
   return range(n, 0).map(widget).flat(1);
 }
 
+export function forMonitor(widget, nr) {
+  // const n = Gdk.Display.get_default()?.get_n_monitors() || 1;
+  // return range(n, 0).map(widget).flat(1);
+  return [widget(nr)];
+}
+
 /**
   * @param {import('gi://Gtk?version=3.0').default.Widget} widget
   * @returns {any} - missing cairo type

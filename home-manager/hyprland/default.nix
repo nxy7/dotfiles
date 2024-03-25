@@ -100,7 +100,10 @@ let
 
     bind=$mainMod SHIFT, R,  exec, ags -q; ags
     bind=SUPER,F,fullscreen
+
+    # screenshots
     bind=,Print,exec,grimblast copy area
+    bind=CTRL,Print,exec,grimblast copysave area - | swappy -f -
 
     bind=SUPER, R,       exec, ags -t applauncher
     bind=SUPER, Tab,     exec, ags -t overview
@@ -160,10 +163,11 @@ let
     workspace=9,monitor:HDMI-A-1
 
 
-    windowrule = workspace 5, title:(steam)
+    windowrule = workspace 4, title:(steam)
     windowrule = workspace 6, title:^(OBS)
     windowrule = workspace 7, title:(KeePassXC)
     windowrule = workspace 8, title:(Discord)
+    windowrule = workspace 8, title:(Slack)
 
     monitor=DP-2,2560x1440@240,auto,1
     monitor=HDMI-A-1,preferred,0x0,1,transform,3
@@ -177,6 +181,7 @@ let
 
     exec-once = keepassxc
     exec-once = discord
+    exec-once = slack
   '';
 in {
   wayland.windowManager.hyprland = {
@@ -186,6 +191,14 @@ in {
     # plugins = with pkgs; [ ];
   };
 
-  home.packages = with pkgs; [ hyprpicker grimblast grim slurp ];
+  home.packages = with pkgs; [
+    hyprpicker
+    grimblast
+    grim
+    slurp
+    swappy
+    ksnip
+    flameshot
+  ];
   programs.rofi = { enable = true; };
 }

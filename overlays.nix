@@ -13,5 +13,6 @@ in [
     pomodorust = inputs.pomodorust.packages.${system}.default;
     openvpn = stablepkgs.openvpn;
     obsidian = (prev.obsidian.override { electron = stablepkgs.electron_24; });
+    steel = inputs.steel.packages.${system}.steel;
   })
 ]

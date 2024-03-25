@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
   services.udev.extraRules = ''
     # Picoprobe
     SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", MODE="0666"
@@ -12,6 +12,8 @@
     # GoXLR
     SUBSYSTEM=="usb", ATTR{idVendor}=="1220", ATTR{idProduct}=="8fe4", MODE="0666"
     SUBSYSTEM=="usb", ATTR{idVendor}=="1220", ATTR{idProduct}=="8fe0", MODE="0666"
+
+    ${builtins.readFile ./69-probe-rs.rules}
   '';
 
 }

@@ -1,8 +1,9 @@
 { pkgs, config, ... }: {
   environment.systemPackages = (with pkgs; [
+    gnome.gnome-control-center
+    busybox
     lsof
     unzip
-    strongswan
 
     stremio
     zip
@@ -23,7 +24,8 @@
     goxlr-utility
 
     mission-center
-    nvtop-nvidia
+    # nvtop-nvidia
+    nvtopPackages.nvidia
 
     qt6.qtwayland
     config.boot.kernelPackages.v4l2loopback

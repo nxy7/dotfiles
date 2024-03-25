@@ -2,6 +2,9 @@
 let
   packages = with pkgs; [
     obsidian
+    # steel
+    speechd
+    nest-cli
     jetbrains.datagrip
     chatgpt-cli
     buf

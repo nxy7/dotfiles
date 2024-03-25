@@ -28,6 +28,12 @@
         },
       }
 
+      for i = 1, 11 do
+        table.insert(config.keys, {
+          key = 'F' .. tostring(i),
+          action = wezterm.action.ActivateTab(i - 1),
+        })
+      end
 
 
       config.window_frame = {

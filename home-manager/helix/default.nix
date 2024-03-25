@@ -22,6 +22,7 @@ in {
     nil
     nixfmt
     lua-language-server
+    vscode-langservers-extracted
 
     zls
     taplo

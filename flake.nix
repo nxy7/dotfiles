@@ -62,6 +62,9 @@
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "unstablePkgs";
 
+    steel.url = "github:mattwparas/steel";
+    steel.inputs.nixpkgs.follows = "unstablePkgs";
+
     nvim-github-theme.url = "github:projekt0n/github-nvim-theme";
     nvim-github-theme.flake = false;
 
