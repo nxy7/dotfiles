@@ -10,9 +10,6 @@ let
         natural_scroll = no
       }
 
-      # device:mice {
-      #   sensitivity = 0
-      # }
     }
 
       general {
@@ -20,18 +17,18 @@ let
         border_size = 0
       }
       decoration {
-          col.shadow_inactive = rgba(1E202900)
+          col.shadow_inactive = rgba(1E2029ee)
 
-          rounding = 5
+          # rounding = 5
           inactive_opacity = 0.92
 
           # suggested shadow setting
-          col.shadow = rgb(111111)
+          col.shadow = rgba(111111ee)
           drop_shadow = yes
           shadow_range = 27
-          # shadow_offset = 0 0
-          shadow_render_power = 2
-          # shadow_scale = 0.97
+          shadow_offset = 10 10
+          shadow_render_power = 4
+          shadow_scale = 0.97
 
 
           blur {
@@ -43,12 +40,6 @@ let
           }
       }
 
-      group {
-          groupbar {
-              col.active = rgb(bd93f9) rgb(44475a) 90deg
-              col.inactive = rgba(282a36dd)
-          }
-      }
     # Some default env vars.
     env = XCURSOR_SIZE,24
     env = LIBVA_DRIVER_NAME,nvidia
@@ -105,7 +96,7 @@ let
     bind=,Print,exec,grimblast copy area
     bind=CTRL,Print,exec,grimblast copysave area - | swappy -f -
 
-    bind=SUPER, R,       exec, ags -t applauncher
+    bind=SUPER, R,       exec, ags -t launcher
     bind=SUPER, Tab,     exec, ags -t overview
     bind = $mainMod SHIFT, Q, killactive, 
     bind = $mainMod, E, exec, nautilus
@@ -199,6 +190,29 @@ in {
     swappy
     ksnip
     flameshot
+
+    which
+    dart-sass
+    fd
+    fzf
+    brightnessctl
+    swww
+    inputs.matugen.packages.${system}.default
+    slurp
+    wf-recorder
+    wl-clipboard
+    wayshot
+    swappy
+    hyprpicker
+    pavucontrol
+    networkmanager
+    gtk3
+    glib
+    libsoup_3
+    papirus-icon-theme
+    gnome.adwaita-icon-theme
+
+    libadwaita
   ];
-  programs.rofi = { enable = true; };
+  # programs.rofi = { enable = true; };
 }

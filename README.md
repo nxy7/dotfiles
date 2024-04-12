@@ -39,3 +39,7 @@ nix run . switch -- --flake . --impure # you might need to add -b bk
 # Additional notes
 This repository also contains some of my personal settings like files for my keyboard layout (I'm using split keyboard).
 
+
+# TODOs
+- [ ] update hyprland config
+- [ ] make desktop bottom bar vertical and appear only on main screen

@@ -5,6 +5,10 @@
       auto-format = true;
     }
     {
+      name = "lua";
+      auto-format = true;
+    }
+    {
       name = "nix";
       auto-format = true;
       formatter = { command = "nixfmt"; };

@@ -47,6 +47,7 @@
     home-manager.url = "github:nix-community/home-manager";
     flake-parts.url = "github:hercules-ci/flake-parts";
     ags.url = "github:Aylur/ags";
+    astal.url = "github:Aylur/astal";
     wezterm = {
       url = "github:wez/wezterm?dir=nix";
       # inputs.nixpkgs.follows = "nixpkgs";
@@ -67,6 +68,8 @@
 
     nvim-github-theme.url = "github:projekt0n/github-nvim-theme";
     nvim-github-theme.flake = false;
+
+    matugen.url = "github:InioX/matugen";
 
     nixvim = {
       url = "github:nix-community/nixvim";

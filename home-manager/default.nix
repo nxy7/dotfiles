@@ -19,7 +19,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
     ./homesettings
 
     # display
-    inputs.ags.homeManagerModules.default
+    # inputs.ags.homeManagerModules.default
     ./hyprland
     ./hyprland/theme.nix
     ./hyprland/ags

@@ -3,6 +3,7 @@
     image = ../hyprland/wallpapers/1.jpg;
     polarity = "dark";
     base16Scheme = ../../theme.yaml;
+    # autoEnable = true;
   };
   stylix.fonts = {
     monospace = config.stylix.fonts.sansSerif;

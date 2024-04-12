@@ -19,6 +19,10 @@ let
       #     "Mononoki"
     ];
   });
+  theme = {
+    name = "MoreWaita";
+    package = pkgs.morewaita-icon-theme;
+  };
 
   cursor-theme = "Qogir";
 in {
@@ -27,7 +31,12 @@ in {
     packages = with pkgs; [
       nerdfonts
       swww
-      kora-icon-theme
+      # kora-icon-theme
+      cantarell-fonts
+      font-awesome
+      morewaita-icon-theme
+      gnome.adwaita-icon-theme
+      papirus-icon-theme
 
       adw-gtk3
     ];
@@ -40,8 +49,23 @@ in {
 
   gtk = {
     enable = true;
-    iconTheme.name = "kora";
-    iconTheme.package = pkgs.kora-icon-theme;
+    iconTheme = {
+      name = theme.name;
+      package = theme.package;
+    };
+
+  };
+  home.file = {
+    ".local/share/themes/${theme.name}" = {
+      source = "${theme.package}/share/themes/${theme.name}";
+    };
+    # ".config/gtk-4.0/gtk.css".text = ''
+    #   window.messagedialog .response-area > button,
+    #   window.dialog.message .dialog-action-area > button,
+    #   .background.csd{
+    #     border-radius: 0;
+    #   }
+    # '';
   };
 
   qt = { enable = true; };

@@ -1,4 +1,9 @@
 { pkgs, inputs, config, lib, ... }: rec {
+  imports = [
+    inputs.ags.homeManagerModules.default
+    inputs.astal.homeManagerModules.default
+  ];
+
   home.packages = with pkgs; [
     sassc
     brightnessctl
@@ -37,6 +42,11 @@
 
     configDir = ./.;
 
-    extraPackages = with pkgs; [ libsoup_3 papirus-icon-theme ];
+    extraPackages = with pkgs; [ libsoup_3 ];
+  };
+
+  programs.astal = {
+    enable = true;
+    extraPackages = with pkgs; [ libadwaita ];
   };
 }

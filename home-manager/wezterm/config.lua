@@ -1,89 +1,106 @@
-local wezterm = require 'wezterm'
+local wezterm = require "wezterm"
 
 local config = wezterm.config_builder()
 
-
--- For example, changing the color scheme:
--- config.tab_bar_style = ""
-config.enable_wayland = true
--- config.text_background_opacity = 0.0
--- config.front_end = "WebGpu"
-config.color_scheme = 'zenbones_dark'
+config.enable_wayland = false
+config.front_end = "WebGpu"
 config.window_decorations = "NONE"
 config.hide_tab_bar_if_only_one_tab = true
 config.window_background_opacity = 0.75
 config.text_background_opacity = 0.75
-config.window_close_confirmation = 'NeverPrompt'
-config.leader = { key = 'a', mods = 'CTRL' }
+config.window_close_confirmation = "NeverPrompt"
 config.keys = {
-  -- search for things that look like git hashes
   {
-    key = 'F',
-    mods = 'SHIFT|CTRL|ALT',
-    action = wezterm.action.Search { CaseInSensitiveString = '' },
+    key = "F",
+    mods = "SHIFT|CTRL|ALT",
+    action = wezterm.action.Search { CaseInSensitiveString = "" },
+  },
+
+  { key = "P",     mods = "CTRL|SHIFT", action = wezterm.action.ActivateCommandPalette },
+  {
+    key = "N",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action_callback(function(_, pane)
+      local tab = pane:tab()
+      local panes = tab:panes_with_info()
+      if #panes == 1 then
+        pane:split({
+          direction = "Bottom",
+          size = 0.4,
+        })
+      elseif not panes[1].is_zoomed then
+        panes[1].pane:activate()
+        tab:set_zoomed(true)
+      elseif panes[1].is_zoomed then
+        tab:set_zoomed(false)
+        panes[2].pane:activate()
+      end
+    end),
   },
   {
-    key = 'w',
-    mods = 'CMD',
-    action = wezterm.action.CloseCurrentPane { confirm = true },
+    key = "H",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action_callback(function(_, pane)
+      local tab = pane:tab()
+      local panes = tab:panes_with_info()
+      if #panes == 1 then
+        pane:split({
+          direction = "Right",
+          size = 0.4,
+        })
+      elseif not panes[1].is_zoomed then
+        panes[1].pane:activate()
+        tab:set_zoomed(true)
+      elseif panes[1].is_zoomed then
+        tab:set_zoomed(false)
+        panes[2].pane:activate()
+      end
+    end),
   },
-  { key = 'UpArrow',   mods = 'ALT', action = wezterm.action.ScrollToPrompt(-1) },
-  { key = 'DownArrow', mods = 'ALT', action = wezterm.action.ScrollToPrompt(1) },
-  {
-    key = 'H',
-    mods = 'SHIFT|CTRL|ALT',
-    action = wezterm.action.AdjustPaneSize { 'Left', 5 },
-  },
-  {
-    key = 'J',
-    mods = 'SHIFT|CTRL|ALT',
-    action = wezterm.action.AdjustPaneSize { 'Down', 5 },
-  },
-  { key = 'K', mods = 'SHIFT|CTRL|ALT', action = wezterm.action.AdjustPaneSize { 'Up', 5 } },
-  {
-    key = 'L',
-    mods = 'SHIFT|CTRL|ALT',
-    action = wezterm.action.AdjustPaneSize { 'Right', 5 },
-  },
+  { key = "K",     mods = "CTRL|SHIFT", action = wezterm.action.CloseCurrentPane { confirm = true }, },
+  { key = 'R',     mods = 'CTRL|SHIFT', action = wezterm.action.RotatePanes 'Clockwise' },
+  { key = 'Enter', mods = 'CTRL|SHIFT', action = wezterm.action.TogglePaneZoomState }
+  -- { key = 'L', mods = 'CTRL|SHIFT', action = wezterm.action.RotatePanes 'Clockwise' }
+  -- { key = 'U', mods = 'CTRL|SHIFT', action = wezterm.action.RotatePanes 'Clockwise' }
+
+
+
 }
 
-
-for i = 1, 8 do
-  -- CTRL+ALT + number to activate that tab
+for i = 1, 11 do
   table.insert(config.keys, {
-    key = tostring(i),
-    mods = 'CTRL|ALT',
+    key = 'F' .. tostring(i),
     action = wezterm.action.ActivateTab(i - 1),
   })
 end
 
 
 config.window_frame = {
-  font = wezterm.font { family = 'Roboto', weight = 'Bold' },
+  font = wezterm.font { family = "Roboto", weight = "Bold" },
   font_size = 15.0,
-  -- active_titlebar_bg = 'none',
-  -- inactive_titlebar_bg = 'none',
-  -- button_bg = 'none',
-  -- inactive_titlebar_border_bottom = 'none',
-  -- active_titlebar_border_bottom = 'none',
+  -- active_titlebar_bg = "none",
+  -- inactive_titlebar_bg = "none",
+  -- button_bg = "none",
+  -- inactive_titlebar_border_bottom = "none",
+  -- active_titlebar_border_bottom = "none",
 }
+config.font_size = 18.0
 
 config.use_fancy_tab_bar = false
 config.colors = {
   tab_bar = {
-    -- inactive_tab_edge = 'none',
-    background = '#1c1917',
+    background = "#${config.lib.stylix.colors.base00}",
     active_tab = {
-      fg_color = '#FFFFFF',
-      bg_color = '#1c1917',
+      fg_color = "#FFFFFF",
+      bg_color = "#${config.lib.stylix.colors.base00}",
     },
     inactive_tab = {
-      fg_color = '#AAAAAA',
-      bg_color = '#1c1917',
+      fg_color = "#AAAAAA",
+      bg_color = "#${config.lib.stylix.colors.base00}",
     },
     new_tab = {
-      fg_color = '#1c1917',
-      bg_color = '#1c1917',
+      fg_color = "#1c1917",
+      bg_color = "#${config.lib.stylix.colors.base00}",
     },
   },
 }

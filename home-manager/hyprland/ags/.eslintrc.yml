@@ -6,9 +6,6 @@ parserOptions:
   ecmaVersion: latest
   sourceType: 'module'
 rules:
-  arrow-parens:
-    - error
-    - as-needed
   comma-dangle:
     - error
     - always-multiline

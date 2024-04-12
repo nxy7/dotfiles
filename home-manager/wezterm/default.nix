@@ -15,17 +15,61 @@
       config.text_background_opacity = 0.75
       config.window_close_confirmation = "NeverPrompt"
       config.keys = {
-        -- search for things that look like git hashes
         {
           key = "F",
           mods = "SHIFT|CTRL|ALT",
           action = wezterm.action.Search { CaseInSensitiveString = "" },
         },
+
+        { key = "P",     mods = "CTRL|SHIFT", action = wezterm.action.ActivateCommandPalette },
         {
-          key = "w",
-          mods = "CMD",
-          action = wezterm.action.CloseCurrentPane { confirm = true },
+          key = "N",
+          mods = "CTRL|SHIFT",
+          action = wezterm.action_callback(function(_, pane)
+            local tab = pane:tab()
+            local panes = tab:panes_with_info()
+            if #panes == 1 then
+              pane:split({
+                direction = "Bottom",
+                size = 0.4,
+              })
+            elseif not panes[1].is_zoomed then
+              panes[1].pane:activate()
+              tab:set_zoomed(true)
+            elseif panes[1].is_zoomed then
+              tab:set_zoomed(false)
+              panes[2].pane:activate()
+            end
+          end),
         },
+        {
+          key = "H",
+          mods = "CTRL|SHIFT",
+          action = wezterm.action_callback(function(_, pane)
+            local tab = pane:tab()
+            local panes = tab:panes_with_info()
+            if #panes == 1 then
+              pane:split({
+                direction = "Right",
+                size = 0.4,
+              })
+            elseif not panes[1].is_zoomed then
+              panes[1].pane:activate()
+              tab:set_zoomed(true)
+            elseif panes[1].is_zoomed then
+              tab:set_zoomed(false)
+              panes[2].pane:activate()
+            end
+          end),
+        },
+        { key = "K",     mods = "CTRL|SHIFT", action = wezterm.action.CloseCurrentPane { confirm = true }, },
+        { key = 'R',     mods = 'CTRL|SHIFT', action = wezterm.action.RotatePanes 'Clockwise' },
+        { key = 'Enter', mods = 'CTRL|SHIFT', action = wezterm.action.TogglePaneZoomState }
+        -- { key = 'L', mods = 'CTRL|SHIFT', action = wezterm.action.RotatePanes 'Clockwise' }
+        -- { key = 'U', mods = 'CTRL|SHIFT', action = wezterm.action.RotatePanes 'Clockwise' }
+
+
+
       }
 
       for i = 1, 11 do
@@ -70,7 +114,6 @@
       config.freetype_load_target = "Light"
 
       return config
-            
     '';
   };
 }

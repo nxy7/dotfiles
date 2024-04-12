@@ -40,4 +40,15 @@ in {
     nls
     marksman
   ];
+
+  home.file.".config/helix/ignore".text = ''
+    !.env*
+    !.dockerignore
+    !.github/
+    !.gitignore
+    !.gitattributes
+    !.eslintrc*
+    !.prettierc*
+    !.cargo/
+  '';
 }

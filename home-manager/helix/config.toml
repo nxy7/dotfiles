@@ -26,6 +26,7 @@ display-inlay-hints = true
 [editor.file-picker]
 max-depth = 14
 
+
 [editor.indent-guides]
 render = true
 character = "┊" # Some characters that work well: "▏", "┆", "┊", "⸽"

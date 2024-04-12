@@ -15,13 +15,20 @@ in {
       alias la = ls -a
       alias ll = ls -l
       alias kctl = sudo k3s kubectl
-      alias homeswitch = home-manager switch --flake . --impure 
-      alias sysswitch = sudo nixos-rebuild switch --flake . --impure
-      alias lsysswitch = sudo systemd-run --property=MemoryMax=10G nixos-rebuild switch --flake . --impure
       alias lg = lazygit
       alias k = kubectl
       alias grep = rg -S
       alias just = just --unstable
+
+      def homeswitch [] {
+        home-manager switch --flake . --impure; 
+        spd-say 'Home configuration updated';
+      }
+
+      def sysswitch [] {
+        sudo nixos-rebuild switch --flake . --impure;
+        spd-say 'System updated';
+      }
 
       # runs test with specified name
       def nptest [
@@ -44,6 +51,7 @@ in {
       def VpnRestart [] {
         sudo ipsec down fsh;
         sudo ipsec up fsh;
+        spd-say 'Connected to VPN'
       }
 
       def getArgoPw [] {
