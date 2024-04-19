@@ -1,77 +1,11 @@
 { pkgs, ... }:
 let
-  poshConfig = builtins.toFile "posh-config.json"
-    (builtins.readFile ../oh-my-posh/posh-config.json);
 in {
+  home.packages = with pkgs; [ freshfetch ];
   programs.nushell = {
     enable = true;
-    package = pkgs.nushellFull;
-    extraConfig = ''
-      alias z = zoxide
-
-      alias vi = nvim
-      alias rm = ^rm -r
-      alias cp = ^cp -r
-      alias la = ls -a
-      alias ll = ls -l
-      alias kctl = sudo k3s kubectl
-      alias lg = lazygit
-      alias k = kubectl
-      alias grep = rg -S
-      alias just = just --unstable
-
-      def homeswitch [] {
-        home-manager switch --flake . --impure; 
-        spd-say 'Home configuration updated';
-      }
-
-      def sysswitch [] {
-        sudo nixos-rebuild switch --flake . --impure;
-        spd-say 'System updated';
-      }
-
-      # runs test with specified name
-      def nptest [
-        testName: string
-        --file (-m)
-        --bail (-b)
-        ] {
-        if $file {
-          npm run test:e2e $"($testName)"
-        }
-        
-         if $bail {
-          npm run test:e2e -- --bail 1 $"-t=($testName)"
-        } else {
-          npm run test:e2e -- $"-t=($testName)"
-        }
-      }
-
-
-      def VpnRestart [] {
-        sudo ipsec down fsh;
-        sudo ipsec up fsh;
-        spd-say 'Connected to VPN'
-      }
-
-      def getArgoPw [] {
-         kubectl get secret -n argocd argocd-initial-admin-secret -o yaml | from yaml | get data.password | base64 -d 
-      }
-
-      def getFshPw [] {
-        cd ~/dotfiles
-        open s | from yaml | get Password | wl-copy
-        print "fsh password copied to clipboard"
-      }
-
-
-      source ~/.zoxide.nu
-      # use ~/.cache/starship/init.nu
-      # source ~/.oh-my-posh.nu
-
-
-      ${pkgs.freshfetch}/bin/freshfetch
-    '';
+    package = pkgs.nushell;
+    extraConfig = builtins.readFile ./config.nu;
     extraEnv = ''
       $env.PATH = ($env.PATH | split row ":" | prepend $"($env.HOME)/.nix-profile/bin" | prepend "/nix/var/nix/profiles/default/bin" | prepend $"($env.HOME)/.cargo/bin");
 
@@ -84,7 +18,6 @@ in {
       $env.PRISMA_SCHEMA_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
 
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu;
-      # ${pkgs.oh-my-posh}/bin/oh-my-posh init nu -c ${poshConfig};
     '';
   };
 }

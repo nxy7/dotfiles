@@ -1,73 +1,59 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, fullSystem, ... }:
 let
-  packages = with pkgs; [
-    obsidian
-    # steel
-    speechd
-    nest-cli
-    jetbrains.datagrip
-    chatgpt-cli
-    buf
-    fd
-    tlrc
-    eza
-    yazi
-    omnisharp-roslyn
-    slack
+  packages = with pkgs;
+    [ speechd yazi bat ripgrep k9s kustomize kube3d kubectl ]
+    ++ lib.optionals (fullSystem) [
+      obsidian
+      # steel
 
-    xonsh
-    elvish
+      chatgpt-cli
+      buf
+      fd
+      tlrc
+      omnisharp-roslyn
 
-    vscode
+      vscode
 
-    grpcui
-    grpcurl
-    wacomtablet
+      grpcui
+      grpcurl
+      wacomtablet
 
-    lnav
-    insomnia
-    kicad
-    yazi
-    qmk
-    hwinfo
-    mangohud
-    gimp
+      lnav
+      kicad
 
-    gtk3
-    transmission_4-gtk
-    gnome.nautilus
+      qmk
+      hwinfo
+      mangohud
+      gimp
 
-    nheko
-    fractal
+      gtk3
+      transmission_4-gtk
+      gnome.nautilus
 
-    cura
+      nheko
+      fractal
 
-    pomodorust
-    fzf
+      cura
 
-    cilium-cli
+      pomodorust
+      fzf
 
-    cmake
-    llvmPackages_latest.llvm
-    rocmPackages.llvm.clang
+      cilium-cli
 
-    pgweb
-    du-dust
-    hyperfine # cli benchmarking tool
-    k6 # http benchmarking tool
-    htop
-    gitui
+      cmake
+      llvmPackages_latest.llvm
+      rocmPackages.llvm.clang
 
-    keepassxc
-    cachix
+      pgweb
+      du-dust
+      hyperfine # cli benchmarking tool
+      k6 # http benchmarking tool
+      htop
+      gitui
 
-    k9s
-    kustomize
-    kube3d
-    kubectl
-    bat
-    ripgrep
+      cachix
+      keepassxc
 
-  ];
+    ];
 in { home.packages = packages; }
 

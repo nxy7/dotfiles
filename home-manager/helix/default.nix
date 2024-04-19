@@ -2,23 +2,9 @@
 let
   settings = builtins.fromTOML (builtins.readFile ./config.toml);
   languages = import ./languages.nix { inherit pkgs inputs; };
-in {
-  programs.helix = {
-    enable = true;
-    # package = inputs
-    defaultEditor = true;
-    themes = {
-      nxyt = let transparent = "none";
-      in {
-        inherits = "github_dark_dimmed";
-        "ui.background" = { bg = transparent; };
-      };
-    };
-    settings = settings // { theme = lib.mkForce "nxyt"; };
-    inherit languages;
-  };
-
-  home.packages = with pkgs; [
+  lsps = with pkgs; [
+    rust-analyzer
+    gopls
     nil
     nixfmt
     lua-language-server
@@ -40,6 +26,22 @@ in {
     nls
     marksman
   ];
+in {
+  programs.helix = {
+    enable = true;
+    defaultEditor = true;
+    themes = {
+      nxyt = let transparent = "none";
+      in {
+        inherits = "github_dark_dimmed";
+        "ui.background" = { bg = transparent; };
+      };
+    };
+    settings = settings // { theme = lib.mkForce "nxyt"; };
+    inherit languages;
+  };
+
+  home.packages = with pkgs; [ ] ++ lsps;
 
   home.file.".config/helix/ignore".text = ''
     !.env*

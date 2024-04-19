@@ -14,5 +14,7 @@ in [
     openvpn = stablepkgs.openvpn;
     obsidian = (prev.obsidian.override { electron = stablepkgs.electron_24; });
     steel = inputs.steel.packages.${system}.steel;
+    nushell =
+      prev.nushell.override { additionalFeatures = p: [ "dataframe" ]; };
   })
 ]

@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }:
+{ inputs, pkgs, lib, config, ... }:
 let
   hyprlandConfig = ''
     input {
@@ -176,7 +176,7 @@ let
   '';
 in {
   wayland.windowManager.hyprland = {
-    enable = true;
+    enable = lib.mkDefault true;
     # settings = { };
     extraConfig = hyprlandConfig;
     # plugins = with pkgs; [ ];
