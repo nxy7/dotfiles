@@ -59,11 +59,11 @@
         spd-say 'Connected to VPN'
       }
 
-      def getArgoPw [] {
+      def ArgoGetPw [] {
          kubectl get secret -n argocd argocd-initial-admin-secret -o yaml | from yaml | get data.password | base64 -d 
       }
 
-      def getFshPw [] {
+      def FshGetPw [] {
         cd ~/dotfiles
         open s | from yaml | get Password | wl-copy
         print "fsh password copied to clipboard"

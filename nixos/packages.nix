@@ -25,7 +25,7 @@
 
     mission-center
     # nvtop-nvidia
-    nvtopPackages.nvidia
+    # nvtopPackages.nvidia
 
     qt6.qtwayland
     config.boot.kernelPackages.v4l2loopback

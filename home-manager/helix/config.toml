@@ -46,7 +46,10 @@ S-right = ":bnext"
 C-j = "half_page_down"
 C-k = "half_page_up"
 
-space = { q = { a = ":pipe echo elo" } }
+
+[keys.normal.space]
+q = { a = ":pipe echo elo" }
+F = "file_picker_in_current_buffer_directory"
 
 [keys.insert]
 C-space = "completion"

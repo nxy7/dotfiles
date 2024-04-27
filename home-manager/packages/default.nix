@@ -1,21 +1,18 @@
-{ pkgs, inputs, fullSystem, ... }:
+{ pkgs, fullSystem, ... }:
 let
   packages = with pkgs;
-    [ speechd yazi bat ripgrep k9s kustomize kube3d kubectl ]
+    [ yazi bat ripgrep k9s kustomize kube3d kubectl fd fzf ]
     ++ lib.optionals (fullSystem) [
+      speechd
       obsidian
       # steel
+      racket
 
       chatgpt-cli
-      buf
-      fd
-      tlrc
+
+      # vscode
       omnisharp-roslyn
 
-      vscode
-
-      grpcui
-      grpcurl
       wacomtablet
 
       lnav
@@ -24,36 +21,19 @@ let
       qmk
       hwinfo
       mangohud
-      gimp
 
-      gtk3
-      transmission_4-gtk
+      gimp
       gnome.nautilus
 
-      nheko
-      fractal
-
-      cura
-
-      pomodorust
-      fzf
-
-      cilium-cli
-
-      cmake
-      llvmPackages_latest.llvm
-      rocmPackages.llvm.clang
-
-      pgweb
-      du-dust
-      hyperfine # cli benchmarking tool
-      k6 # http benchmarking tool
       htop
-      gitui
 
       cachix
       keepassxc
 
+      pgweb
+
+      # 3D Printing
+      cura
     ];
 in { home.packages = packages; }
 

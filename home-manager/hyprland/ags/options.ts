@@ -79,8 +79,8 @@ const options = mkOptions(OPTIONS, {
         "media",
         "expander",
         "systray",
-        "colorpicker",
         "screenrecord",
+        "colorpicker",
         "system",
         "battery",
         "powermenu",
@@ -110,7 +110,7 @@ const options = mkOptions(OPTIONS, {
       low: opt(30),
     },
     workspaces: {
-      workspaces: opt(7),
+      workspaces: opt(9),
     },
     taskbar: {
       iconSize: opt(0),
@@ -226,7 +226,7 @@ const options = mkOptions(OPTIONS, {
   notifications: {
     position: opt<Array<"top" | "bottom" | "left" | "right">>(["top", "right"]),
     blacklist: opt(["Spotify"]),
-    width: opt(440),
+    width: opt(600),
   },
 
   hyprland: {

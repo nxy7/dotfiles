@@ -18,11 +18,8 @@ let
       }
       decoration {
           col.shadow_inactive = rgba(1E2029ee)
-
-          # rounding = 5
           inactive_opacity = 0.92
 
-          # suggested shadow setting
           col.shadow = rgba(111111ee)
           drop_shadow = yes
           shadow_range = 27
@@ -52,9 +49,6 @@ let
 
     animations {
       enabled = yes
-
-      # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
-
       bezier = myBezier, 0.05, 0.9, 0.1, 1.05
 
       animation = windows, 1, 7, myBezier
@@ -71,18 +65,6 @@ let
       preserve_split = yes # you probably want this
     }
 
-    # master {
-    #   # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-    #   new_is_master = true
-    # }
-
-    # gestures {
-    #   # See https://wiki.hyprland.org/Configuring/Variables/ for more
-    #   workspace_swipe = off
-    # }
-
-    # Example per-device config
-    # See https://wiki.hyprland.org/Configuring/Keywords/#executing for more
 
     $mainMod = SUPER
 
@@ -93,8 +75,14 @@ let
     bind=SUPER,F,fullscreen
 
     # screenshots
-    bind=,Print,exec,grimblast copy area
-    bind=CTRL,Print,exec,grimblast copysave area - | swappy -f -
+    bind=,Print,exec,ags -r 'recorder.screenshot()'
+    bind=CTRL SHIFT,Print,exec,ags -r 'recorder.start()'
+
+    # bind=CTRL,Print,exec,grimblast copysave area - | swappy -f -
+
+    # bind=,XF86Launch4,   exec, ags -r 'recorder.start()'
+    # bind=,Print,         exec, ags -r 'recorder.screenshot()'
+    # bind=SHIFT,Print,    exec, ags -r 'recorder.screenshot(true)'
 
     bind=SUPER, R,       exec, ags -t launcher
     bind=SUPER, Tab,     exec, ags -t overview
