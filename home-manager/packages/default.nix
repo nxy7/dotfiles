@@ -1,8 +1,7 @@
 { pkgs, fullSystem, ... }:
 let
   packages = with pkgs;
-    [ yazi bat ripgrep k9s kustomize kube3d kubectl fd fzf ]
-    ++ lib.optionals (fullSystem) [
+    [ kustomize kube3d kubectl ] ++ lib.optionals (fullSystem) [
       speechd
       obsidian
       # steel
@@ -35,5 +34,13 @@ let
       # 3D Printing
       cura
     ];
-in { home.packages = packages; }
+in {
+  home.packages = packages;
+  programs.yazi.enable = true;
+  programs.ripgrep.enable = true;
+  programs.bat.enable = true;
+  programs.fd.enable = true;
+  programs.fzf.enable = true;
+  programs.k9s.enable = true;
+}
 
