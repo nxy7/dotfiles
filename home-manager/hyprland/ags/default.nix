@@ -38,11 +38,10 @@
 
   programs.ags = {
     enable = true;
-    package = inputs.ags.packages.${pkgs.system}.default;
 
     configDir = ./.;
 
-    extraPackages = with pkgs; [ libsoup_3 ];
+    extraPackages = with pkgs; [ gtksourceview webkitgtk accountsservice ];
   };
 
   programs.astal = {

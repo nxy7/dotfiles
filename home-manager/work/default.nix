@@ -8,7 +8,15 @@ let
     nodePackages.pnpm
     yarn
 
-    nodePackages_latest.bash-language-server
+    dotnet-sdk_8
+
   ];
-  otherPackages = with pkgs; [ jetbrains.datagrip nest-cli slack insomnia ];
+  otherPackages = with pkgs; [
+    jetbrains.datagrip
+    azuredatastudio
+    dbeaver-bin
+    nest-cli
+    slack
+    insomnia
+  ];
 in { home.packages = programmingPackages ++ otherPackages; }

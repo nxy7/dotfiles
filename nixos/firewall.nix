@@ -3,7 +3,7 @@
   networking.networkmanager.enable = true;
   networking.networkmanager.enableStrongSwan = true;
 
-  networking.extraHosts = "";
+  # networking.extraHosts = "";
 
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [
@@ -11,6 +11,7 @@
     80
     137
     443
+    1935
     1433
     2379
     2380
@@ -43,7 +44,23 @@
     9964
     10250
   ];
-  networking.firewall.allowedUDPPorts =
-    [ 53 80 137 443 500 3000 4500 4789 1433 6081 6443 8132 8181 8472 51871 ];
+  networking.firewall.allowedUDPPorts = [
+    53
+    80
+    137
+    443
+    1935
+    500
+    3000
+    4500
+    4789
+    1433
+    6081
+    6443
+    8132
+    8181
+    8472
+    51871
+  ];
 
 }

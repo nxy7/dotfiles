@@ -30,7 +30,7 @@ let
 
           blur {
             enabled = true
-            popups = true
+            # popups = true
             new_optimizations = on
             size = 8
             passes = 3
@@ -76,6 +76,7 @@ let
 
     # screenshots
     bind=,Print,exec,ags -r 'recorder.screenshot()'
+    bind=SHIFT,Print,exec,ags -r 'recorder.screenshot(true)'
     bind=CTRL SHIFT,Print,exec,ags -r 'recorder.start()'
 
     # bind=CTRL,Print,exec,grimblast copysave area - | swappy -f -
@@ -131,44 +132,53 @@ let
     bindm = $mainMod, mouse:273, resizewindow
 
     # Example windowrule v1
-    workspace=1,monitor:DP-2
-    workspace=2,monitor:DP-2
-    workspace=3,monitor:DP-2
-    workspace=4,monitor:DP-2
-    workspace=5,monitor:DP-2
-    workspace=6,monitor:HDMI-A-1
-    workspace=7,monitor:HDMI-A-1
-    workspace=8,monitor:HDMI-A-1
-    workspace=9,monitor:HDMI-A-1
+    workspace=1,monitor:DP-1
+    workspace=2,monitor:DP-1
+    workspace=3,monitor:DP-1
+    workspace=4,monitor:DP-1
+    workspace=5,monitor:DP-1
+    workspace=6,HDMI-A-1
+    workspace=7,HDMI-A-1
+    workspace=8,HDMI-A-1
+    workspace=9,HDMI-A-1
 
 
+    windowrule = workspace 1, title:(Firefox)
+    windowrule = workspace 2, title:(Visual Studio Code)
+    windowrule = workspace 5, title:(DataGrip)
     windowrule = workspace 4, title:(steam)
+    windowrule = workspace 4 silent, title:(Bevy)
     windowrule = workspace 6, title:^(OBS)
     windowrule = workspace 7, title:(KeePassXC)
     windowrule = workspace 8, title:(Discord)
     windowrule = workspace 8, title:(Slack)
 
-    monitor=DP-2,2560x1440@240,auto,1
-    monitor=HDMI-A-1,preferred,0x0,1,transform,3
+    monitor=desc:BNQ BenQ EX270QM 59N0147001Q,2560x1440@240,auto,1
+    monitor=desc:DO NOT USE - RTK ZZX-FHD-HDR demoset-1,preferred,0x0,1,transform,3
+    # monitor=DP-4,2560x1440@240,auto,1
+    # monitor=HDMI-A-2,preferred,0x0,1,transform,3
     monitor=,preferred,auto,1  
 
     # Execute your favorite apps at launch
     exec-once = ags
     exec-once = hyprctl setcursor Qogir 24
-    exec-once = xrandr --output DP-2 --primary
+    exec-once = sleep 1 && xrandr --output DP-2 --primary
     exec-once = ${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1
 
     exec-once = keepassxc
     exec-once = discord
     exec-once = slack
+    exec-once = nm-applet
   '';
 in {
   wayland.windowManager.hyprland = {
-    enable = lib.mkDefault true;
-    # settings = { };
+    enable = true;
     extraConfig = hyprlandConfig;
-    # plugins = with pkgs; [ ];
   };
+
+  # services.hyprpaper.enable = true;
+  # services.hypridle.enable = true;
+  # services.hyprlock.enable = true;
 
   home.packages = with pkgs; [
     hyprpicker
@@ -177,7 +187,6 @@ in {
     slurp
     swappy
     ksnip
-    flameshot
 
     which
     dart-sass
@@ -185,7 +194,7 @@ in {
     fzf
     brightnessctl
     swww
-    inputs.matugen.packages.${system}.default
+    matugen
     slurp
     wf-recorder
     wl-clipboard
@@ -202,5 +211,4 @@ in {
 
     libadwaita
   ];
-  # programs.rofi = { enable = true; };
 }

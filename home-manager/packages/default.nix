@@ -1,29 +1,34 @@
-{ pkgs, fullSystem, ... }:
-let
-  packages = with pkgs;
+{ pkgs, fullSystem, ... }: {
+  home.packages = with pkgs;
     [ kustomize kube3d kubectl ] ++ lib.optionals (fullSystem) [
       speechd
+      eza
+      fd
       obsidian
-      # steel
-      racket
+      zed-editor
+      aichat
+      discord
+      qbittorrent-qt5
+
+      # browsers
+      vivaldi
+      # ungoogled-chromium
+      # firefox
+      firefox-devedition
+      brave
+
+      # game launchers
+      lutris
+      heroic
 
       chatgpt-cli
 
-      # vscode
-      omnisharp-roslyn
-
-      wacomtablet
-
+      vscode
       lnav
-      kicad
 
-      qmk
-      hwinfo
       mangohud
 
       gimp
-      gnome.nautilus
-
       htop
 
       cachix
@@ -31,16 +36,7 @@ let
 
       pgweb
 
-      # 3D Printing
-      cura
+      tokei
     ];
-in {
-  home.packages = packages;
-  programs.yazi.enable = true;
-  programs.ripgrep.enable = true;
-  programs.bat.enable = true;
-  programs.fd.enable = true;
-  programs.fzf.enable = true;
-  programs.k9s.enable = true;
 }
 

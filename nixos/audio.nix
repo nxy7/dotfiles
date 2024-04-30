@@ -13,7 +13,7 @@
 
   environment.systemPackages = with pkgs; [
     alsa-utils
-    pulseaudio
+    # pulseaudio
     pamixer
     qpwgraph
     helvum

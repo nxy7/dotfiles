@@ -1,1 +1,1 @@
-{ stablepkgs, ... }: { home.packages = with stablepkgs; [ davinci-resolve ]; }
+{ pkgs, ... }: { home.packages = with pkgs; [ davinci-resolve ]; }

@@ -1,6 +1,1 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs;
-    [
-      # lutris heroic 
-    ];
-}
+{ pkgs, ... }: { home.packages = with pkgs; [ ]; }

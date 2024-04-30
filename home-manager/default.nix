@@ -15,6 +15,9 @@ in inputs.home-manager.lib.homeManagerConfiguration {
     ./homesettings
     ./helix
     ./nushell
+    ./fish
+    ./bash
+    ./elvish
 
     # shell stuff
     ./wezterm
@@ -24,23 +27,14 @@ in inputs.home-manager.lib.homeManagerConfiguration {
     ./git
     ./work
 
-    ./starship
-    ./direnv
-    ./broot
   ] ++ lib.optionals (fullSystem) [
     inputs.base16.homeManagerModule
 
     ./services.nix
 
-    ./hyprland
-    ./hyprland/theme.nix
-    ./hyprland/ags
-
     ./obs-studio
 
-    ./gamelaunchers
-    ./browsers
-    # ./davinci_resolve
     ./packages
+    ./programs
   ];
 }

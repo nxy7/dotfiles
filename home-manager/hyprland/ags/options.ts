@@ -51,14 +51,14 @@ const options = mkOptions(OPTIONS, {
 
     shadows: opt(true),
     padding: opt(5),
-    spacing: opt(6),
+    spacing: opt(7),
     radius: opt(10),
   },
 
   transition: opt(175),
 
   font: {
-    size: opt(13),
+    size: opt(16),
     name: opt("Ubuntu Nerd Font"),
   },
 

@@ -2,37 +2,37 @@
 
   programs.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     xwayland = { enable = true; };
   };
 
   services.xserver.enable = true;
-  services.xserver.displayManager = {
+  services.displayManager = {
     sddm.enable = true;
     sddm.wayland.enable = true;
     sddm.theme = "where_is_my_sddm_theme";
     autoLogin = {
-      enable = true;
       user = "nxyt";
+      enable = true;
     };
+    # autoLogin = {
+    #   enable = true;
+    #   user = "nxyt";
+    # };
   };
-  services.xrdp.enable = true;
-  services.gnome.gnome-remote-desktop.enable = true;
+  # services.xrdp.enable = true;
+  # services.gnome.gnome-remote-desktop.enable = true;
 
   # services.xrdp.defaultWindowManager = "startplasma-x11";
-  services.xrdp.openFirewall = true;
+  # services.xrdp.openFirewall = true;
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
   environment.systemPackages = with pkgs; [
     jq
     where-is-my-sddm-theme
     hyprpaper
     hyprshade
     wf-recorder
-    # audio gui
     pavucontrol
-    # program launcher
-    tofi
   ];
   xdg.portal = {
     enable = true;

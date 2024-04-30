@@ -8,7 +8,7 @@
   programs.lazygit = {
     enable = true;
     settings.git.commit.signOff = false;
-    settings.os.editPreset = "hx";
+    settings.os.editPreset = "helix";
   };
   programs.gh = {
     enable = true;

@@ -1,9 +1,10 @@
 { pkgs, config, ... }: {
   environment.systemPackages = (with pkgs; [
-    gnome.gnome-control-center
     busybox
     lsof
     unzip
+    openssl
+    jq
 
     stremio
     zip
@@ -27,7 +28,5 @@
     # nvtop-nvidia
     # nvtopPackages.nvidia
 
-    qt6.qtwayland
-    config.boot.kernelPackages.v4l2loopback
   ]);
 }

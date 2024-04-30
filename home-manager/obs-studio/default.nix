@@ -5,7 +5,7 @@
       obs-vkcapture
       wlrobs
       obs-tuna
-      obs-multi-rtmp
+      # obs-multi-rtmp
     ];
   };
 }

@@ -21,7 +21,7 @@ let
   });
   theme = {
     name = "MoreWaita";
-    package = pkgs.morewaita-icon-theme;
+    package = moreWaita;
   };
 
   cursor-theme = "Qogir";
