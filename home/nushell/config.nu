@@ -23,7 +23,24 @@ def gotoDotfiles [] {
   cd ~/dotfiles
 }
 
-alias nfs = nix-full-system-update
+
+# home manager update
+def nix-home-manager-update [] {
+  gotoDotfiles
+  home-manager switch --flake . --impure; 
+  spd-say 'Home configuration updated';
+}
+alias nhs = nix-home-manager-update
+
+# system update
+def nix-system-update [] {
+  gotoDotfiles
+  sudo nixos-rebuild switch --flake . --impure;
+  spd-say 'System updated';
+}
+alias nss = nix-system-update
+
+
 # full system update (system + home manager)
 def nix-full-system-update [
   --update (-u)
@@ -35,23 +52,7 @@ def nix-full-system-update [
   nss;
   nhs;
 }
-
-alias nhs = nix-home-manager-update
-# home manager update
-def nix-home-manager-update [] {
-  gotoDotfiles
-  home-manager switch --flake . --impure; 
-  spd-say 'Home configuration updated';
-}
-
-alias nss = nix-system-update
-# system update
-def nix-system-update [] {
-  gotoDotfiles
-  sudo nixos-rebuild switch --flake . --impure;
-  spd-say 'System updated';
-}
-
+alias nfs = nix-full-system-update
 
 def vpn-restart [] {
   sudo ipsec down fsh;

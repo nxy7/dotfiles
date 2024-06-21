@@ -1,5 +1,6 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, inputs, system, ... }: {
   environment.systemPackages = (with pkgs; [
+    inputs.agenix.packages.${pkgs.system}.default
     busybox
     lsof
     unzip

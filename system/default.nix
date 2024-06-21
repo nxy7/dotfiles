@@ -44,6 +44,7 @@
 
   imports = [
     inputs.nixos-cosmic.nixosModules.default
+    inputs.agenix.nixosModules.default
     /etc/nixos/hardware-configuration.nix
     ./kernel.nix
     ./firewall.nix

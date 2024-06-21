@@ -21,7 +21,7 @@
       };
 
       homeConfig =
-        import ./home-manager currentUser { inherit home-manager inputs pkgs; };
+        import ./home currentUser { inherit home-manager inputs pkgs; };
       # inherit (inputs.stablePkgs.lib) nixosSystem;
     in flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [ ];
@@ -37,7 +37,7 @@
           nixos = nixosSystem {
             inherit system;
             specialArgs = inputs // { inherit pkgs inputs; };
-            modules = [ ./nixos ];
+            modules = [ ./system ];
           };
         };
       };
@@ -65,6 +65,8 @@
 
     stylix.url = "github:danth/stylix";
     base16.url = "github:SenchoPens/base16.nix";
-
+    sops-nix.url = "github:Mic92/sops-nix";
+    agenix.url = "github:ryantm/agenix";
   };
+
 }

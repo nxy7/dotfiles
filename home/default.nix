@@ -10,23 +10,13 @@ in inputs.home-manager.lib.homeManagerConfiguration {
     ({ config, ... }: { config.scheme = ../theme.yaml; })
     inputs.stylix.homeManagerModules.stylix
     ./stylix
-
-    # shells
     ./homesettings
-    ./helix
-    ./nushell
-    ./fish
-    ./bash
-    ./elvish
 
-    # shell stuff
-    ./wezterm
-    ./zoxide
+    ./shells
+    ./browsers
 
     # programming
-    ./git
     ./work
-
   ] ++ lib.optionals (fullSystem) [
     inputs.base16.homeManagerModule
 

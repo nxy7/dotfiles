@@ -28,5 +28,12 @@ in [
   (final: prev:
     {
       obsidian = (prev.obsidian.override { electron = prev.electron_24; });
+      firefox-devedition = (prev.firefox-devedition-bin.overrideAttrs
+        (oldAttrs: rec {
+          buildCommand = oldAttrs.buildCommand + ''
+            wrapProgram "$executablePath" \
+              --set MOZ_ENABLE_WAYLAND 0
+          '';
+        }));
     } // fromFlakes // stablePkgs)
 ]

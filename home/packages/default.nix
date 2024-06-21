@@ -10,13 +10,6 @@
       discord
       qbittorrent-qt5
 
-      # browsers
-      vivaldi
-      # ungoogled-chromium
-      # firefox
-      firefox-devedition
-      brave
-
       # game launchers
       lutris
       heroic
