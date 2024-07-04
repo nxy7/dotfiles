@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, config, ... }:
+{ inputs, pkgs, lib, config, system, ... }:
 let
   hyprlandConfig = ''
     input {
@@ -71,22 +71,22 @@ let
     bind = $mainMod, K, exec, kitty
     bind = $mainMod, W, exec, wezterm
 
-    bind=$mainMod SHIFT, R,  exec, ags -q; ags
+    bind=$mainMod SHIFT, R,  exec, asztal -q; asztal
     bind=SUPER,F,fullscreen
 
     # screenshots
-    bind=,Print,exec,ags -r 'recorder.screenshot()'
-    bind=SHIFT,Print,exec,ags -r 'recorder.screenshot(true)'
-    bind=CTRL SHIFT,Print,exec,ags -r 'recorder.start()'
+    bind=,Print,exec,asztal -r 'recorder.screenshot()'
+    bind=SHIFT,Print,exec,asztal -r 'recorder.screenshot(true)'
+    bind=CTRL SHIFT,Print,exec,asztal -r 'recorder.start()'
 
     # bind=CTRL,Print,exec,grimblast copysave area - | swappy -f -
 
-    # bind=,XF86Launch4,   exec, ags -r 'recorder.start()'
-    # bind=,Print,         exec, ags -r 'recorder.screenshot()'
-    # bind=SHIFT,Print,    exec, ags -r 'recorder.screenshot(true)'
+    # bind=,XF86Launch4,   exec, asztal -r 'recorder.start()'
+    # bind=,Print,         exec, asztal -r 'recorder.screenshot()'
+    # bind=SHIFT,Print,    exec, asztal -r 'recorder.screenshot(true)'
 
-    bind=SUPER, R,       exec, ags -t launcher
-    bind=SUPER, Tab,     exec, ags -t overview
+    bind=SUPER, R,       exec, asztal -t launcher
+    bind=SUPER, Tab,     exec, asztal -t overview
     bind = $mainMod SHIFT, Q, killactive, 
     bind = $mainMod, E, exec, nautilus
     bind = $mainMod, V, togglefloating, 
@@ -160,7 +160,7 @@ let
     monitor=,preferred,auto,1  
 
     # Execute your favorite apps at launch
-    exec-once = ags
+    exec-once = asztal
     exec-once = hyprctl setcursor Qogir 24
     exec-once = sleep 1 && xrandr --output DP-2 --primary
     exec-once = ${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1
@@ -171,6 +171,12 @@ let
     exec-once = nm-applet
   '';
 in {
+  imports = [
+
+    # ./asztal 
+    ./theme.nix
+  ];
+
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = hyprlandConfig;
@@ -181,6 +187,9 @@ in {
   # services.hyprlock.enable = true;
 
   home.packages = with pkgs; [
+    # ags packaged as 'asztal' with Aylur config
+    inputs.aylurDots.packages.x86_64-linux.default
+
     hyprpicker
     grimblast
     grim

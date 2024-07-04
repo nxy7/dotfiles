@@ -9,22 +9,23 @@ in inputs.home-manager.lib.homeManagerConfiguration {
   modules = [
     ({ config, ... }: { config.scheme = ../theme.yaml; })
     inputs.stylix.homeManagerModules.stylix
-    ./stylix
-    ./homesettings
+    ./stylix.nix
+    ./homesettings.nix
 
-    ./shells
-    ./browsers
+    ./shells.nix
+    ./browsers.nix
 
     # programming
-    ./work
+    ./work.nix
   ] ++ lib.optionals (fullSystem) [
     inputs.base16.homeManagerModule
 
     ./services.nix
+    ./hyprland
 
     ./obs-studio
 
-    ./packages
-    ./programs
+    ./packages.nix
+    ./programs.nix
   ];
 }

@@ -13,27 +13,12 @@ let
     ];
   };
 
-  fromFlakes = {
-    steel = inputs.steel.packages.${system}.steel;
-    # ags = inputs.ags.packages.${system}.default;
-    # wezterm = inputs.wezterm.packages.${system}.default;
-  };
+  fromFlakes = { steel = inputs.steel.packages.${system}.steel; };
 
-  # unstablePkgs = with unstable; {
-  #   inherit matugen prisma-engines zed-editor spacedrive morewaita-icon-theme
-  #     vscode warp-terminal;
-  # };
   stablePkgs = with stable; { inherit obs-studio; };
 in [
   (final: prev:
     {
       obsidian = (prev.obsidian.override { electron = prev.electron_24; });
-      firefox-devedition = (prev.firefox-devedition-bin.overrideAttrs
-        (oldAttrs: rec {
-          buildCommand = oldAttrs.buildCommand + ''
-            wrapProgram "$executablePath" \
-              --set MOZ_ENABLE_WAYLAND 0
-          '';
-        }));
     } // fromFlakes // stablePkgs)
 ]

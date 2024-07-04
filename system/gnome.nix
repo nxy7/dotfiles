@@ -11,7 +11,7 @@
   };
 
   services.xserver = {
-    layout = "pl";
+    xkb.layout = "pl";
     xkbVariant = "";
   };
 

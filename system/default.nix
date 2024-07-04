@@ -1,5 +1,5 @@
 { config, pkgs, inputs, ... }: {
-  services.xserver = { layout = "pl,pl"; };
+  services.xserver.xkb.layout = "pl,pl";
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
     settings.trusted-substituters = [
@@ -22,13 +22,14 @@
       options = "--delete-older-than 15d";
     };
   };
-  # hardware.keyboard.qmk.enable = true;
+  hardware.keyboard.qmk.enable = true;
   environment = {
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
       DOTNET_ROOT = "${pkgs.dotnet-sdk_8}";
       LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
       WLR_NO_HARDWARE_CURSORS = "1";
+      MOZ_ENABLE_WAYLAND = "0";
     };
   };
   fonts.fontconfig.enable = true;
@@ -41,6 +42,8 @@
 
   environment.etc."containers/policy.json".text =
     builtins.readFile ../policy.json;
+  environment.systemPackages = with pkgs; [ via qmk-udev-rules ];
+  services.udev.packages = [ pkgs.via ];
 
   imports = [
     inputs.nixos-cosmic.nixosModules.default
@@ -54,10 +57,10 @@
     # display
     ./fonts.nix
     ./gaming.nix
-    # ./hyprland.nix
+    ./hyprland.nix
     # ./gnome.nix
-    ./kde.nix
-    ./cosmic.nix
+    # ./cosmic.nix
+    # ./kde.nix
 
     ./audio.nix
 

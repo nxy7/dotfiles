@@ -6,6 +6,7 @@
     unzip
     openssl
     jq
+    yq
 
     stremio
     zip

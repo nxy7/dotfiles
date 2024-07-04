@@ -1,0 +1,2 @@
+flash-qmk:
+    qmk flash ./lily58.hex

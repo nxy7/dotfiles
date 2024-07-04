@@ -54,6 +54,8 @@
 
     # helix.url = "github:mattwparas/helix";
 
+    ags.url = "github:Aylur/ags";
+    astal.url = "github:Aylur/Astal";
     more-waita = {
       url = "github:somepaulo/MoreWaita";
       flake = false;
@@ -67,6 +69,7 @@
     base16.url = "github:SenchoPens/base16.nix";
     sops-nix.url = "github:Mic92/sops-nix";
     agenix.url = "github:ryantm/agenix";
+    aylurDots.url = "github:Aylur/dotfiles";
   };
 
 }
