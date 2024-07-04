@@ -1,18 +1,7 @@
 { config, pkgs, inputs, ... }: {
-  services.xserver = { layout = "pl,pl"; };
+  services.xserver.xkb.layout = "pl,pl";
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
-    settings.trusted-substituters = [
-      "https://ai.cachix.org"
-      "https://nix-community.cachix.org"
-      "https://hyprland.cachix.org"
-      "https://cosmic.cachix.org/"
-    ];
-    settings.trusted-public-keys = [
-      "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
-      "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-    ];
     settings.trusted-users = [ "root" "nxyt" ];
 
     optimise.automatic = true;
@@ -22,59 +11,57 @@
       options = "--delete-older-than 15d";
     };
   };
-  # hardware.keyboard.qmk.enable = true;
+  hardware.keyboard.qmk.enable = true;
   environment = {
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
       DOTNET_ROOT = "${pkgs.dotnet-sdk_8}";
       LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
       WLR_NO_HARDWARE_CURSORS = "1";
+      MOZ_ENABLE_WAYLAND = "0";
+      QT_QPA_PLATFORM = "wayland";
     };
   };
   fonts.fontconfig.enable = true;
   services.flatpak.enable = true;
+  programs.dconf.enable = true;
 
   systemd.services.nix-daemon.serviceConfig = {
-    MemoryHigh = "30G";
-    MemoryMax = "40G";
+    MemoryHigh = "20G";
+    MemoryMax = "28G";
   };
 
-  environment.etc."containers/policy.json".text =
-    builtins.readFile ../policy.json;
+  environment.systemPackages = with pkgs; [ via qmk-udev-rules ];
+  services.udev.packages = [ pkgs.via ];
 
   imports = [
-    inputs.nixos-cosmic.nixosModules.default
-    inputs.agenix.nixosModules.default
     /etc/nixos/hardware-configuration.nix
-    ./kernel.nix
-    ./firewall.nix
-    ./samba.nix
-    ./vpn.nix
+    ../nixos-modules/gnome.nix
 
-    # display
-    ./fonts.nix
-    ./gaming.nix
-    # ./hyprland.nix
-    # ./gnome.nix
-    ./kde.nix
-    ./cosmic.nix
+    ../nixos-modules/kernel.nix
+    ../nixos-modules/antivirus.nix
+    ../nixos-modules/firewall.nix
+    ../nixos-modules/samba.nix
+    ../nixos-modules/vpn.nix
 
-    ./audio.nix
+    #/modules display
+    ../nixos-modules/fonts.nix
+    ../nixos-modules/gaming.nix
 
-    ./packages.nix
-    ./services.nix
-    (import ./users.nix)
-    ./programs.nix
-    ./udev.nix
+    ../nixos-modules/audio.nix
+
+    ../nixos-modules/packages.nix
+    ../nixos-modules/services.nix
+    ../nixos-modules/users.nix
+    ../nixos-modules/programs.nix
+    ../nixos-modules/udev.nix
   ];
 
   time.hardwareClockInLocalTime = true;
   environment.shells = with pkgs; [ fish nushell elvish ];
 
-  nixpkgs.config.allowUnfree = true;
-
   time.timeZone = "Europe/Warsaw";
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "en_GB.UTF-8";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.UTF-8";
@@ -88,29 +75,15 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  # programs.sway.enable = true;
-  services.syncthing = {
-    enable = true;
-    user = "nxyt";
-    dataDir = "/home/nxyt/Sync";
-    configDir = "/home/nxyt/.config/syncthing";
-    guiAddress = "127.0.0.1:8384";
-  };
-
-  services.earlyoom = {
-    enable = true;
-    enableNotifications = true;
-    freeMemThreshold = 4;
-  };
-
   services.printing.enable = true;
   security.rtkit.enable = true;
 
+  virtualisation.waydroid.enable = true;
+
   virtualisation.docker.enable = true;
-  # virtualisation.docker.package = pkgs.docker_26;
-  virtualisation.docker.extraOptions = ''
-    --insecure-registry "http://noxy.ddns.net:5000"
-    }"'';
+
+  environment.etc."containers/policy.json".text =
+    builtins.readFile ../policy.json;
 
   system.stateVersion = "23.11";
 }

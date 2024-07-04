@@ -1,28 +1,21 @@
 { pkgs, inputs, lib, ... }:
 let
-  settings = builtins.fromTOML (builtins.readFile ./config.toml);
   languages = import ./languages.nix { inherit pkgs inputs; };
   lsps = with pkgs; [
     rust-analyzer
-    gopls
+    # gopls
     nil
     nixfmt
-    lua-language-server
-    vscode-langservers-extracted
+    # lua-language-server
 
-    zls
     taplo
     ltex-ls
 
-    buf-language-server
     pb
 
     golangci-lint-langserver
     yaml-language-server
-    python311Packages.python-lsp-server
 
-    haskellPackages.haskell-language-server
-    ocamlPackages.ocaml-lsp
     nls
     marksman
   ];
@@ -37,7 +30,10 @@ in {
         "ui.background" = { bg = transparent; };
       };
     };
-    settings = settings // { theme = lib.mkForce "nxyt"; };
+    settings = {
+      theme = lib.mkForce "nxyt";
+      editor.line-number = "relative";
+    };
     inherit languages;
   };
 
