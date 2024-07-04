@@ -7,14 +7,7 @@ configuration using my `/nixos` folder :-)
 - nix: for home configuration
 - nixos: if you want to use my whole system configuration
 
-## Projects used in my config
-- Hyprland
-- ags
-
 ## System configuration
-I'm using flakified system configuration with 2 channels enabled: 22-11 and 23-05.
-22-11 is meant for most packages and for bleeding edge ones I'm using 23-05 (right now
-I'm using it for 6.3 zen kernel and updated nvidia drivers).
 
 To use my config run:
 ```bash
@@ -30,12 +23,15 @@ configuration.
 
 ## Home Config
 ```bash
-git clone git@github.com:nxy7/dotfiles #or use https git clone
-
-# to clone user configuration
-cd dotfiles/home-manager
-nix run . switch -- --flake . --impure # you might need to add -b bk
+home-manager switch --flake . --impure
 ```
+
+## On new machine
+```bash
+sudo nixos-rebuild switch --flake https://github.com/nxy7/dotfiles --impure
+home-manager switch --flake https://github.com/nxy7/dotfiles --impure
+```
+  
 # Additional notes
 This repository also contains some of my personal settings like files for my keyboard layout (I'm using split keyboard).
 

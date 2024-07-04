@@ -34,6 +34,11 @@
       ];
     }
     {
+      name = "nu";
+      auto-format = true;
+      formatter = { command = "${pkgs.nufmt}/bin/nufmt"; };
+    }
+    {
       name = "typescript";
       auto-format = true;
       language-servers = [ "eslint" "typescript" ];
@@ -74,15 +79,15 @@
       "${pkgs.nodePackages_latest.svelte-language-server}/bin/svelteserver";
     args = [ "--stdio" ];
   };
-  language-server.volar = {
-    args = [ "--stdio" ];
-    command = "${
-      # pkgs.nodePackages_latest."@vue/language-server"
-      pkgs.nodePackages_latest.volar}/bin/vue-language-server";
-    config.typescript = {
-      tsdk = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib";
-    };
-  };
+  # language-server.volar = {
+  #   args = [ "--stdio" ];
+  #   command = "${
+  #     # pkgs.nodePackages_latest."@vue/language-server"
+  #     pkgs.nodePackages_latest.vue}/bin/language-server";
+  #   config.typescript = {
+  #     tsdk = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib";
+  #   };
+  # };
   language-server.eslint = {
     command = "vscode-eslint-language-server";
     args = [ "--stdio" ];

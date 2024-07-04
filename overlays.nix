@@ -1,6 +1,6 @@
 { inputs, system }:
 let
-  stable = import inputs.nixpkgs {
+  stable = import inputs.nixpkgs-stable {
     inherit system;
     config.allowUnfree = true;
     config.allowUnfreePredicate = (_: true);
@@ -13,27 +13,16 @@ let
     ];
   };
 
-  fromFlakes = {
-    steel = inputs.steel.packages.${system}.steel;
-    # ags = inputs.ags.packages.${system}.default;
-    # wezterm = inputs.wezterm.packages.${system}.default;
-  };
+  fromFlakes = { steel = inputs.steel.packages.${system}.steel; };
 
-  # unstablePkgs = with unstable; {
-  #   inherit matugen prisma-engines zed-editor spacedrive morewaita-icon-theme
-  #     vscode warp-terminal;
-  # };
   stablePkgs = with stable; { inherit obs-studio; };
 in [
   (final: prev:
     {
+      utillinux = prev.util-linux;
       obsidian = (prev.obsidian.override { electron = prev.electron_24; });
-      firefox-devedition = (prev.firefox-devedition-bin.overrideAttrs
-        (oldAttrs: rec {
-          buildCommand = oldAttrs.buildCommand + ''
-            wrapProgram "$executablePath" \
-              --set MOZ_ENABLE_WAYLAND 0
-          '';
-        }));
+      zen-browser = inputs.zen-browser.packages.x86_64-linux.default;
+      # zen-browser-specific = inputs.zen-browser.packages.x86_64-linux.specific;
+      # zen-browser-generic = inputs.zen-browser.packages.x86_64-linux.generic;
     } // fromFlakes // stablePkgs)
 ]
