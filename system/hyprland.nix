@@ -19,6 +19,7 @@
 
   environment.systemPackages = with pkgs;
     with gnome; [
+      inputs.aylurDots.packages.x86_64-linux.default
       morewaita-icon-theme
       adwaita-icon-theme
       qogir-icon-theme
@@ -46,6 +47,36 @@
       hyprshade
       wf-recorder
       pavucontrol
+
+      hyprpicker
+      grimblast
+      grim
+      slurp
+      swappy
+      ksnip
+
+      which
+      dart-sass
+      fd
+      fzf
+      brightnessctl
+      swww
+      matugen
+      slurp
+      wf-recorder
+      wl-clipboard
+      wayshot
+      swappy
+      hyprpicker
+      pavucontrol
+      networkmanager
+      gtk3
+      glib
+      libsoup_3
+      papirus-icon-theme
+      gnome.adwaita-icon-theme
+
+      libadwaita
     ];
   xdg.portal = {
     enable = true;

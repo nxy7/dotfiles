@@ -171,11 +171,7 @@ let
     exec-once = nm-applet
   '';
 in {
-  imports = [
-
-    # ./asztal 
-    ./theme.nix
-  ];
+  imports = [ ./theme.nix ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -185,39 +181,4 @@ in {
   # services.hyprpaper.enable = true;
   # services.hypridle.enable = true;
   # services.hyprlock.enable = true;
-
-  home.packages = with pkgs; [
-    # ags packaged as 'asztal' with Aylur config
-    inputs.aylurDots.packages.x86_64-linux.default
-
-    hyprpicker
-    grimblast
-    grim
-    slurp
-    swappy
-    ksnip
-
-    which
-    dart-sass
-    fd
-    fzf
-    brightnessctl
-    swww
-    matugen
-    slurp
-    wf-recorder
-    wl-clipboard
-    wayshot
-    swappy
-    hyprpicker
-    pavucontrol
-    networkmanager
-    gtk3
-    glib
-    libsoup_3
-    papirus-icon-theme
-    gnome.adwaita-icon-theme
-
-    libadwaita
-  ];
 }

@@ -22,7 +22,6 @@
 
       homeConfig =
         import ./home currentUser { inherit home-manager inputs pkgs; };
-      # inherit (inputs.stablePkgs.lib) nixosSystem;
     in flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [ ];
       systems = [ "x86_64-linux" ];
@@ -52,14 +51,6 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    # helix.url = "github:mattwparas/helix";
-
-    ags.url = "github:Aylur/ags";
-    astal.url = "github:Aylur/Astal";
-    more-waita = {
-      url = "github:somepaulo/MoreWaita";
-      flake = false;
-    };
     nixos-cosmic = {
       url = "github:lilyinstarlight/nixos-cosmic";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
