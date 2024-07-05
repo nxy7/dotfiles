@@ -1,6 +1,6 @@
 { pkgs, fullSystem, ... }: {
   programs = {
-    yazi.enable = true;
+    # yazi.enable = true;
     ripgrep.enable = true;
     bat.enable = true;
     fzf.enable = true;

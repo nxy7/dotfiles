@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  config = # elv
+  config = # elvish
     ''
       eval (starship init elvish)
       eval (zoxide init elvish | slurp)
@@ -13,9 +13,13 @@ let
       use epm
       use direnv
 
+      fn fshw {||
+        code .; docker compose up;
+      }
       fn just {|@a| e:just --unstable $@a}
       fn ls {|@a| e:eza $@a }
       fn n {|@a| e:nix $@a }
+      fn k {|@a| e:kubectl $@a }
       fn lg {|@a| e:lazygit $@a }
       fn ll {|@a| e:ls -l $@a }
       fn la {|@a| e:ls -a $@a }
@@ -27,7 +31,8 @@ let
       }
 
       fn fsh-get-pw {||
-      cd ~/dotfiles
+        cd ~/dotfiles
+        cat s | yq -r .Password | wl-copy
       # open s | from yaml | get Password | wl-copy
       # echo "fsh password copied to clipboard"
       }

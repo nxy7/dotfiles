@@ -1,6 +1,6 @@
 { inputs, system }:
 let
-  stable = import inputs.nixpkgs {
+  stable = import inputs.nixpkgs-stable {
     inherit system;
     config.allowUnfree = true;
     config.allowUnfreePredicate = (_: true);
@@ -19,6 +19,7 @@ let
 in [
   (final: prev:
     {
+      utillinux = prev.util-linux;
       obsidian = (prev.obsidian.override { electron = prev.electron_24; });
     } // fromFlakes // stablePkgs)
 ]

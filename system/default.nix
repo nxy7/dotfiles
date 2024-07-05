@@ -2,17 +2,6 @@
   services.xserver.xkb.layout = "pl,pl";
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
-    settings.trusted-substituters = [
-      "https://ai.cachix.org"
-      "https://nix-community.cachix.org"
-      "https://hyprland.cachix.org"
-      "https://cosmic.cachix.org/"
-    ];
-    settings.trusted-public-keys = [
-      "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
-      "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-    ];
     settings.trusted-users = [ "root" "nxyt" ];
 
     optimise.automatic = true;
@@ -34,41 +23,38 @@
   };
   fonts.fontconfig.enable = true;
   services.flatpak.enable = true;
+  programs.dconf.enable = true;
 
   systemd.services.nix-daemon.serviceConfig = {
-    MemoryHigh = "30G";
-    MemoryMax = "40G";
+    MemoryHigh = "20G";
+    MemoryMax = "28G";
   };
 
-  environment.etc."containers/policy.json".text =
-    builtins.readFile ../policy.json;
   environment.systemPackages = with pkgs; [ via qmk-udev-rules ];
   services.udev.packages = [ pkgs.via ];
 
   imports = [
-    inputs.nixos-cosmic.nixosModules.default
-    inputs.agenix.nixosModules.default
     /etc/nixos/hardware-configuration.nix
-    ./kernel.nix
-    ./firewall.nix
-    ./samba.nix
-    ./vpn.nix
+    ./modules/kernel.nix
+    ./modules/antivirus.nix
+    ./modules/firewall.nix
+    ./modules/samba.nix
+    ./modules/vpn.nix
 
-    # display
-    ./fonts.nix
-    ./gaming.nix
-    ./hyprland.nix
-    # ./gnome.nix
-    # ./cosmic.nix
-    # ./kde.nix
+    #/modules display
+    ./modules/fonts.nix
+    ./modules/gaming.nix
+    ./modules/gnome.nix
+    #/modules ./hyprland.nix
+    # ./modules/kde.nix
 
-    ./audio.nix
+    ./modules/audio.nix
 
-    ./packages.nix
-    ./services.nix
-    (import ./users.nix)
-    ./programs.nix
-    ./udev.nix
+    ./modules/packages.nix
+    ./modules/services.nix
+    ./modules/users.nix
+    ./modules/programs.nix
+    ./modules/udev.nix
   ];
 
   time.hardwareClockInLocalTime = true;
@@ -77,7 +63,7 @@
   nixpkgs.config.allowUnfree = true;
 
   time.timeZone = "Europe/Warsaw";
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "en_GB.UTF-8";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.UTF-8";
@@ -91,29 +77,20 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  # programs.sway.enable = true;
-  services.syncthing = {
-    enable = true;
-    user = "nxyt";
-    dataDir = "/home/nxyt/Sync";
-    configDir = "/home/nxyt/.config/syncthing";
-    guiAddress = "127.0.0.1:8384";
-  };
-
-  services.earlyoom = {
-    enable = true;
-    enableNotifications = true;
-    freeMemThreshold = 4;
-  };
-
   services.printing.enable = true;
   security.rtkit.enable = true;
 
+  virtualisation.waydroid.enable = true;
+  # virtualisation.podman = {
+  #   enable = true;
+  #   dockerCompat = true;
+  # };
+
   virtualisation.docker.enable = true;
-  # virtualisation.docker.package = pkgs.docker_26;
-  virtualisation.docker.extraOptions = ''
-    --insecure-registry "http://noxy.ddns.net:5000"
-    }"'';
+  virtualisation.docker.package = pkgs.docker_27;
+
+  environment.etc."containers/policy.json".text =
+    builtins.readFile ../policy.json;
 
   system.stateVersion = "23.11";
 }

@@ -34,6 +34,11 @@
       ];
     }
     {
+      name = "nu";
+      auto-format = true;
+      formatter = { command = "${pkgs.nufmt}/bin/nufmt"; };
+    }
+    {
       name = "typescript";
       auto-format = true;
       language-servers = [ "eslint" "typescript" ];

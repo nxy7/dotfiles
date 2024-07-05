@@ -1,6 +1,6 @@
 { config, inputs, pkgs, ... }: {
   stylix = {
-    image = ../hyprland/wallpapers/1.jpg;
+    # image = ../hyprland/wallpapers/1.jpg;
     polarity = "dark";
     base16Scheme = ../theme.yaml;
     targets.bemenu.enable = false;
@@ -11,9 +11,9 @@
     serif = config.stylix.fonts.sansSerif;
     sansSerif = {
       package = (pkgs.nerdfonts.override {
-        fonts = [ "RobotoMono" "DejaVuSansMono" ];
+        fonts = [ "Monaspace" "RobotoMono" "DejaVuSansMono" ];
       });
-      name = "Roboto Mono Nerd Font";
+      name = "Monaspace Nerd Font";
     };
     emoji = {
       package = pkgs.noto-fonts-emoji;

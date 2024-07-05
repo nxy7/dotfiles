@@ -1,31 +1,34 @@
 username:
 { inputs, pkgs, fullSystem ? true, ... }:
 let lib = pkgs.lib;
-in inputs.home-manager.lib.homeManagerConfiguration {
-  inherit pkgs;
+in {
+  mainpc = inputs.home-manager.lib.homeManagerConfiguration {
+    inherit pkgs;
 
-  extraSpecialArgs = { inherit inputs pkgs username fullSystem; };
+    extraSpecialArgs = { inherit inputs pkgs username fullSystem; };
 
-  modules = [
-    ({ config, ... }: { config.scheme = ../theme.yaml; })
-    inputs.stylix.homeManagerModules.stylix
-    ./stylix.nix
-    ./homesettings.nix
+    modules = [
+      ({ config, ... }: { config.scheme = ../theme.yaml; })
+      inputs.stylix.homeManagerModules.stylix
+      inputs.base16.homeManagerModule
+      ./stylix.nix
+      ./homesettings.nix
 
-    ./shells.nix
-    ./browsers.nix
+      ./shells.nix
+      ./browsers.nix
+      ./zed.nix
 
-    # programming
-    ./work.nix
-  ] ++ lib.optionals (fullSystem) [
-    inputs.base16.homeManagerModule
+      # programming
+      ./wezterm.nix
+      ./work.nix
+    ] ++ lib.optionals (fullSystem) [
 
-    ./services.nix
-    ./hyprland
+      ./services.nix
 
-    ./obs-studio
+      ./obs-studio
 
-    ./packages.nix
-    ./programs.nix
-  ];
+      ./packages.nix
+      ./programs.nix
+    ];
+  };
 }

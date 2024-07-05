@@ -6,7 +6,7 @@
       currentUser = builtins.getEnv "USER";
       system = "x86_64-linux";
 
-      pkgs = import inputs.nixpkgs-unstable {
+      pkgs = import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (_: true);
@@ -20,20 +20,25 @@
         overlays = import ./overlays.nix { inherit inputs system; };
       };
 
-      homeConfig =
-        import ./home currentUser { inherit home-manager inputs pkgs; };
-      # inherit (inputs.stablePkgs.lib) nixosSystem;
     in flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [ ];
       systems = [ "x86_64-linux" ];
-      perSystem = { config, system, pkgs, self', ... }: { };
+      perSystem = { config, system, pkgs, self', ... }:
+        {
+          # packages.default = homeConfig;
+        };
       flake = {
         homeConfigurations = {
           default = inputs.home-manager.defaultPackage.${system};
-          "${currentUser}" = homeConfig;
+          nxyt = (import ./home currentUser {
+            inherit home-manager inputs pkgs;
+          }).mainpc;
+          laptop = (import ./home currentUser {
+            inherit home-manager inputs pkgs;
+          }).laptop;
         };
 
-        nixosConfigurations = with inputs.nixpkgs-unstable.lib; {
+        nixosConfigurations = with inputs.nixpkgs.lib; {
           nixos = nixosSystem {
             inherit system;
             specialArgs = inputs // { inherit pkgs inputs; };
@@ -43,33 +48,27 @@
       };
     };
 
+  nixConfig = {
+    extra-substituters =
+      [ "https://ai.cachix.org" "https://nix-community.cachix.org" ];
+    extra-trusted-public-keys =
+      [ "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc=" ];
+  };
+
   inputs = {
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-23.11";
 
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-
-    # helix.url = "github:mattwparas/helix";
-
-    ags.url = "github:Aylur/ags";
-    astal.url = "github:Aylur/Astal";
-    more-waita = {
-      url = "github:somepaulo/MoreWaita";
-      flake = false;
-    };
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
 
     stylix.url = "github:danth/stylix";
     base16.url = "github:SenchoPens/base16.nix";
     sops-nix.url = "github:Mic92/sops-nix";
-    agenix.url = "github:ryantm/agenix";
-    aylurDots.url = "github:Aylur/dotfiles";
+    roc.url = "github:roc-lang/roc";
   };
 
 }
+

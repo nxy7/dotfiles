@@ -7,8 +7,10 @@
   };
   programs.lazygit = {
     enable = true;
-    settings.git.commit.signOff = false;
-    settings.os.editPreset = "helix";
+    settings = {
+      git.commit.signOff = false;
+      os.editPreset = "helix";
+    };
   };
   programs.gh = {
     enable = true;

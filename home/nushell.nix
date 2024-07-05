@@ -14,19 +14,58 @@ let
       alias g = git
       alias len = length
 
-      alias n = nix
+      alias n = node
+      alias nx = nix
       alias c = cargo
+      alias j = just
       alias vi = nvim
       alias rm = ^rm -r
       alias cp = ^cp -r
       alias l = ls
       alias la = ls -a
       alias ll = ls -l
+      alias nfu = nix flake update
       alias kctl = sudo k3s kubectl
       alias lg = lazygit
       alias k = kubectl
       alias grep = rg -S
       alias just = just --unstable
+
+      alias nxfix = sudo nix-store --repair --verify --check-contents
+
+      def pr-action-restart [] {
+        git commit --amend --no-edit
+        git push --force-with-lease
+      }
+
+      def fshconnect [] {
+        mut retry = 0
+        loop { 
+          nmcli connection down MyEvaluations | complete;
+          let out = (nmcli connection up MyEvaluations| complete);
+           if $out.exit_code == 0 { 
+              spd-say 'Connected to VPN';
+              break 
+               } else {
+                $retry = $retry + 1
+            print $"retry ($retry)"
+              }
+            
+           
+          if $retry > 20 {
+            spd-say 'too many retries';
+            return
+          }
+          sleep 1sec;
+        }
+      }
+
+      def fshw [] {
+        # z nodejs
+        fshconnect;
+        code .;
+        docker compose up;
+      }
 
       def gotoDotfiles [] {
         cd ~/dotfiles
@@ -75,7 +114,7 @@ let
       }
 
       def fsh-get-pw [] {
-        cd ~/dotfiles
+        cd ~/dotfiles/certs
         open s | from yaml | get Password | wl-copy
         print "fsh password copied to clipboard"
       }
@@ -92,9 +131,7 @@ let
       source ~/.zoxide.nu
       # use ~/.cache/starship/init.nu
 
-
       freshfetch
-        
     '';
 in {
   home.packages = with pkgs; [ freshfetch ];
@@ -107,11 +144,10 @@ in {
         show_banner: false,
       };
       $env.PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
-      $env.PRISMA_QUERY_ENGINE_LIBRARY = "${pkgs.prisma-engines}/lib/libquery_engine.node";
-      $env.PRISMA_QUERY_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/query-engine";
-      $env.PRISMA_SCHEMA_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
 
-      $env.PATH = ($env.PATH | split row ":" | prepend $"($env.HOME)/.nix-profile/bin" | prepend "/nix/var/nix/profiles/default/bin" | prepend $"($env.HOME)/.cargo/bin" | prepend $"($env.DOTNET_ROOT)/tools" | prepend $"($env.DOTNET_ROOT)");
+      $env.PATH = ($env.PATH | split row ":" | prepend $"($env.HOME)/.nix-profile/bin" | prepend "/nix/var/nix/profiles/default/bin" | prepend $"($env.HOME)/.cargo/bin" | prepend $"($env.DOTNET_ROOT)/tools" | prepend $"($env.DOTNET_ROOT)" | prepend "${
+        ../scripts
+      }");
 
 
       $env.EDITOR = "hx";
