@@ -9,6 +9,7 @@ in inputs.home-manager.lib.homeManagerConfiguration {
   modules = [
     ({ config, ... }: { config.scheme = ../theme.yaml; })
     inputs.stylix.homeManagerModules.stylix
+    inputs.base16.homeManagerModule
     ./stylix.nix
     ./homesettings.nix
 
@@ -18,7 +19,6 @@ in inputs.home-manager.lib.homeManagerConfiguration {
     # programming
     ./work.nix
   ] ++ lib.optionals (fullSystem) [
-    inputs.base16.homeManagerModule
 
     ./services.nix
     ./hyprland

@@ -46,7 +46,6 @@
   services.udev.packages = [ pkgs.via ];
 
   imports = [
-    inputs.nixos-cosmic.nixosModules.default
     inputs.agenix.nixosModules.default
     /etc/nixos/hardware-configuration.nix
     ./kernel.nix
@@ -58,7 +57,6 @@
     ./fonts.nix
     ./gaming.nix
     ./hyprland.nix
-    # ./gnome.nix
     # ./cosmic.nix
     # ./kde.nix
 
@@ -66,7 +64,7 @@
 
     ./packages.nix
     ./services.nix
-    (import ./users.nix)
+    ./users.nix
     ./programs.nix
     ./udev.nix
   ];
@@ -91,7 +89,6 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  # programs.sway.enable = true;
   services.syncthing = {
     enable = true;
     user = "nxyt";
@@ -110,7 +107,6 @@
   security.rtkit.enable = true;
 
   virtualisation.docker.enable = true;
-  # virtualisation.docker.package = pkgs.docker_26;
   virtualisation.docker.extraOptions = ''
     --insecure-registry "http://noxy.ddns.net:5000"
     }"'';

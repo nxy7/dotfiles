@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  config = # elv
+  config = # elvish
     ''
       eval (starship init elvish)
       eval (zoxide init elvish | slurp)

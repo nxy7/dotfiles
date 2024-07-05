@@ -80,25 +80,12 @@ let
 
     hardware.nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.beta;
-      # package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      #   version = "555.42.02";
-      #   sha256_64bit = "sha256-k7cI3ZDlKp4mT46jMkLaIrc2YUx1lh1wj/J4SVSHWyk=";
-      #   sha256_aarch64 = "sha256-rtDxQjClJ+gyrCLvdZlT56YyHQ4sbaL+d5tL4L4VfkA=";
-      #   openSha256 = "sha256-rtDxQjClJ+gyrCLvdZlT56YyHQ4sbaL+d5tL4L4VfkA=";
-      #   settingsSha256 = "sha256-rtDxQjClJ+gyrCLvdZlT56YyHQ4sbaL+d5tL4L4VfkA=";
-      #   persistencedSha256 = lib.fakeSha256;
-      # };
       open = false;
       powerManagement.enable = true;
-      # nvidiaSettings = true;
-      # powerManagement.finegrained = false;
+      nvidiaSettings = true;
       modesetting.enable = true;
     };
-
-    # boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv6l-linux" ];
   };
-  # in base // lib.attrsets.optionalAttrs (!minimal) extras
-  # in base // extras
 
 in lib.mkMerge [ base extras ]
 
