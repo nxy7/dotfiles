@@ -56,9 +56,9 @@
     # display
     ./fonts.nix
     ./gaming.nix
-    ./hyprland.nix
+    # ./hyprland.nix
     # ./cosmic.nix
-    # ./kde.nix
+    ./kde.nix
 
     ./audio.nix
 
@@ -107,6 +107,7 @@
   security.rtkit.enable = true;
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.package = pkgs.docker_27;
   virtualisation.docker.extraOptions = ''
     --insecure-registry "http://noxy.ddns.net:5000"
     }"'';

@@ -21,7 +21,7 @@ in inputs.home-manager.lib.homeManagerConfiguration {
   ] ++ lib.optionals (fullSystem) [
 
     ./services.nix
-    ./hyprland
+    # ./hyprland
 
     ./obs-studio
 

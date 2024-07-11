@@ -19,7 +19,8 @@
 
   environment.systemPackages = with pkgs;
     with gnome; [
-      inputs.aylurDots.packages.x86_64-linux.default
+      # inputs.aylurDots.packages.x86_64-linux.default
+      waybar
       morewaita-icon-theme
       adwaita-icon-theme
       qogir-icon-theme

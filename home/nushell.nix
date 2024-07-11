@@ -28,6 +28,10 @@ let
       alias grep = rg -S
       alias just = just --unstable
 
+      def fshw [] {
+        code .; docker compose up;
+      }
+
       def gotoDotfiles [] {
         cd ~/dotfiles
       }

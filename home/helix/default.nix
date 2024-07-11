@@ -1,6 +1,5 @@
 { pkgs, inputs, lib, ... }:
 let
-  settings = builtins.fromTOML (builtins.readFile ./config.toml);
   languages = import ./languages.nix { inherit pkgs inputs; };
   lsps = with pkgs; [
     rust-analyzer
@@ -37,7 +36,7 @@ in {
         "ui.background" = { bg = transparent; };
       };
     };
-    settings = settings // { theme = lib.mkForce "nxyt"; };
+    settings = { theme = lib.mkForce "nxyt"; };
     inherit languages;
   };
 

@@ -10,10 +10,13 @@ let
 
     dotnet-sdk_8
 
+    cargo
+    rustc
+
   ];
   otherPackages = with pkgs; [
     jetbrains.datagrip
-    azuredatastudio
+    # azuredatastudio
     dbeaver-bin
     nest-cli
     slack

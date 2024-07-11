@@ -18,13 +18,13 @@ in {
     packages = with pkgs; [
       nerdfonts
       swww
-      # kora-icon-theme
+      kora-icon-theme
       cantarell-fonts
       font-awesome
 
       morewaita-icon-theme
-      # adwaita-icon-theme
-      # papirus-icon-theme
+      adwaita-icon-theme
+      papirus-icon-theme
 
       adw-gtk3
     ];
@@ -36,11 +36,11 @@ in {
   };
 
   gtk = { enable = true; };
-  home.file = {
-    ".local/share/themes/${theme.name}" = {
-      source = "${theme.package}/share/themes/${theme.name}";
-    };
-  };
+  # home.file = {
+  #   ".local/share/themes/${theme.name}" = {
+  #     source = "${theme.package}/share/themes/${theme.name}";
+  #   };
+  # };
 
   qt = { enable = true; };
 }

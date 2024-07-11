@@ -2,7 +2,6 @@
   imports = [
     # shells
     ./nushell.nix
-    ./fish.nix
     ./bash.nix
     ./elvish.nix
 
