@@ -11,6 +11,7 @@ let
       config.window_background_opacity = 0.85
       config.text_background_opacity = 0.85
       config.window_close_confirmation = "NeverPrompt"
+      config.window_decorations = "NONE"
       config.keys = {
         {
           key = "F",

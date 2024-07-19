@@ -5,6 +5,13 @@
       qmk
       just
       speechd
+      guvcview
+      warp-terminal
+
+      grpcurl
+      grpcui
+      bloomrpc
+
       unrar
       eza
       fd

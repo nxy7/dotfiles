@@ -29,6 +29,7 @@ let
       alias just = just --unstable
 
       def fshw [] {
+        nmcli connection up MyEvaluations;
         code .; docker compose up;
       }
 

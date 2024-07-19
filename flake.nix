@@ -6,7 +6,7 @@
       currentUser = builtins.getEnv "USER";
       system = "x86_64-linux";
 
-      pkgs = import inputs.nixpkgs-unstable {
+      pkgs = import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
         config.allowUnfreePredicate = (_: true);
@@ -32,7 +32,7 @@
           "${currentUser}" = homeConfig;
         };
 
-        nixosConfigurations = with inputs.nixpkgs-unstable.lib; {
+        nixosConfigurations = with inputs.nixpkgs.lib; {
           nixos = nixosSystem {
             inherit system;
             specialArgs = inputs // { inherit pkgs inputs; };
@@ -42,18 +42,34 @@
       };
     };
 
+  nixConfig = {
+    extra-substituters = [
+
+      "https://ai.cachix.org"
+      "https://nix-community.cachix.org"
+      "https://hyprland.cachix.org"
+      "https://cosmic.cachix.org/"
+
+    ];
+    extra-trusted-public-keys = [
+      "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
+      "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+    ];
+  };
+
   inputs = {
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-23.11";
 
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     nixos-cosmic = {
       url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     stylix.url = "github:danth/stylix";
