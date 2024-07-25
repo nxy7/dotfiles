@@ -20,8 +20,6 @@
         overlays = import ./overlays.nix { inherit inputs system; };
       };
 
-      homeConfig =
-        import ./home currentUser { inherit home-manager inputs pkgs; };
     in flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [ ];
       systems = [ "x86_64-linux" ];
@@ -29,7 +27,9 @@
       flake = {
         homeConfigurations = {
           default = inputs.home-manager.defaultPackage.${system};
-          "${currentUser}" = homeConfig;
+          "${currentUser}" = (import ./home currentUser {
+            inherit home-manager inputs pkgs;
+          }).mainpc;
         };
 
         nixosConfigurations = with inputs.nixpkgs.lib; {
