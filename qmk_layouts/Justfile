@@ -1,2 +1,5 @@
 flash-qmk:
-    qmk flash ./lily58.hex
+    qmk flash ./lily58.hex;
+    echo "disconnect keyboard and connect new one";
+    sleep 10;
+    qmk flash ./lily58.hex;

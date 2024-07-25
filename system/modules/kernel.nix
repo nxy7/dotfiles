@@ -25,6 +25,8 @@ let
       "systemd.unified_cgroup_hierarchy=1"
 
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      "nvidia.NVreg_EnableGpuFirmware=0"
+      "nvidia.WLR_RENDERER=vulkan"
     ];
     boot.loader.efi.canTouchEfiVariables = true;
     boot.loader.efi.efiSysMountPoint = "/boot";

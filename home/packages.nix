@@ -7,6 +7,8 @@
       speechd
       guvcview
       warp-terminal
+      figma-linux
+      kooha
 
       grpcurl
       grpcui

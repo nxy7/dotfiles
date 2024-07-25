@@ -28,6 +28,23 @@ let
       alias grep = rg -S
       alias just = just --unstable
 
+
+      def fshconnect [] {
+        mut retry = 0
+        loop { 
+          let out = (nmcli connection up MyEvaluations| complete);
+           if $out.exit_code == 0 { 
+              spd-say 'Connected to VPN';
+              break 
+               } else {
+                $retry = $retry + 1
+            print $"retry ($retry)"
+              }
+            
+           
+        }
+      }
+
       def fshw [] {
         nmcli connection up MyEvaluations;
         code .; docker compose up;
@@ -97,9 +114,7 @@ let
       source ~/.zoxide.nu
       # use ~/.cache/starship/init.nu
 
-
       freshfetch
-        
     '';
 in {
   home.packages = with pkgs; [ freshfetch ];

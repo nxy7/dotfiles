@@ -19,7 +19,7 @@
       LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
       WLR_NO_HARDWARE_CURSORS = "1";
       MOZ_ENABLE_WAYLAND = "0";
-      NVreg_EnableGpuFirmware = 0;
+
     };
   };
   fonts.fontconfig.enable = true;
@@ -35,7 +35,7 @@
   environment.systemPackages = with pkgs; [ via qmk-udev-rules ];
   services.udev.packages = [ pkgs.via ];
 
-  imports = [
+  imports = with ./modules; [
     inputs.agenix.nixosModules.default
     /etc/nixos/hardware-configuration.nix
     ./kernel.nix
@@ -47,8 +47,8 @@
     ./fonts.nix
     ./gaming.nix
     # ./hyprland.nix
-    # ./cosmic.nix
-    ./kde.nix
+    ./cosmic.nix
+    # ./kde.nix
 
     ./audio.nix
 
@@ -65,7 +65,7 @@
   nixpkgs.config.allowUnfree = true;
 
   time.timeZone = "Europe/Warsaw";
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "pl_PL.UTF-8";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.UTF-8";
@@ -77,20 +77,6 @@
     LC_PAPER = "pl_PL.UTF-8";
     LC_TELEPHONE = "pl_PL.UTF-8";
     LC_TIME = "pl_PL.UTF-8";
-  };
-
-  services.syncthing = {
-    enable = true;
-    user = "nxyt";
-    dataDir = "/home/nxyt/Sync";
-    configDir = "/home/nxyt/.config/syncthing";
-    guiAddress = "127.0.0.1:8384";
-  };
-
-  services.earlyoom = {
-    enable = true;
-    enableNotifications = true;
-    freeMemThreshold = 4;
   };
 
   services.printing.enable = true;
