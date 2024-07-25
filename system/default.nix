@@ -38,25 +38,25 @@
   imports = with ./modules; [
     inputs.agenix.nixosModules.default
     /etc/nixos/hardware-configuration.nix
-    ./kernel.nix
-    ./firewall.nix
-    ./samba.nix
-    ./vpn.nix
+    ./modules/kernel.nix
+    ./modules/firewall.nix
+    ./modules/samba.nix
+    ./modules/vpn.nix
 
-    # display
-    ./fonts.nix
-    ./gaming.nix
-    # ./hyprland.nix
-    ./cosmic.nix
-    # ./kde.nix
+    #/modules display
+    ./modules/fonts.nix
+    ./modules/gaming.nix
+    #/modules ./hyprland.nix
+    ./modules/cosmic.nix
+    #/modules ./kde.nix
 
-    ./audio.nix
+    ./modules/audio.nix
 
-    ./packages.nix
-    ./services.nix
-    ./users.nix
-    ./programs.nix
-    ./udev.nix
+    ./modules/packages.nix
+    ./modules/services.nix
+    ./modules/users.nix
+    ./modules/programs.nix
+    ./modules/udev.nix
   ];
 
   time.hardwareClockInLocalTime = true;
