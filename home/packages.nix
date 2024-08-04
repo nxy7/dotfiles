@@ -9,6 +9,8 @@
       warp-terminal
       figma-linux
       kooha
+      k6
+      wrk
 
       grpcurl
       grpcui
@@ -35,6 +37,7 @@
       mangohud
 
       gimp
+      watchexec
       htop
 
       cachix

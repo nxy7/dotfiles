@@ -48,7 +48,7 @@
     ./modules/gaming.nix
     #/modules ./hyprland.nix
     ./modules/cosmic.nix
-    #/modules ./kde.nix
+    ./modules/kde.nix
 
     ./modules/audio.nix
 

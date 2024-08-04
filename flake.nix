@@ -23,13 +23,19 @@
     in flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [ ];
       systems = [ "x86_64-linux" ];
-      perSystem = { config, system, pkgs, self', ... }: { };
+      perSystem = { config, system, pkgs, self', ... }:
+        {
+          # packages.default = homeConfig;
+        };
       flake = {
         homeConfigurations = {
           default = inputs.home-manager.defaultPackage.${system};
-          "${currentUser}" = (import ./home currentUser {
+          nxyt = (import ./home currentUser {
             inherit home-manager inputs pkgs;
           }).mainpc;
+          laptop = (import ./home currentUser {
+            inherit home-manager inputs pkgs;
+          }).laptop;
         };
 
         nixosConfigurations = with inputs.nixpkgs.lib; {
