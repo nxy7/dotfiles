@@ -10,6 +10,7 @@
       figma-linux
       kooha
       k6
+      deno
       wrk
 
       grpcurl

@@ -32,6 +32,7 @@ let
       def fshconnect [] {
         mut retry = 0
         loop { 
+          nmcli connection down MyEvaluations | complete;
           let out = (nmcli connection up MyEvaluations| complete);
            if $out.exit_code == 0 { 
               spd-say 'Connected to VPN';
@@ -42,6 +43,11 @@ let
               }
             
            
+          if $retry > 20 {
+            spd-say 'too many retries';
+            return
+          }
+          sleep 1sec;
         }
       }
 
