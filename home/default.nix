@@ -3,60 +3,31 @@ username:
 let lib = pkgs.lib;
 in {
   mainpc = inputs.home-manager.lib.homeManagerConfiguration {
-    inherit pkgs;
+  inherit pkgs;
 
-    extraSpecialArgs = { inherit inputs pkgs username fullSystem; };
+  extraSpecialArgs = { inherit inputs pkgs username fullSystem; };
 
-    modules = [
-      ({ config, ... }: { config.scheme = ../theme.yaml; })
-      inputs.stylix.homeManagerModules.stylix
-      inputs.base16.homeManagerModule
-      ./stylix.nix
-      ./homesettings.nix
+  modules = [
+    ({ config, ... }: { config.scheme = ../theme.yaml; })
+    inputs.stylix.homeManagerModules.stylix
+    inputs.base16.homeManagerModule
+    ./stylix.nix
+    ./homesettings.nix
 
-      ./shells.nix
-      ./browsers.nix
+    ./shells.nix
+    ./browsers.nix
 
-      # programming
-      ./work.nix
-    ] ++ lib.optionals (fullSystem) [
+    # programming
+    ./work.nix
+  ] ++ lib.optionals (fullSystem) [
 
-      ./services.nix
-      # ./hyprland
+    ./services.nix
+    # ./hyprland
 
-      ./obs-studio
+    ./obs-studio
 
-      ./packages.nix
-      ./programs.nix
-    ];
-  };
-
-  laptop = inputs.home-manager.lib.homeManagerConfiguration {
-    inherit pkgs;
-
-    extraSpecialArgs = { inherit inputs pkgs username fullSystem; };
-
-    modules = [
-      ({ config, ... }: { config.scheme = ../theme.yaml; })
-      inputs.stylix.homeManagerModules.stylix
-      inputs.base16.homeManagerModule
-      ./stylix.nix
-      ./homesettings.nix
-
-      ./shells.nix
-      ./browsers.nix
-
-      # programming
-      ./work.nix
-
-      ./services.nix
-      # ./hyprland
-
-      ./obs-studio
-
-      ./packages.nix
-      ./programs.nix
-    ];
-  };
-
+    ./packages.nix
+    ./programs.nix
+  ];
+};
 }
