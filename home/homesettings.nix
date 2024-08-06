@@ -15,8 +15,8 @@
       PRISMA_SCHEMA_ENGINE_BINARY = "${pkgs.prisma-engines}/bin/schema-engine";
 
       STEAM_EXTRA_COMPAT_TOOLS_PATH = "\${HOME}/.steam/root/compabilitytools.d";
-      PATH = [ ./../scripts ];
     };
+    sessionPath = [ "${./../scripts}" ];
 
     file.".face".source = ../avatar.jpg;
   };
