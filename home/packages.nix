@@ -2,13 +2,19 @@
   home.packages = with pkgs;
     [ kustomize kube3d kubectl ] ++ lib.optionals (fullSystem) [
       foot
+      hyperfine
+      multitime
       qmk
       just
       speechd
       guvcview
       warp-terminal
       figma-linux
+
       kooha
+      flameshot
+      satty
+
       k6
       deno
       wrk
@@ -16,6 +22,7 @@
       grpcurl
       grpcui
       bloomrpc
+      diffutils
 
       unrar
       eza

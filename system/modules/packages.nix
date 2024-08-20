@@ -1,6 +1,6 @@
 { pkgs, config, inputs, system, ... }: {
   environment.systemPackages = (with pkgs; [
-    inputs.agenix.packages.${pkgs.system}.default
+    # inputs.agenix.packages.${pkgs.system}.default
     home-manager
     busybox
     lsof

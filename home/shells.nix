@@ -6,7 +6,7 @@
     ./elvish.nix
 
     # shell stuff
-    ./wezterm.nix
+    # ./wezterm.nix
     ./zoxide.nix
     ./helix
     ./git.nix

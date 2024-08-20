@@ -24,6 +24,7 @@
   };
   fonts.fontconfig.enable = true;
   services.flatpak.enable = true;
+  programs.dconf.enable = true;
 
   systemd.services.nix-daemon.serviceConfig = {
     MemoryHigh = "30G";
@@ -36,7 +37,7 @@
   services.udev.packages = [ pkgs.via ];
 
   imports = with ./modules; [
-    inputs.agenix.nixosModules.default
+    # inputs.agenix.nixosModules.default
     /etc/nixos/hardware-configuration.nix
     ./modules/kernel.nix
     ./modules/firewall.nix
@@ -46,9 +47,10 @@
     #/modules display
     ./modules/fonts.nix
     ./modules/gaming.nix
+    ./modules/gnome.nix
     #/modules ./hyprland.nix
-    ./modules/cosmic.nix
-    ./modules/kde.nix
+    # ./modules/cosmic.nix
+    # ./modules/kde.nix
 
     ./modules/audio.nix
 
@@ -65,7 +67,7 @@
   nixpkgs.config.allowUnfree = true;
 
   time.timeZone = "Europe/Warsaw";
-  i18n.defaultLocale = "pl_PL.UTF-8";
+  i18n.defaultLocale = "en_GB.UTF-8";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.UTF-8";

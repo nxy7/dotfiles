@@ -7,7 +7,6 @@ let
     nil
     nixfmt
     lua-language-server
-    vscode-langservers-extracted
 
     zls
     taplo
@@ -36,7 +35,10 @@ in {
         "ui.background" = { bg = transparent; };
       };
     };
-    settings = { theme = lib.mkForce "nxyt"; };
+    settings = {
+      theme = lib.mkForce "nxyt";
+      editor.line-number = "relative";
+    };
     inherit languages;
   };
 

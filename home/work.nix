@@ -12,6 +12,7 @@ let
 
     cargo
     rustc
+    omnisharp-roslyn
 
   ];
   otherPackages = with pkgs; [

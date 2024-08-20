@@ -9,7 +9,7 @@ in {
 
     modules = [
       ({ config, ... }: { config.scheme = ../theme.yaml; })
-      inputs.stylix.homeManagerModules.stylix
+      # inputs.stylix.homeManagerModules.stylix
       inputs.base16.homeManagerModule
       ./stylix.nix
       ./homesettings.nix
