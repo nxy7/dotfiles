@@ -1,5 +1,6 @@
 { pkgs, config, inputs, system, ... }: {
   environment.systemPackages = (with pkgs; [
+    zip
     # inputs.agenix.packages.${pkgs.system}.default
     home-manager
     busybox
@@ -20,10 +21,13 @@
     usbutils
     git
     helix
+    vivaldi
 
     wineWowPackages.stable
-    # wezterm
+    wezterm
     kitty
+
+    steam-run
 
     goxlr-utility
 

@@ -1,5 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
+  rocPkgs = inputs.roc.packages."x86_64-linux";
+
   programmingPackages = with pkgs; [
     bun
 
@@ -13,6 +15,8 @@ let
     cargo
     rustc
     omnisharp-roslyn
+
+    rocPkgs.full
 
   ];
   otherPackages = with pkgs; [

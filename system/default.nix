@@ -19,7 +19,6 @@
       LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
       WLR_NO_HARDWARE_CURSORS = "1";
       MOZ_ENABLE_WAYLAND = "0";
-
     };
   };
   fonts.fontconfig.enable = true;
@@ -27,8 +26,8 @@
   programs.dconf.enable = true;
 
   systemd.services.nix-daemon.serviceConfig = {
-    MemoryHigh = "30G";
-    MemoryMax = "40G";
+    MemoryHigh = "20G";
+    MemoryMax = "28G";
   };
 
   environment.etc."containers/policy.json".text =

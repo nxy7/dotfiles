@@ -81,8 +81,10 @@
     stylix.url = "github:danth/stylix";
     base16.url = "github:SenchoPens/base16.nix";
     sops-nix.url = "github:Mic92/sops-nix";
-    # agenix.url = "github:ryantm/agenix";
+    agenix.url = "github:ryantm/agenix";
     aylurDots.url = "github:Aylur/dotfiles";
+    roc.url = "github:roc-lang/roc";
   };
 
 }
+

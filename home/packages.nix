@@ -10,6 +10,7 @@
       guvcview
       warp-terminal
       figma-linux
+      murex
 
       kooha
       flameshot
