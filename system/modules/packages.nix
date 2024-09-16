@@ -1,6 +1,7 @@
 { pkgs, config, inputs, system, ... }: {
   environment.systemPackages = (with pkgs; [
     zip
+    sops
     # inputs.agenix.packages.${pkgs.system}.default
     home-manager
     busybox

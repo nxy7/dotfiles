@@ -83,6 +83,8 @@
   services.printing.enable = true;
   security.rtkit.enable = true;
 
+  virtualisation.waydroid.enable = true;
+
   virtualisation.docker.enable = true;
   virtualisation.docker.package = pkgs.docker_27;
   virtualisation.docker.extraOptions = ''

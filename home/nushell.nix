@@ -28,6 +28,10 @@ let
       alias grep = rg -S
       alias just = just --unstable
 
+      def pr-action-restart [] {
+        git commit --amend --no-edit
+        git push --force-with-lease
+      }
 
       def fshconnect [] {
         mut retry = 0

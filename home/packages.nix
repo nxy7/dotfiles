@@ -1,6 +1,7 @@
 { pkgs, fullSystem, ... }: {
   home.packages = with pkgs;
     [ kustomize kube3d kubectl ] ++ lib.optionals (fullSystem) [
+      ventoy
       foot
       hyperfine
       multitime
@@ -51,6 +52,7 @@
 
       cachix
       keepassxc
+      keepass-keeagent
 
       pgweb
 
