@@ -21,7 +21,8 @@ in [
     {
       utillinux = prev.util-linux;
       obsidian = (prev.obsidian.override { electron = prev.electron_24; });
-      zen-browser-specific = inputs.zen-browser.packages.x86_64-linux.specific;
-      zen-browser-generic = inputs.zen-browser.packages.x86_64-linux.generic;
+      zen-browser = inputs.zen-browser.packages.x86_64-linux.default;
+      # zen-browser-specific = inputs.zen-browser.packages.x86_64-linux.specific;
+      # zen-browser-generic = inputs.zen-browser.packages.x86_64-linux.generic;
     } // fromFlakes // stablePkgs)
 ]

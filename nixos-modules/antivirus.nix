@@ -1,6 +1,6 @@
 { ... }: {
   services.clamav = {
-    # scanner.enable = true;
-    # daemon.enable = true;
+    scanner.enable = true;
+    daemon.enable = true;
   };
 }

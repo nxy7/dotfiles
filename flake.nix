@@ -55,11 +55,14 @@
     extra-substituters = [
       "https://ai.cachix.org"
       "https://nix-community.cachix.org"
-      "https://roc-lang.cachix.org" # "https://cosmic.cachix.org/"
+      "https://ghostty.cachix.org"
+      "https://roc-lang.cachix.org"
+      # "https://cosmic.cachix.org/"
     ];
     extra-trusted-public-keys = [
       "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
       "roc-lang.cachix.org-1:6lZeqLP9SadjmUbskJAvcdGR2T5ViR57pDVkxJQb8R4="
+      "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
       # "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
     ];
   };

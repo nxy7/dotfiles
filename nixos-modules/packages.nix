@@ -1,6 +1,7 @@
 { pkgs, config, inputs, system, ... }: {
   environment.systemPackages = (with pkgs; [
     inputs.ghostty.packages.x86_64-linux.default
+    clamav
     kitty
     zip
     sops
