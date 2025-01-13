@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, stablePkgs, inputs, ... }:
 let
   rocPkgs = inputs.roc.packages."x86_64-linux";
 

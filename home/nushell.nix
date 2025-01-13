@@ -140,6 +140,10 @@ let
         cd ~/dotfiles
       }
 
+      def kill-wlcopy-wrappers [] {
+        ps | where name =~ wl-copy-wrap | each {kill $in.pid}
+      }
+
 
       def argo-get-pw [] {
          kubectl get secret -n argocd argocd-initial-admin-secret -o yaml | from yaml | get data.password | base64 -d | wl-copy 

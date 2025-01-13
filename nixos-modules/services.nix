@@ -2,6 +2,8 @@
   services.gvfs.enable = true;
   security.polkit.enable = true;
 
+  services.strongswan-swanctl.enable = true;
+
   # service exposed on port 14564
   services.goxlr-utility = { enable = true; };
 

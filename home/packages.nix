@@ -1,11 +1,12 @@
 { inputs, pkgs, fullSystem, ... }: {
   home.packages = with pkgs;
     [ kustomize kube3d kubectl ] ++ lib.optionals (fullSystem) [
-      inputs.roc-start.packages.x86_64-linux.default
+      # inputs.roc-start.packages.x86_64-linux.default
       ollama
       slumber
       brotli
       imagemagick
+      nixd
 
       ventoy
       hyperfine

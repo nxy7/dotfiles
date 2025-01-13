@@ -85,5 +85,11 @@
   environment.etc."containers/policy.json".text =
     builtins.readFile ../policy.json;
 
+  environment.etc."docker/daemon.json".text = ''
+    {
+      "live-restore": false
+    }
+  '';
+
   system.stateVersion = "23.11";
 }

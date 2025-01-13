@@ -2,13 +2,6 @@
   programs.zed-editor.enable = true;
   programs.zed-editor.package = pkgs.zed-editor;
   programs.zed-editor.userSettings = {
-    "assistant" = {
-      "default_model" = {
-        "provider" = "anthropic";
-        "model" = "claude-3-5-sonnet-latest";
-      };
-      "version" = "2";
-    };
     "inline_completion_provider" = "supermaven";
     "vim_mode" = true;
     "ui_font_family" = "FiraCode Nerd Font";
@@ -25,4 +18,6 @@
     };
     "lsp" = { "elixir-ls" = { "settings" = { "projectDir" = "backend"; }; }; };
   };
+
+  programs.zed-editor.extensions = [ "git-firefly" "sql" "svelte" ];
 }

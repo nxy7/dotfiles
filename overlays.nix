@@ -15,7 +15,7 @@ let
 
   fromFlakes = { steel = inputs.steel.packages.${system}.steel; };
 
-  stablePkgs = with stable; { inherit obs-studio; };
+  stablePkgs = with stable; { inherit obs-studio jetbrains; };
 in [
   (final: prev:
     {
