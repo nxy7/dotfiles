@@ -13,7 +13,6 @@ let
       "xt_socket"
       "xt_mark"
       "xt_set"
-      "v4l2loopback"
 
     ];
     security.protectKernelImage = false;
@@ -24,9 +23,9 @@ let
       "cgroup_enable=cpuset"
       "systemd.unified_cgroup_hierarchy=1"
 
-      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-      "nvidia.NVreg_EnableGpuFirmware=0"
-      "nvidia.WLR_RENDERER=vulkan"
+      # "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      # "nvidia.NVreg_EnableGpuFirmware=0"
+      # "nvidia.WLR_RENDERER=vulkan"
     ];
     boot.loader = {
       systemd-boot.enable = true;
@@ -38,13 +37,13 @@ let
   extras = {
     services.xserver.videoDrivers = [ "nvidia" ];
     hardware.graphics = { enable = true; };
-    boot.extraModulePackages = with config.boot.kernelPackages;
-      [ v4l2loopback ];
+    # boot.extraModulePackages = with config.boot.kernelPackages;
+    #   [ v4l2loopback ];
     hardware.opentabletdriver.enable = true;
     services.xserver.wacom.enable = true;
 
     hardware.nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      # package = config.boot.kernelPackages.nvidiaPackages.beta;
       open = false;
       powerManagement.enable = true;
       nvidiaSettings = true;

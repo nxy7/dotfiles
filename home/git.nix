@@ -12,11 +12,12 @@
     enable = true;
     settings = {
       git.commit.signOff = false;
-      os.editPreset = "helix";
+      os.editPreset = "hx";
     };
   };
   programs.gh = {
     enable = true;
     settings.git_protocol = "ssh";
+    extensions = with pkgs; [ gh-copilot gh-dash gh-contribs gh-dash ];
   };
 }

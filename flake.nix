@@ -28,7 +28,7 @@
       systems = [ "x86_64-linux" ];
       perSystem = { config, system, pkgs, self', ... }:
         {
-          # packages.default = homeConfig;
+          # packages.default = homeConfig
         };
       flake = {
         homeConfigurations = {
@@ -55,45 +55,34 @@
     extra-substituters = [
       "https://ai.cachix.org"
       "https://nix-community.cachix.org"
-      "https://ghostty.cachix.org"
       "https://roc-lang.cachix.org"
-      # "https://cosmic.cachix.org/"
+      "https://zed-industries.cachix.org"
     ];
     extra-trusted-public-keys = [
       "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "roc-lang.cachix.org-1:6lZeqLP9SadjmUbskJAvcdGR2T5ViR57pDVkxJQb8R4="
-      "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
-      # "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE="
+      "zed-industries.cachix.org-1:QW3RoXK0Lm4ycmU5/3bmYRd3MLf4RbTGPqRulGlX5W0="
     ];
   };
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-23.11";
+    nixpkgs-stable.url = "nixpkgs/nixos-24.11";
+    nixpkgs-old.url = "nixpkgs/nixos-23.11";
 
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     stylix.url = "github:danth/stylix";
     base16.url = "github:SenchoPens/base16.nix";
     sops-nix.url = "github:Mic92/sops-nix";
-    ghostty = {
-      url = "git+ssh://git@github.com/ghostty-org/ghostty";
-      inputs.nixpkgs-stable.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs";
-    };
 
-    # niri.url = "github:sodiboo/niri-flake";
     roc.url = "github:roc-lang/roc";
     roc-start.url = "github:nxy7/roc-start/add-nix-support";
 
-    # cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
+    zed-editor.url = "github:zed-industries/zed";
   };
-
 }
-

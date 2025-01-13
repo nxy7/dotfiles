@@ -7,7 +7,6 @@
   environment.systemPackages = with pkgs;
     with gnomeExtensions; [
       paperwm
-      blur-my-shell
       xdg-desktop-portal
       xdg-desktop-portal-gnome
     ];

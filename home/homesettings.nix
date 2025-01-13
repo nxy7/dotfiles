@@ -7,10 +7,11 @@
 
     sessionVariables = {
       EDITOR = "hx";
-      PKG_CONFIG_PATH = pkgs.openssl;
       LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
 
       STEAM_EXTRA_COMPAT_TOOLS_PATH = "\${HOME}/.steam/root/compabilitytools.d";
+      MESA_VK_DEVICE_SELECT = "10de:28a0";
+
     };
     sessionPath = [ "${./../scripts}" ];
 

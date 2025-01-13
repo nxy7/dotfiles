@@ -13,7 +13,7 @@ let
 
     pb
 
-    golangci-lint-langserver
+    # golangci-lint-langserver
     yaml-language-server
 
     nls

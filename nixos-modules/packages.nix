@@ -1,8 +1,6 @@
 { pkgs, config, inputs, system, ... }: {
   environment.systemPackages = (with pkgs; [
-    inputs.ghostty.packages.x86_64-linux.default
-    clamav
-    kitty
+    ghostty
     zip
     sops
     speechd
@@ -11,7 +9,6 @@
     busybox
     lsof
     unzip
-    openssl
     jq
     yq
 

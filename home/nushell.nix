@@ -3,8 +3,9 @@ let
   aliases = # nu
     ''
       alias z = zoxide
-      alias d = docker
+      alias d = dotnet
       alias g = git
+      alias b = bun
       alias p = pnpm
       alias len = length
 
@@ -21,7 +22,6 @@ let
       alias kctl = sudo k3s kubectl
       alias lg = lazygit
       alias k = kubectl
-      alias zed = zeditor
       alias grep = rg -S
       alias just = just --unstable
       alias sup = snap-update
@@ -80,8 +80,10 @@ let
       }
 
       # updates vitest snapshot using provided path to run specific test file 
-      def snap-update [path: string] {
-       npm run test:e2e $path -- -u 
+      def snap-update [...paths: string] {
+        for path in $paths {
+          npm run test:e2e $path -- -u --run
+        } 
       }
 
       def fsh-get-pw [] {
@@ -113,7 +115,7 @@ let
       }
 
       def fshw [] {
-        # z nodejs
+        # zoxide nodejs
         fshconnect;
         code .;
         docker compose up;
@@ -140,6 +142,10 @@ let
         cd ~/dotfiles
       }
 
+      def kill-wlcopy-wrappers [] {
+        ps | where name =~ wl-copy-wrap | each {kill $in.pid}
+      }
+
 
       def argo-get-pw [] {
          kubectl get secret -n argocd argocd-initial-admin-secret -o yaml | from yaml | get data.password | base64 -d | wl-copy 
@@ -147,14 +153,6 @@ let
       }
 
 
-      def investigate [] {
-        let script = $"const repl = require\('repl'\);
-        const context = repl.start\('> '\).context;
-        context.x = ($in);
-
-        console.log\(`REPL started with predefined variable assigned to 'x'`\);"
-        $script | node 
-      }
 
       source ~/.zoxide.nu
       # use ~/.cache/starship/init.nu
@@ -172,23 +170,18 @@ in {
     ];
     enable = true;
     extraEnv = ''
-
       $env.config = {
         show_banner: false,
       };
-      $env.PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+      # $env.PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
 
       $env.PATH = ($env.PATH |
        split row ":" |
        prepend $"($env.HOME)/.nix-profile/bin" |
        prepend "/nix/var/nix/profiles/default/bin" |
        prepend $"($env.HOME)/.cargo/bin" |
-       prepend $"($env.DOTNET_ROOT)/tools" |
-       prepend $"($env.DOTNET_ROOT)" |
+       prepend $"($env.HOME)/.dotnet/tools" |
        prepend "${../scripts}");
-
-
-      $env.EDITOR = "hx";
 
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu;
     '';

@@ -7,7 +7,7 @@
     zlib
     nss
     openssl
-    curl
+    # curl
     expat
   ];
 

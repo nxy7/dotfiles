@@ -64,7 +64,7 @@ in {
     ## hook for direnv
     set @edit:before-readline = $@edit:before-readline {
             try {
-                    var m = [("/nix/store/q161ialkxk9anr9z7adbi9qwc43s7819-direnv-2.34.0/bin/direnv" export elvish | from-json)]
+                    var m = [("${pkgs.direnv}/bin/direnv" export elvish | from-json)]
                     if (> (count $m) 0) {
                             set m = (all $m)
                             keys $m | each { |k|

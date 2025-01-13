@@ -15,11 +15,12 @@
   environment = {
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
-      DOTNET_ROOT = "${pkgs.dotnet-sdk_8}";
+      DOTNET_ROOT = "${pkgs.dotnet-sdk_9}/share/dotnet";
       LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
       WLR_NO_HARDWARE_CURSORS = "1";
       MOZ_ENABLE_WAYLAND = "0";
       QT_QPA_PLATFORM = "wayland";
+      MESA_VK_DEVICE_SELECT = "10de:28a0";
     };
   };
   fonts.fontconfig.enable = true;
@@ -39,7 +40,7 @@
     ../nixos-modules/gnome.nix
 
     ../nixos-modules/kernel.nix
-    # ../nixos-modules/antivirus.nix
+    ../nixos-modules/antivirus.nix
     ../nixos-modules/firewall.nix
     ../nixos-modules/samba.nix
     ../nixos-modules/vpn.nix
@@ -81,9 +82,16 @@
   virtualisation.waydroid.enable = true;
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.liveRestore = false;
 
   environment.etc."containers/policy.json".text =
     builtins.readFile ../policy.json;
+
+  environment.etc."docker/daemon.json".text = ''
+    {
+      "live-restore": false
+    }
+  '';
 
   system.stateVersion = "23.11";
 }

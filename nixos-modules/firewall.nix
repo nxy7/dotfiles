@@ -3,7 +3,10 @@
   networking.networkmanager.enable = true;
   networking.networkmanager.enableStrongSwan = true;
 
-  # networking.extraHosts = "";
+  networking.extraHosts = ''
+    10.10.2.4 myevtfbedev.blob.core.windows.net
+    10.0.5.10 myevtfbe.blob.core.windows.net
+  '';
 
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [
