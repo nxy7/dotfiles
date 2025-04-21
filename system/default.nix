@@ -65,7 +65,7 @@
   virtualisation.docker.liveRestore = false;
 
   environment.etc."containers/policy.json".text =
-    builtins.readFile ../policy.json;
+    builtins.readFile ./policy.json;
 
   environment.etc."docker/daemon.json".text = ''
     {
