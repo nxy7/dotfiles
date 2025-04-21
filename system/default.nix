@@ -35,8 +35,7 @@
   environment.systemPackages = with pkgs; [ via qmk-udev-rules ];
   services.udev.packages = [ pkgs.via ];
 
-  imports =
-    [ /etc/nixos/hardware-configuration.nix ../visuals ../nixos-modules ];
+  imports = [ /etc/nixos/hardware-configuration.nix ../visuals ../nixos ];
 
   time.hardwareClockInLocalTime = true;
   environment.shells = with pkgs; [ fish nushell elvish ];
