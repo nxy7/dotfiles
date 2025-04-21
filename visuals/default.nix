@@ -1,7 +1,13 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [ ./gnome.nix ./fonts.nix ./gaming.nix ./audio.nix ];
+  imports = [
+    ./gnome.nix
+    # ./hyprland.nix
+    ./fonts.nix
+    ./gaming.nix
+    ./audio.nix
+  ];
   options = {
     myModule.enable = lib.mkOption {
       type = lib.types.bool;

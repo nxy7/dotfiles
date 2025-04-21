@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  aliases = # nu
+  extraConfig = # nu
     ''
       alias z = zoxide
       alias d = dotnet
@@ -28,25 +28,26 @@ let
 
 
       alias nfix = sudo nix-store --repair --verify --check-contents
-    '';
 
-  nixScripts = # nu
-    ''
       def flake-update [] {
         gotoDotfiles
         nix flake update 
       }
 
       # home manager update
-      def nix-home-manager-update [] {
+      def nix-home-manager-update [
+        ...rest 
+      ] {
         gotoDotfiles
-        home-manager switch --flake . --impure; 
+        home-manager switch --flake . --impure ...$rest; 
         spd-say 'Home configuration updated';
       }
       alias nhs = nix-home-manager-update
 
       # system update
-      def nix-system-update [] {
+      def nix-system-update [
+        ...rest: string
+      ] {
         gotoDotfiles
         sudo nixos-rebuild switch --flake . --impure;
         spd-say 'System updated';
@@ -69,10 +70,6 @@ let
       alias flake-rebuild = nix-full-system-update
 
 
-    '';
-
-  workScripts = # nu
-    ''
       def vpn-restart [] {
         sudo ipsec down fsh;
         sudo ipsec up fsh;
@@ -120,15 +117,11 @@ let
         code .;
         docker compose up;
       }
-    '';
 
-  extraConfig = # nu
-    ''
       $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
       mkdir ~/.cache/carapace
       carapace _carapace nushell | save --force ~/.cache/carapace/init.nu
 
-      #~/.config/nushell/config.nu
       source ~/.cache/carapace/init.nu
 
 
@@ -159,31 +152,26 @@ let
 
       freshfetch
     '';
-in {
-  home.packages = with pkgs; [ freshfetch ];
-  programs.nushell = {
-    extraConfig = builtins.concatStringsSep "\n" [
-      aliases
-      extraConfig
-      nixScripts
-      workScripts
-    ];
-    enable = true;
-    extraEnv = ''
-      $env.config = {
-        show_banner: false,
-      };
-      # $env.PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+
+  extraEnv = # nu
+    ''
+      $env.config.show_banner = false;
 
       $env.PATH = ($env.PATH |
        split row ":" |
        prepend $"($env.HOME)/.nix-profile/bin" |
        prepend "/nix/var/nix/profiles/default/bin" |
        prepend $"($env.HOME)/.cargo/bin" |
-       prepend $"($env.HOME)/.dotnet/tools";
+       prepend $"($env.HOME)/.dotnet/tools");
 
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu;
     '';
+
+in {
+  home.packages = with pkgs; [ freshfetch carapace ];
+  programs.nushell = {
+    enable = true;
+    inherit extraConfig extraEnv;
   };
 }
 

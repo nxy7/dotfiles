@@ -31,6 +31,7 @@ let
 
     rocPkgs.full
 
+    wireshark
   ];
   otherPackages = with pkgs; [
     jetbrains.datagrip

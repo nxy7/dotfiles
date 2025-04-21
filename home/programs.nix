@@ -1,34 +1,5 @@
-{ pkgs, fullSystem, ... }:
-let
-  icons = rec {
-    calendar = "󰃭 ";
-    clock = " ";
-    battery.charging = "󱐋";
-    battery.horizontal = [ " " " " " " " " " " ];
-    battery.vertical = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
-    battery.levels = battery.vertical;
-    network.disconnected = "󰤮 ";
-    network.ethernet = "󰈀 ";
-    network.strength = [ "󰤟 " "󰤢 " "󰤥 " "󰤨 " ];
-    bluetooth.on = "󰂯";
-    bluetooth.off = "󰂲";
-    bluetooth.battery = "󰥉";
-    volume.source = "󱄠";
-    volume.muted = "󰝟";
-    volume.levels = [ "󰕿" "󰖀" "󰕾" ];
-    idle.on = "󰈈 ";
-    idle.off = "󰈉 ";
-    vpn = "󰌆 ";
-
-    notification.red_badge = "<span foreground='red'><sup></sup></span>";
-    notification.bell = "󰂚";
-    notification.bell-badge = "󱅫";
-    notification.bell-outline = "󰂜";
-    notification.bell-outline-badge = "󰅸";
-  };
-in {
+{
   programs = {
-    # yazi.enable = true;
     ripgrep.enable = true;
     bat.enable = true;
     fzf.enable = true;

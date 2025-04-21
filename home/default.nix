@@ -16,11 +16,9 @@ in {
       ./homesettings.nix
 
       ./shells.nix
-      ./browsers.nix
       ./zed.nix
 
       # programming
-      ./wezterm.nix
       ./work.nix
     ] ++ lib.optionals (fullSystem) [
 

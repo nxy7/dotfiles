@@ -1,6 +1,9 @@
-{ inputs, pkgs, fullSystem, ... }: {
+{ inputs, pkgs, fullSystem, ... }:
+let browsers = with pkgs; [ zen-browser ungoogled-chromium brave ];
+
+in {
   home.packages = with pkgs;
-    [ kustomize kube3d kubectl ] ++ lib.optionals (fullSystem) [
+    [ kustomize kube3d kubectl ] ++ browsers ++ lib.optionals (fullSystem) [
       inputs.roc-start.packages.x86_64-linux.default
       vulkan-tools
       elk

@@ -85,6 +85,8 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     zen-browser.inputs.nixpkgs.follows = "nixpkgs";
     zed-editor.url = "github:zed-industries/zed";
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
     elk.url = "github:PaddiM8/elk";
 
   };

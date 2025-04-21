@@ -33,5 +33,6 @@ let
     } // fromFlakes // stablePkgs // oldPkgs);
 in [
   overlayPkgs
+  inputs.hyprpanel.overlay
   # inputs.zed-editor.overlays.default
 ]
