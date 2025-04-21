@@ -12,10 +12,6 @@ in {
       inputs.stylix.homeManagerModules.stylix
       inputs.base16.homeManagerModule
 
-      # ../home-modules/hyprland.nix
-      # ../home-modules/niri.nix
-      # ../home-modules/waybar.nix
-
       ./stylix.nix
       ./homesettings.nix
 
@@ -26,7 +22,6 @@ in {
       # programming
       ./wezterm.nix
       ./work.nix
-
     ] ++ lib.optionals (fullSystem) [
 
       ./services.nix
