@@ -1,5 +1,0 @@
-_default: 
-    just -l
-
-argo-pw:
-    ./argo-get-pw.ts
