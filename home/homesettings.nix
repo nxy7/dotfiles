@@ -13,7 +13,6 @@
       MESA_VK_DEVICE_SELECT = "10de:28a0";
 
     };
-    sessionPath = [ "${./../scripts}" ];
 
     file.".face".source = ../avatar.jpg;
   };

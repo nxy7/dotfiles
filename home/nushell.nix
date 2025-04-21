@@ -180,8 +180,7 @@ in {
        prepend $"($env.HOME)/.nix-profile/bin" |
        prepend "/nix/var/nix/profiles/default/bin" |
        prepend $"($env.HOME)/.cargo/bin" |
-       prepend $"($env.HOME)/.dotnet/tools" |
-       prepend "${../scripts}");
+       prepend $"($env.HOME)/.dotnet/tools";
 
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu;
     '';
