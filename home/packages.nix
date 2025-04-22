@@ -1,5 +1,5 @@
 { inputs, pkgs, fullSystem, ... }:
-let browsers = with pkgs; [ zen-browser ungoogled-chromium brave ];
+let browsers = with pkgs; [ ungoogled-chromium brave ];
 
 in {
   home.packages = with pkgs;

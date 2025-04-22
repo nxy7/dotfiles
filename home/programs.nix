@@ -1,4 +1,6 @@
-{
+{ inputs, pkgs, ... }: {
+  imports = [ inputs.zen-browser.homeModules.beta ];
+
   programs = {
     ripgrep.enable = true;
     bat.enable = true;
@@ -10,6 +12,14 @@
       enable = true;
       nix-direnv.enable = true;
       enableNushellIntegration = true;
+    };
+    zen-browser = {
+      enable = true;
+      nativeMessagingHosts = [ pkgs.firefoxpwa ];
+      policies = {
+        DisableAppUpdate = true;
+        DisableTelemetry = true;
+      };
     };
     starship = {
       enable = true;

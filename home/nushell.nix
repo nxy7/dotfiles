@@ -103,11 +103,11 @@ let
               }
             
            
-          if $retry > 20 {
+          if $retry > 30 {
             spd-say 'too many retries';
             return
           }
-          sleep 1sec;
+          sleep 1.5sec;
         }
       }
 
