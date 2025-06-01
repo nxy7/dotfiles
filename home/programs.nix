@@ -1,5 +1,6 @@
-{ inputs, pkgs, ... }: {
-  imports = [ inputs.zen-browser.homeModules.beta ];
+{ inputs, pkgs, ... }:
+{
+  imports = [ inputs.zen-browser.homeModules.default ];
 
   programs = {
     ripgrep.enable = true;
@@ -7,7 +8,6 @@
     fzf.enable = true;
     k9s.enable = true;
     fish.enable = true;
-    fuzzel.enable = true;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
@@ -21,6 +21,25 @@
         DisableTelemetry = true;
       };
     };
+
+    satty = {
+      enable = true;
+    };
+
+    bash = {
+      enable = true;
+      bashrcExtra = "\n\n";
+    };
+
+    zed-editor = {
+      enable = true;
+    };
+    zoxide = {
+      enable = true;
+      enableNushellIntegration = true;
+      enableFishIntegration = true;
+    };
+
     starship = {
       enable = true;
       enableNushellIntegration = true;
@@ -46,4 +65,3 @@
 
   };
 }
-

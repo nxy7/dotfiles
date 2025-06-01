@@ -1,44 +1,55 @@
-{ pkgs, stablePkgs, inputs, ... }:
+{ pkgs, ... }:
 let
-  rocPkgs = inputs.roc.packages."x86_64-linux";
 
   programmingPackages = with pkgs; [
-    bun
-    postgresql_17
+    # expert
+    pv
     azure-storage-azcopy
-    # python3
-    # jupyter-all
 
+    jq
     nodejs
-    nodePackages_latest.ts-node
-    nodePackages.pnpm
+    deno
     yarn
 
-    dotnetPackages.Nuget
-    dotnet-sdk_9
-    dotnet-ef
+    nodePackages_latest.ts-node
+    nodePackages.pnpm
 
-    terraform
-    (azure-cli.withExtensions [ azure-cli.extensions.aks-preview ])
-    kubectl
-    kubelogin
-    redis
+    dotnetCorePackages.dotnet_9.sdk
+    dotnetCorePackages.dotnet_9.runtime
+    dotnetCorePackages.dotnet_9.aspnetcore
+
     pkgs.nodePackages.cdktf-cli
 
-    cargo
-    rustc
-    # omnisharp-roslyn
-
-    rocPkgs.full
-
+  ];
+  devopsPackages = with pkgs; [
+    freerdp
+    rdesktop
+    terraform
+    kubectl
+    kubelogin
     wireshark
+    (azure-cli.withExtensions [ azure-cli.extensions.aks-preview ])
   ];
-  otherPackages = with pkgs; [
-    jetbrains.datagrip
-    # azuredatastudio
-    dbeaver-bin
-    nest-cli
-    slack
-    insomnia
-  ];
-in { home.packages = programmingPackages ++ otherPackages; }
+  otherPackages =
+    with pkgs;
+    with jetbrains;
+    [
+      jetbrains-toolbox
+      livebook
+
+      datagrip
+      rider
+
+      idea-ultimate
+      jprofiler
+      webstorm
+      claude-code
+
+      slack
+      redis
+      postgresql_17
+    ];
+in
+{
+  home.packages = programmingPackages ++ otherPackages ++ devopsPackages;
+}

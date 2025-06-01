@@ -1,32 +1,44 @@
-{ pkgs, config, inputs, system, ... }: {
-  environment.systemPackages = (with pkgs; [
-    ghostty
-    zip
-    sops
-    speechd
-    home-manager
-    appimage-run
-    busybox
-    lsof
-    unzip
-    jq
-    yq
+{
+  pkgs,
+  config,
+  inputs,
+  system,
+  ...
+}:
+{
+  environment.systemPackages = (
+    with pkgs;
+    [
+      protonvpn-gui
+      ghostty
+      zip
+      sops
+      speechd
+      home-manager
+      appimage-run
+      busybox
+      lsof
+      unzip
 
-    distrobox
+      distrobox
 
-    readarr
-    stremio
-    libreoffice-qt
+      stremio
+      libreoffice-qt
 
-    xclip
-    wl-clipboard
-    vlc
+      xclip
+      wl-clipboard
+      vlc
 
-    usbutils
-    git
-    helix
+      usbutils
+      git
+      helix
 
-    steam-run
-    goxlr-utility
-  ]);
+      steam-run
+      goxlr-utility
+
+      # For URL handling and browser redirection
+      xdg-utils
+
+    ]
+  );
 }

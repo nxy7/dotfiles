@@ -1,18 +1,30 @@
-{ config, inputs, pkgs, ... }: {
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
+{
   stylix = {
     image = ../system/wallpaper.jpg;
     polarity = "dark";
     base16Scheme = ../theme.yaml;
     targets.bemenu.enable = false;
-    # autoEnable = true;
   };
   stylix.fonts = {
     monospace = config.stylix.fonts.sansSerif;
     serif = config.stylix.fonts.sansSerif;
     sansSerif = {
-      package = (pkgs.nerd-fonts.override {
-        fonts = [ "Monaspace" "RobotoMono" "DejaVuSansMono" "FiraCode" ];
-      });
+      package = (
+        pkgs.nerd-fonts.override {
+          fonts = [
+            "Monaspace"
+            "RobotoMono"
+            "DejaVuSansMono"
+            "FiraCode"
+          ];
+        }
+      );
       name = "Fira Code Nerd Font";
     };
   };

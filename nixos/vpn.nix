@@ -8,5 +8,4 @@
     networkmanager_strongswan
     networkmanager-vpnc
   ]);
-
 }

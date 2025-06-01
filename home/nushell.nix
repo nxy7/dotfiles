@@ -52,21 +52,32 @@ let
         sudo nixos-rebuild switch --flake . --impure;
         spd-say 'System updated';
       }
+
+      def "from env" []: string -> record {
+        lines 
+          | split column '#' 
+          | get column1 
+          | where {($in | str length) > 0} 
+          | parse "{key}={value}"
+          | update value {str trim -c '"'}
+          | transpose -r -d
+      }
+
       alias nss = nix-system-update
 
 
       # full system update (system + home manager)
-      def nix-full-system-update [
+      def nfs [
         --update (-u)
       ] {
         gotoDotfiles;
+        sudo echo "Starting system update";
         if $update {
           nix flake update
         }
         nss;
         nhs;
       }
-      alias nfs = nix-full-system-update
       alias flake-rebuild = nix-full-system-update
 
 
@@ -79,8 +90,14 @@ let
       # updates vitest snapshot using provided path to run specific test file 
       def snap-update [...paths: string] {
         for path in $paths {
-          npm run test:e2e $path -- -u --run
+          try {
+            npm run test:e2e $path -- -u --run
+          }
         } 
+      }
+
+      def update-pr-snaps [] {
+        snap-update ...(gh pr diff --name-only | lines | where {$in =~ .e2e and $in !~ snap and $in !~ helper})
       }
 
       def fsh-get-pw [] {
@@ -112,13 +129,13 @@ let
       }
 
       def fshw [] {
-        # zoxide nodejs
         fshconnect;
         code .;
         docker compose up;
       }
 
       $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
+      $env.EDITOR = 'hx'
       mkdir ~/.cache/carapace
       carapace _carapace nushell | save --force ~/.cache/carapace/init.nu
 
@@ -147,8 +164,6 @@ let
 
 
 
-      source ~/.zoxide.nu
-      # use ~/.cache/starship/init.nu
 
       freshfetch
     '';
@@ -162,16 +177,21 @@ let
        prepend $"($env.HOME)/.nix-profile/bin" |
        prepend "/nix/var/nix/profiles/default/bin" |
        prepend $"($env.HOME)/.cargo/bin" |
+       prepend $"($env.HOME)/.npm-global/bin" |
+       prepend $"($env.HOME)/.bun/bin" |
        prepend $"($env.HOME)/.dotnet/tools");
 
       ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu;
     '';
 
-in {
-  home.packages = with pkgs; [ freshfetch carapace ];
+in
+{
+  home.packages = with pkgs; [
+    freshfetch
+    carapace
+  ];
   programs.nushell = {
     enable = true;
     inherit extraConfig extraEnv;
   };
 }
-

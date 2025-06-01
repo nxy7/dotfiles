@@ -1,29 +1,50 @@
-{ pkgs, ... }: {
-  services.gvfs.enable = true;
+{ lib, pkgs, ... }: {
   security.polkit.enable = true;
 
-  services.strongswan-swanctl.enable = true;
+  # Reduce systemd user manager timeout to prevent hanging on shutdown
+  systemd.services."user@".serviceConfig.TimeoutStopSec = "30s";
 
-  # service exposed on port 14564
-  services.goxlr-utility = { enable = true; };
+  services = {
 
-  services.syncthing = {
-    enable = true;
-    user = "nxyt";
-    dataDir = "/home/nxyt/Sync";
-    configDir = "/home/nxyt/.config/syncthing";
-    guiAddress = "127.0.0.1:8384";
+    # laptop batery
+    thermald.enable = true;
+
+    strongswan-swanctl.enable = true;
+
+    # service exposed on port 14564
+    goxlr-utility = { enable = true; };
+
+    syncthing = {
+      enable = true;
+      user = "nxyt";
+      dataDir = "/home/nxyt/Sync";
+      configDir = "/home/nxyt/.config/syncthing";
+      guiAddress = "127.0.0.1:8384";
+    };
+
+    earlyoom = {
+      enable = true;
+      enableNotifications = true;
+      freeMemThreshold = 5;
+    };
+
+    speechd.enable = true;
+
+    # ollama.enable = true;
+
+    clamav = {
+      scanner.enable = false;
+      daemon.enable = false;
+      daemon.settings = { LogTime = true; };
+      updater.enable = false;
+      updater.interval = "daily";
+    };
+
+    # samba
+    gvfs = {
+      enable = true;
+      package = lib.mkForce pkgs.gnome.gvfs;
+    };
+    # speech-dispatcher.enable = true;
   };
-
-  services.earlyoom = {
-    enable = true;
-    enableNotifications = true;
-    freeMemThreshold = 5;
-  };
-
-  services.speechd.enable = true;
-
-  services.ollama.enable = true;
-  # services.speech-dispatcher.enable = true;
-
 }

@@ -4,6 +4,7 @@
     inherit username;
     homeDirectory = "/home/" + username;
     stateVersion = "23.11";
+    sessionPath = [ "$HOME/.npm-global/bin" ];
 
     sessionVariables = {
       EDITOR = "hx";

@@ -1,26 +1,46 @@
 username:
-{ inputs, pkgs, fullSystem ? true, ... }:
-let lib = pkgs.lib;
-in {
+{
+  inputs,
+  pkgs,
+  ...
+}:
+let
+  lib = pkgs.lib;
+in
+{
   mainpc = inputs.home-manager.lib.homeManagerConfiguration {
     inherit pkgs;
 
-    extraSpecialArgs = { inherit inputs pkgs username fullSystem; };
+    extraSpecialArgs = {
+      inherit
+        inputs
+        pkgs
+        username
+        ;
+    };
 
     modules = [
-      ({ config, ... }: { config.scheme = ../theme.yaml; })
-      inputs.stylix.homeManagerModules.stylix
+      (
+        { config, ... }:
+        {
+          config.scheme = ../theme.yaml;
+        }
+      )
+      inputs.stylix.homeModules.stylix
       inputs.base16.homeManagerModule
 
       ./stylix.nix
       ./homesettings.nix
 
-      ./shells.nix
-      ./zed.nix
+      # shells
+      ./nushell.nix
+
+      # shell stuff
+      ./helix.nix
+      ./git.nix
 
       # programming
       ./work.nix
-    ] ++ lib.optionals (fullSystem) [
 
       ./services.nix
 

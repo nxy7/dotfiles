@@ -1,10 +1,25 @@
-{ config, pkgs, inputs, ... }: {
-  services.xserver.xkb.layout = "pl,pl";
-  nix = {
-    settings.experimental-features = [ "nix-command" "flakes" ];
-    settings.trusted-users = [ "root" "nxyt" ];
+{
+  pkgs,
+  ...
+}:
+{
+  imports = [
+    /etc/nixos/hardware-configuration.nix
+    ../visuals
+    ../nixos
+  ];
 
+  nix = {
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    settings.trusted-users = [
+      "root"
+      "nxyt"
+    ];
     optimise.automatic = true;
+
     gc = {
       automatic = true;
       randomizedDelaySec = "14m";
@@ -13,9 +28,10 @@
   };
   hardware.keyboard.qmk.enable = true;
   environment = {
+    variables.EDITOR = "hx";
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
-      DOTNET_ROOT = "${pkgs.dotnet-sdk_9}/share/dotnet";
+      # DOTNET_ROOT = "${pkgs.dotnet-sdk_10}/share/dotnet";
       LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
       WLR_NO_HARDWARE_CURSORS = "1";
       MOZ_ENABLE_WAYLAND = "0";
@@ -24,25 +40,38 @@
     };
   };
   fonts.fontconfig.enable = true;
-  services.flatpak.enable = true;
   programs.dconf.enable = true;
 
   systemd.services.nix-daemon.serviceConfig = {
-    MemoryHigh = "20G";
-    MemoryMax = "28G";
+    MemoryHigh = "16G";
+    MemoryMax = "20G";
+    CPUQuota = "400%";
   };
 
-  environment.systemPackages = with pkgs; [ via qmk-udev-rules ];
-  services.udev.packages = [ pkgs.via ];
+  environment.systemPackages = with pkgs; [
+    via
+    qmk-udev-rules
+  ];
+  services = {
+    xserver.xkb.layout = "pl,pl";
 
-  imports = [ /etc/nixos/hardware-configuration.nix ../visuals ../nixos ];
+    flatpak.enable = true;
+    resolved.enable = true;
+    udev.packages = [ pkgs.via ];
+
+    printing.enable = true;
+  };
+
+  environment.shells = with pkgs; [
+    fish
+    nushell
+    elvish
+  ];
 
   time.hardwareClockInLocalTime = true;
-  environment.shells = with pkgs; [ fish nushell elvish ];
-
   time.timeZone = "Europe/Warsaw";
-  i18n.defaultLocale = "en_GB.UTF-8";
 
+  i18n.defaultLocale = "en_GB.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pl_PL.UTF-8";
     LC_IDENTIFICATION = "pl_PL.UTF-8";
@@ -54,23 +83,15 @@
     LC_TELEPHONE = "pl_PL.UTF-8";
     LC_TIME = "pl_PL.UTF-8";
   };
-
-  services.printing.enable = true;
   security.rtkit.enable = true;
 
-  virtualisation.waydroid.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    # autoPrune = true;
+    liveRestore = false;
+  };
 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.liveRestore = false;
-
-  environment.etc."containers/policy.json".text =
-    builtins.readFile ./policy.json;
-
-  environment.etc."docker/daemon.json".text = ''
-    {
-      "live-restore": false
-    }
-  '';
+  environment.etc."containers/policy.json".text = builtins.readFile ./policy.json;
 
   system.stateVersion = "23.11";
 }

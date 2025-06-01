@@ -10,6 +10,4 @@
     # curl
     expat
   ];
-
-  programs.firefox = { enable = true; };
 }
