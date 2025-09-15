@@ -1,0 +1,4 @@
+personal filter=git-crypt diff=git-crypt
+personal/** filter=git-crypt diff=git-crypt
+encrypted filter=git-crypt diff=git-crypt
+encrypted/** filter=git-crypt diff=git-crypt
