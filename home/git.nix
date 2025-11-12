@@ -2,15 +2,19 @@
 {
   programs.git = {
     enable = true;
-    userName = "Dawid Danieluk";
-    userEmail = "danielukd@gmail.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Dawid Danieluk";
+        email = "danielukd@gmail.com";
+      };
+
       credential = {
         helper = "cache";
       };
       pull = {
         rebase = "true";
       };
+
     };
   };
   programs.lazygit = {

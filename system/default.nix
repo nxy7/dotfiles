@@ -5,6 +5,8 @@
 {
   imports = [
     /etc/nixos/hardware-configuration.nix
+    ./environment.nix
+    ./hardware.nix
     ../visuals
     ../nixos
   ];
@@ -26,47 +28,8 @@
       options = "--delete-older-than 15d";
     };
   };
-  hardware.keyboard.qmk.enable = true;
-  environment = {
-    variables.EDITOR = "hx";
-    sessionVariables = {
-      NIXOS_OZONE_WL = "1";
-      # DOTNET_ROOT = "${pkgs.dotnet-sdk_10}/share/dotnet";
-      LD_LIBRARY_PATH = "${pkgs.libGL}/lib";
-      WLR_NO_HARDWARE_CURSORS = "1";
-      MOZ_ENABLE_WAYLAND = "0";
-      QT_QPA_PLATFORM = "wayland";
-      MESA_VK_DEVICE_SELECT = "10de:28a0";
-    };
-  };
+
   fonts.fontconfig.enable = true;
-  programs.dconf.enable = true;
-
-  systemd.services.nix-daemon.serviceConfig = {
-    MemoryHigh = "16G";
-    MemoryMax = "20G";
-    CPUQuota = "400%";
-  };
-
-  environment.systemPackages = with pkgs; [
-    # via
-    qmk-udev-rules
-  ];
-  services = {
-    xserver.xkb.layout = "pl,pl";
-
-    flatpak.enable = true;
-    resolved.enable = true;
-    udev.packages = [ pkgs.via ];
-
-    printing.enable = true;
-  };
-
-  environment.shells = with pkgs; [
-    # fish
-    nushell
-    # elvish
-  ];
 
   time.hardwareClockInLocalTime = true;
   time.timeZone = "Europe/Warsaw";
@@ -90,8 +53,6 @@
     # autoPrune = true;
     liveRestore = false;
   };
-
-  environment.etc."containers/policy.json".text = builtins.readFile ./policy.json;
 
   system.stateVersion = "23.11";
 }

@@ -18,26 +18,10 @@ let
     libtool
 
     elixir
-    # expert
-    # aider-chat-full
-    minicom
-    screen
-    esptool
-    openssl
-    pv
-    azure-storage-azcopy
-
-    jq
     nodejs
-    deno
     yarn
 
-    nodePackages_latest.ts-node
     nodePackages.pnpm
-
-    dotnetCorePackages.dotnet_9.sdk
-    dotnetCorePackages.dotnet_9.runtime
-    dotnetCorePackages.dotnet_9.aspnetcore
 
     pkgs.nodePackages.cdktf-cli
 
@@ -55,15 +39,8 @@ let
     with pkgs;
     with jetbrains;
     [
-      jetbrains-toolbox
       livebook
-
       datagrip
-      rider
-
-      idea-ultimate
-      jprofiler
-      webstorm
       claude-code
 
       slack

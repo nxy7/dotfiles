@@ -1,27 +1,19 @@
 {
   config,
   pkgs,
+  inputs,
   lib,
   ...
 }:
 
 {
   imports = [
+    # inputs.dankMaterialShell.nixosModules.greeter
+
     ./gnome.nix
-    # ./hyprland.nix
-    # ./gaming.nix
+    # ./cosmic.nix
+    # ./niri.nix
     ./fonts.nix
     ./audio.nix
   ];
-  options = {
-    myModule.enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "tbd";
-    };
-  };
-
-  config = lib.mkIf config.myModule.enable {
-
-  };
 }

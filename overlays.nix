@@ -32,4 +32,7 @@ let
     // stablePkgs
   );
 in
-[ overlayPkgs ]
+[
+  overlayPkgs
+  # inputs.niri.overlays.niri
+]

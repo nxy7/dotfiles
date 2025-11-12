@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   pkgs,
   ...
 }:
@@ -8,7 +7,7 @@
   stylix = {
     image = ../system/wallpaper.jpg;
     polarity = "dark";
-    base16Scheme = ../theme.yaml;
+    base16Scheme = ../visuals/theme.yaml;
     targets.bemenu.enable = false;
   };
   stylix.fonts = {

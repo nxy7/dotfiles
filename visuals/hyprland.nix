@@ -1,20 +1,15 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
   imports = [ ];
 
   programs.hyprland = {
     enable = true;
-    xwayland = { enable = true; };
-    package =
-      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    xwayland = {
+      enable = true;
+    };
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage =
       inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-  };
-
-  services.xserver.enable = true;
-  services.displayManager = {
-    sddm.enable = true;
-    sddm.wayland.enable = true;
-    sddm.theme = "where_is_my_sddm_theme";
   };
 
   environment.systemPackages = with pkgs; [

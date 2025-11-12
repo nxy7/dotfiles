@@ -9,7 +9,7 @@
   environment.systemPackages = (
     with pkgs;
     [
-      protonvpn-gui
+      # protonvpn-gui
       ghostty
       zip
       sops
@@ -27,6 +27,7 @@
 
       xclip
       wl-clipboard
+      xwayland-satellite
       vlc
 
       usbutils
@@ -38,6 +39,12 @@
 
       # For URL handling and browser redirection
       xdg-utils
+
+      # Niri window switcher
+      niriswitcher
+
+      # Vulkan tools for debugging
+      vulkan-tools
 
     ]
   );

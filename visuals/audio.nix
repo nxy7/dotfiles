@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -8,6 +9,8 @@
     pulse.enable = true;
     wireplumber.enable = true;
   };
+  services.avahi.enable = true;
+  services.avahi.nssmdns4 = true;
 
   environment.systemPackages = with pkgs; [
     alsa-utils
@@ -16,7 +19,4 @@
     qpwgraph
     helvum
   ];
-
-  services.avahi.enable = true;
-  services.avahi.nssmdns4 = true;
 }

@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     zlib
@@ -7,7 +8,7 @@
     zlib
     nss
     openssl
-    # curl
     expat
   ];
+  programs.dconf.enable = true;
 }

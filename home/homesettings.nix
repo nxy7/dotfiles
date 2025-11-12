@@ -1,4 +1,11 @@
-{ username, pkgs, inputs, config, ... }: {
+{
+  username,
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
+{
   home = rec {
 
     inherit username;
@@ -12,11 +19,12 @@
 
       STEAM_EXTRA_COMPAT_TOOLS_PATH = "\${HOME}/.steam/root/compabilitytools.d";
       MESA_VK_DEVICE_SELECT = "10de:28a0";
-
+      QT_QPA_PLATFORM = "wayland";
+      SDL_VIDEODRIVER = "wayland";
+      XDG_SESSION_TYPE = "wayland";
     };
 
     file.".face".source = ../avatar.jpg;
   };
   programs.home-manager.enable = true;
 }
-

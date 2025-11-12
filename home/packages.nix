@@ -5,22 +5,16 @@
 }:
 {
   home.packages = with pkgs; [
-    kustomize
-    kube3d
     kubectl
-    grim
-    slurp
 
-    ungoogled-chromium
+    # ungoogled-chromium
     brave
 
-    jupyter
     bombardier
     brotli
-    imagemagick
     caddy
 
-    gnome-network-displays
+    nautilus
     just
     figma-linux
 

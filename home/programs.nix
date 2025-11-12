@@ -7,7 +7,6 @@
     bat.enable = true;
     fzf.enable = true;
     k9s.enable = true;
-    fish.enable = true;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
@@ -15,29 +14,20 @@
     };
     zen-browser = {
       enable = true;
-      nativeMessagingHosts = [ pkgs.firefoxpwa ];
+      # nativeMessagingHosts = [ pkgs.firefoxpwa ];
       policies = {
         DisableAppUpdate = true;
         DisableTelemetry = true;
       };
     };
 
-    satty = {
-      enable = true;
-    };
+    satty.enable = true;
+    bash.enable = true;
+    zed-editor.enable = true;
 
-    bash = {
-      enable = true;
-      bashrcExtra = "\n\n";
-    };
-
-    zed-editor = {
-      enable = true;
-    };
     zoxide = {
       enable = true;
       enableNushellIntegration = true;
-      enableFishIntegration = true;
     };
 
     starship = {
