@@ -103,7 +103,7 @@ let
 
 
       # darwin system update. nss/nixos-rebuild is Linux-only, so on the Mac
-      # the system generation (nix.gc, nix.settings, system.defaults, ...) is
+      # the system generation (launchd daemons, system.defaults, ...) is
       # switched by darwin-rebuild instead. home-manager alone does not apply
       # anything under darwinConfigurations.
       def darwin-system-update [
