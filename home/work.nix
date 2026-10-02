@@ -8,6 +8,7 @@ let
 
   programmingPackages = with pkgs; [
     bun
+    deno
     ruff
     uv
     mongosh
@@ -21,6 +22,7 @@ let
     nodejs_24
     duckdb
     tailscale
+    process-compose
   ];
 
   devopsPackages = with pkgs; [

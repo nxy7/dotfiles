@@ -2,8 +2,6 @@
 let
   extraConfig = # nu
     ''
-      alias z = zoxide
-
       alias j = just
       alias l = ls
       alias la = ls -a
@@ -14,10 +12,12 @@ let
       $env.config.abbreviations = {
           d: "dotnet"
           j: "just"
+          y: "yarn"
           ll: "ls -l"
           lg: "lazygit"
           gs: "git status"
           ds: "npx @deepseek-ai/dsh web"
+          dss: "sudo darwin-rebuild switch --flake .#dawiddanieluk --impure"
           dsp: "pnpm --prefix ~/deepseek-harness exec node --expose-internals --import tsx/esm apps/cli/src/bin.ts web --no-open"
           nsp: "node --expose-internals /Users/dawiddanieluk/.bun/install/global/node_modules/@deepseek-ai/dsh/lib/bin.js web --no-open"
           nspu: "bun add -g @deepseek-ai/dsh@next"
@@ -25,6 +25,12 @@ let
           ccd: "claude --dangerously-skip-permissions"
           nhs: "home-manager switch --flake .#dawiddanieluk"
           nfix: "sudo nix-store --repair --verify --check-contents"
+      }
+
+      # --env so the cd carries into the calling command; the callers themselves
+      # aren't --env, so your own cwd is left alone once they finish.
+      def --env gotoDotfiles [] {
+        cd ($env.HOME | path join "dotfiles")
       }
 
       def flake-update [] {
@@ -73,22 +79,31 @@ let
         print $"\n(ansi green_bold)✓ Completed: ($percentage)% success \(($final.successes)/($total)\)(ansi reset)"
       }
 
+      # Spoken notice: speech-dispatcher on Linux, the built-in voice on macOS.
+      def announce [message: string] {
+        if $nu.os-info.name == "macos" { ^say $message } else { ^spd-say $message }
+      }
+
       # home manager update
       def nix-home-manager-update [
         ...rest
       ] {
         gotoDotfiles
         home-manager switch --flake . --impure ...$rest;
-        spd-say 'Home configuration updated';
+        announce 'Home configuration updated';
       }
 
-      # system update
+      # system update (nix-darwin on macOS, NixOS elsewhere)
       def nix-system-update [
         ...rest: string
       ] {
         gotoDotfiles
-        sudo nixos-rebuild switch --flake . --impure;
-        spd-say 'System updated';
+        if $nu.os-info.name == "macos" {
+          sudo darwin-rebuild switch --flake .#dawiddanieluk ...$rest;
+        } else {
+          sudo nixos-rebuild switch --flake . --impure ...$rest;
+        }
+        announce 'System updated';
       }
 
       def "from env" []: string -> record {
@@ -102,21 +117,6 @@ let
       }
 
 
-      # darwin system update. nss/nixos-rebuild is Linux-only, so on the Mac
-      # the system generation (nix.gc, nix.settings, system.defaults, ...) is
-      # switched by darwin-rebuild instead. home-manager alone does not apply
-      # anything under darwinConfigurations.
-      def darwin-system-update [
-        ...rest: string
-      ] {
-        gotoDotfiles
-        # `#dawiddanieluk` is required: darwin-rebuild otherwise looks up
-        # darwinConfigurations.<hostname>, and the host is MacBook-Pro-Dawid.
-        sudo darwin-rebuild switch --flake .#dawiddanieluk --impure ...$rest
-      }
-      alias dss = darwin-system-update
-
-
       # full system update (system + home manager)
       def nfs [
         --update (-u)
@@ -126,18 +126,12 @@ let
         if $update {
           nix flake update
         }
-        nss;
-        nhs;
+        nix-system-update;
+        nix-home-manager-update;
       }
-      alias flake-rebuild = nix-full-system-update
+      alias flake-rebuild = nfs
 
       $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
-      $env.EDITOR = 'hx'
-
-      mkdir $nu.cache-dir
-      carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"
-
-      source $"($nu.cache-dir)/carapace.nu"
 
       # Reclaim disk space from the caches that grow without bound.
       #
@@ -220,6 +214,24 @@ let
          kubectl get secret -n argocd argocd-initial-admin-secret -o yaml | from yaml | get data.password | base64 -d | wl-copy
         print "fsh password copied to clipboard"
       }
+
+      # Live project runners with no dekit console (`dekit` or `dekit attach`) open inside their root.
+      def "dekit orphans" [] {
+        let consoles = ps -l
+          | where name == dekit and command !~ ' runner '
+          | get cwd
+        ^dekit runner list --json
+          | from json
+          | where running and kind == project
+          | where {|r| not ($consoles | any {|c| $c == $r.root or ($c | str starts-with $"($r.root)/") }) }
+          | select pid root started_at
+          | update started_at { $in * 1_000_000_000 | into datetime }
+      }
+
+      # Stop every orphaned runner and its tasks, without saving them.
+      def "dekit orphans stop" [] {
+        dekit orphans | each {|r| ^dekit runner stop $r.root | ignore; $r.root }
+      }
     '';
 
   extraEnv = # nu
@@ -228,27 +240,45 @@ let
 
       $env.PATH = ($env.PATH |
        split row ":" |
+       # nix-darwin's system profile (darwin-rebuild, environment.systemPackages).
+       # zsh/bash get it from /etc/zshenv via set-environment; nushell doesn't.
+       prepend "/run/current-system/sw/bin" |
        prepend $"($env.HOME)/.nix-profile/bin" |
        prepend "/nix/var/nix/profiles/default/bin" |
        prepend $"($env.HOME)/.local/bin" |
        prepend $"($env.HOME)/.cargo/bin" |
        prepend $"($env.HOME)/.mix/escripts" |
-       prepend $"($env.HOME)/.npm-global/bin" |
        prepend $"($env.HOME)/.bun/bin" |
-       prepend $"($env.HOME)/.dotnet/tools");
-
-      ${pkgs.zoxide}/bin/zoxide init nushell | save -f ~/.zoxide.nu;
+       prepend $"($env.HOME)/.dotnet/tools" |
+       # Homebrew (managed by nix-darwin's homebrew module). zsh gets this from
+       # `brew shellenv` in ~/.zprofile; nushell doesn't. Below nix, above /usr/bin.
+       prepend "/opt/homebrew/sbin" |
+       prepend "/opt/homebrew/bin" |
+       # OrbStack (docker, kubectl, orb) normally adds itself via ~/.zprofile,
+       # and /usr/local/bin comes from /etc/paths via zsh's path_helper;
+       # nushell runs neither.
+       append $"($env.HOME)/.orbstack/bin" |
+       append "/usr/local/bin" |
+       uniq);
 
       # Trigger direnv on shell startup (fixes VSCode terminal not loading env)
       ${pkgs.direnv}/bin/direnv export json | from json | default {} | load-env
     '';
 in
 {
-  home.packages = with pkgs; [
-    carapace
-  ];
+  # The module generates the completer at build time and sources it from the
+  # store; generating it from config.nu can't work because `source` is
+  # resolved at parse time, before any of the config runs.
+  programs.carapace = {
+    enable = true;
+    enableNushellIntegration = true;
+  };
   programs.nushell = {
     enable = true;
+    # Source home.sessionVariables / home.sessionPath (EDITOR, npm-global, …)
+    # at the top of env.nu, before extraEnv. Nushell is the login shell, so
+    # nothing else would load them.
+    loadSessionVariables = true;
     inherit extraConfig extraEnv;
   };
 }

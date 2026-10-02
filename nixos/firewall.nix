@@ -3,7 +3,13 @@
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
-    networkmanager.plugins = with pkgs; [ networkmanager-strongswan ];
+    # VPN plugins only register with NetworkManager through this list, not
+    # environment.systemPackages. libreswan replaces the removed vpnc plugin
+    # (Cisco-style IPsec).
+    networkmanager.plugins = with pkgs; [
+      networkmanager-strongswan
+      networkmanager-libreswan
+    ];
 
     extraHosts = ''
       10.10.2.4 myevtfbedev.blob.core.windows.net

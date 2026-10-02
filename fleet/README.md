@@ -1,94 +1,194 @@
-# fleet — Raspberry Pi 4 GitHub Actions Runners
+# fleet — G5 GitHub Actions runner
 
-NixOS SD image that boots into **2 isolated self-hosted GitHub Actions
-runners** for [nxy7/cogni](https://github.com/nxy7/cogni).
+NixOS config that turns the Gigabyte G5 laptop into a dedicated, headless,
+lid-closed self-hosted GitHub Actions runner for
+[WCEEN/cogni](https://github.com/WCEEN/cogni).
 
-Each runner is a separate systemd service with strong isolation:
-- **DynamicUser** — ephemeral UID per runner, no shared home directory
-- **PrivateTmp** — isolated `/tmp` mount per runner
-- **ProtectHome / ProtectSystem=strict** — runners can't read user homes or write to `/`
-- **NoNewPrivileges, PrivateDevices, RestrictNamespaces** — locked-down capabilities
+| File | What it does |
+|---|---|
+| `g5-runner/configuration.nix` | Laptop as a server: no sleep, lid ignored, panel off, 80% battery cap, Ethernet with Wi-Fi fallback, SSH, Nix GC |
+| `g5-runner/runners.nix` | The runners and their rootless Docker |
+| `g5-runner/hardware-configuration.nix` | Disks by label, Intel/NVMe kernel modules |
 
-They share a single PAT file but run completely independently. To change
-the count, edit `runnerCount` in `fleet/flake.nix`.
+The RTX 4060 is powered off entirely (nixos-hardware `common-gpu-nvidia-disable`).
 
-## Prerequisites
+## Isolation
 
-1. **Linux builder** — Building an `aarch64-linux` SD image from macOS
-   requires a Linux builder.  The `nix.linux-builder.enable = true` option
-   in `darwin/default.nix` spins up a lightweight NixOS VM via Apple
-   Virtualization Framework.  Apply it once:
+- Each runner is its own system user (`runner-1`, …), in neither `docker`
+  nor `wheel`.
+- Each runner user has its **own rootless Docker daemon**. Job containers,
+  including service containers like Postgres, run inside that user's
+  namespace, so a job can't get root on the host through Docker.
+- **Ephemeral**: one job per registration, then the runner deregisters and
+  re-registers with a wiped state and work directory. The Nix store and each
+  runner's Docker images persist, so caches survive between jobs.
+- The GitHub token is read by root at startup and hidden from the runner
+  process.
+- Only SSH (key-only) is open in the firewall. Rootless Docker's published
+  ports don't bypass the firewall the way rootful Docker's do.
+
+One runner by default. cogni's CI publishes Postgres on the fixed host port
+5432, so two jobs at once would collide; see `runnerCount` in
+`g5-runner/runners.nix`.
+
+## Switching the existing NixOS install (keeps the disk)
+
+The G5 already runs NixOS with systemd-boot, so it can switch to this config
+in place. Do it at the laptop's keyboard, because the desktop config has no
+SSH server.
+
+1. Pull this repo on the laptop (push it from the Mac first).
+2. Use the laptop's real disk layout instead of the label-based file:
 
    ```bash
-   darwin-rebuild switch --flake ~/dotfiles
+   cd ~/dotfiles
+   cp /etc/nixos/hardware-configuration.nix fleet/g5-runner/hardware-configuration.nix
+   grep -n luks fleet/g5-runner/hardware-configuration.nix   # should print nothing
+   getent passwd 901                                          # should print nothing
    ```
 
-   After the first switch the builder VM starts automatically.  Subsequent
-   `nix build` calls for Linux targets are transparently forwarded to it.
+   If `grep` finds `luks`, the disk is encrypted. The runner would then stop
+   at a passphrase prompt after every reboot or power cut. Use the reinstall
+   below instead.
 
-2. **SD card** — Any microSD ≥ 8 GB.
+   Commit and push the copied file. Otherwise the next deploy from the Mac
+   brings back the label-based file, and that generation won't find its disks.
+3. Plug in Ethernet. Wi-Fi saved in NetworkManager doesn't carry over.
+4. Build the runner config and make it the next boot. Use `boot`, not
+   `switch`: switching live would stop GDM and NetworkManager halfway through.
 
-## Build
+   ```bash
+   sudo nixos-rebuild boot --flake ./fleet#g5-runner
+   sudo reboot
+   ```
 
-```bash
-cd ~/dotfiles
+5. Continue with [First boot](#first-boot) from the Mac.
 
-# WIFI_PASSWORD is baked into the image so it can join your network on
-# first boot.  --impure lets the flake read the environment variable.
-WIFI_PASSWORD="your-wifi-password" nix build ./fleet#sdImage --impure
-```
+What changes:
 
-The result is a compressed image at `./result/sd-image/nixos-sd-image-*.img.zst`.
+- The `nxyt` account is removed. `/home/nxyt` and the old rootful Docker
+  data in `/var/lib/docker` stay on disk. Once nothing in them is needed:
+  `sudo rm -rf /home/nxyt /var/lib/docker` (this also frees the Nix store
+  paths that nxyt's Home Manager generations keep alive).
+- `admin` has no password, only the SSH key. For keyboard login at the
+  laptop, run `sudo passwd admin` once you're in over SSH.
+- **Rollback**: the desktop generations stay in the systemd-boot menu until
+  the weekly GC deletes generations older than 7 days.
 
-## Flash
+## Fresh install (wipes the laptop)
 
-```bash
-# Find your SD card
-diskutil list external
+Back up anything you still need from the laptop first.
 
-# Unmount (do NOT eject)
-diskutil unmountDisk /dev/diskN
+1. Push this directory to GitHub (the installer pulls the config from there).
+2. Boot the [NixOS 26.05 minimal ISO](https://nixos.org/download/) from USB,
+   with Ethernet plugged in.
+3. Partition. Check the disk name with `lsblk` first; it's usually
+   `/dev/nvme0n1`, but the G5 has room for a second SSD.
 
-# Flash (use /dev/rdiskN for raw speed)
-zstdcat ./result/sd-image/nixos-sd-image-*.img.zst | sudo dd of=/dev/rdiskN bs=4M status=progress
+   ```bash
+   sudo -i
+   DISK=/dev/nvme0n1
+   parted $DISK -- mklabel gpt
+   parted $DISK -- mkpart ESP fat32 1MiB 1GiB
+   parted $DISK -- set 1 esp on
+   parted $DISK -- mkpart root ext4 1GiB 100%
+   mkfs.fat -F 32 -n boot ${DISK}p1
+   mkfs.ext4 -L nixos ${DISK}p2
+   mount /dev/disk/by-label/nixos /mnt
+   mkdir -p /mnt/boot
+   mount -o umask=077 /dev/disk/by-label/boot /mnt/boot
+   ```
 
-# Eject safely
-diskutil eject /dev/diskN
-```
+4. Compare the detected hardware with `g5-runner/hardware-configuration.nix`.
+   If the generated `boot.initrd.availableKernelModules` lists anything the
+   repo's file doesn't, add it to the repo and push:
+
+   ```bash
+   nixos-generate-config --root /mnt --show-hardware-config
+   ```
+
+5. Install, with no root password (log in as `admin` with your SSH key):
+
+   ```bash
+   export NIX_CONFIG="experimental-features = nix-command flakes"
+   nixos-install --no-root-passwd --flake 'github:nxy7/dotfiles?dir=fleet#g5-runner'
+   reboot
+   ```
 
 ## First boot
 
-1. Insert the SD card into the Pi 4 and power it on.
-2. Wait ~60 s for it to get a DHCP lease and advertise via mDNS.
-3. SSH in:
+```bash
+ssh admin@g5-runner.local
+```
+
+1. **GitHub token.** Create a fine-grained PAT with resource owner `WCEEN`,
+   repository access limited to `cogni`, and permission
+   **Administration: Read and write** (needed to register runners; the org
+   may have to approve the token). Ephemeral runners re-register after every
+   job, so this has to be a PAT, not a one-hour registration token.
+
+   `read -s` keeps the token out of the terminal and shell history:
 
    ```bash
-   ssh admin@pi-runner.local
-   ```
-
-4. Drop the GitHub PAT (a fine-grained token with `Administration: Read & Write`
-   scope on `nxy7/cogni`, or a classic PAT with `repo` scope):
-
-   ```bash
-   sudo bash -c 'echo "ghp_YOUR_TOKEN" > /var/lib/github-runner-token'
-   sudo chmod 600 /var/lib/github-runner-token
-
-   # Both runner services start automatically once the file exists.
+   read -rsp 'PAT: ' t; printf '%s\n' "$t" | sudo install -m 600 /dev/stdin /var/lib/github-runner-token; unset t
    sudo systemctl start github-runner-cogni-1
-   sudo systemctl start github-runner-cogni-2
    ```
 
-5. Verify:
+2. **Wi-Fi fallback** (optional; Ethernet works without it):
 
    ```bash
-   systemctl status 'github-runner-cogni-*'
+   read -rsp 'Wi-Fi password: ' p; printf 'home_psk=%s\n' "$p" | sudo install -D -m 600 /dev/stdin /var/lib/wireless/secrets; unset p
+   sudo systemctl restart wpa_supplicant
    ```
 
-   Two runners appear as **pi-runner-1** and **pi-runner-2** with the
-   `rpi` label in the repo's Settings → Actions → Runners page.
+3. **Check it:**
 
-## Updating
+   ```bash
+   systemctl status github-runner-cogni-1        # registered and listening
+   systemctl status battery-charge-limit          # "skipped" = firmware has no charge limit
+   sudo -u runner-1 DOCKER_HOST=unix:///run/user/901/docker.sock docker info   # rootless Docker is up
+   ```
 
-Edit `fleet/flake.nix`, rebuild the image, and reflash.  For in-place
-updates after the first boot you can also `nixos-rebuild switch` on the
-Pi itself (or remotely via `--target-host`).
+   The runner shows up as **g5-runner-1** under WCEEN/cogni → Settings →
+   Actions → Runners. If `battery-charge-limit` was skipped, look for a charge
+   limit in the BIOS, or take the battery out (it runs fine on AC alone).
+
+## Deploying changes
+
+From the Mac, building on the G5 itself (no Linux builder needed on the Mac):
+
+```bash
+cd ~/dotfiles
+git add fleet   # flakes only see files git tracks
+nix run nixpkgs#nixos-rebuild-ng -- switch \
+  --flake ./fleet#g5-runner \
+  --target-host admin@g5-runner.local \
+  --build-host admin@g5-runner.local \
+  --sudo
+```
+
+## Sending jobs to it
+
+Nothing in cogni targets it yet. A job opts in with:
+
+```yaml
+runs-on: [self-hosted, nixos, g5]
+```
+
+Things that differ from GitHub's hosted `ubuntu-24.04-arm` runners:
+
+- **Architecture**: the G5 is x86_64. cogni's flake builds for both, so
+  Nix-based jobs (backend tests, tsz-quality) work. Jobs that publish arm64
+  images should stay on hosted ARM runners.
+- **No apt or sudo**: steps like `playwright install-deps` (which runs
+  `sudo apt-get`) won't work on NixOS and need a Nix-based alternative.
+- **Nix is already installed**, so steps that install Nix should be skipped
+  on this runner.
+
+## Retiring the Raspberry Pi
+
+The Pi config that used to live here has been removed. To finish:
+
+1. Remove the Pi's runners (**pi-runner-1**, **pi-runner-2**) from the repo
+   they registered with (`nxy7/cogni`) under Settings → Actions → Runners.
+2. Revoke the PAT stored on the Pi, then power it off.

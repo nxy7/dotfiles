@@ -5,8 +5,17 @@
     MemoryMax = "20G";
     CPUQuota = "400%";
   };
+
+  # The display manager is GDM (visuals/gnome.nix). The old SDDM, autologin
+  # and xrdp settings were dropped when this file was re-imported: SDDM would
+  # clash with GDM, and none of them were active before.
   services = {
-    xserver.xkb.layout = "pl,pl";
+    xserver.enable = true;
+    xserver.xkb.layout = "pl";
+    xserver.videoDrivers = [
+      "nvidia"
+      "modesetting"
+    ];
 
     flatpak.enable = true;
     resolved.enable = true;
@@ -14,24 +23,4 @@
 
     printing.enable = true;
   };
-  services.xserver.enable = true;
-  services.displayManager = {
-    sddm.enable = true;
-    sddm.wayland.enable = true;
-    sddm.theme = "where_is_my_sddm_theme";
-
-    autoLogin = {
-      enable = true;
-      user = "nxyt";
-    };
-  };
-  services = {
-    xrdp.enable = true;
-    xrdp.openFirewall = true;
-    xserver.videoDrivers = [
-      "nvidia"
-      "modesetting"
-    ];
-  };
-
 }

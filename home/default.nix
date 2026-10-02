@@ -14,6 +14,11 @@ inputs.home-manager.lib.homeManagerConfiguration {
       pkgs
       username
       ;
+    # Passed explicitly: modules use these in `imports`, where an argument's
+    # default value (`isLinux ? pkgs.stdenv.isLinux`) can't be resolved and
+    # causes infinite recursion.
+    isLinux = true;
+    isDarwin = false;
   };
 
   modules = [

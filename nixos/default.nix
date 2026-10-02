@@ -8,5 +8,6 @@
     ./services.nix
     ./users.nix
     ./programs.nix
+    ./udev.nix
   ];
 }

@@ -7,6 +7,7 @@
     /etc/nixos/hardware-configuration.nix
     ./environment.nix
     ./hardware.nix
+    ./services.nix
     ../visuals
     ../nixos
   ];
@@ -19,6 +20,16 @@
     settings.trusted-users = [
       "root"
       "nxyt"
+    ];
+    settings.extra-substituters = [
+      "https://ai.cachix.org"
+      "https://nix-community.cachix.org"
+      "https://roc-lang.cachix.org"
+    ];
+    settings.extra-trusted-public-keys = [
+      "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "roc-lang.cachix.org-1:6lZeqLP9SadjmUbskJAvcdGR2T5ViR57pDVkxJQb8R4="
     ];
     optimise.automatic = true;
 
