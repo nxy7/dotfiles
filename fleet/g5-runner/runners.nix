@@ -173,11 +173,26 @@ in
       group = "runners";
       workDir = workDir id;
 
+      # On top of the module's bash, coreutils, git, tar, gzip and NixOS's
+      # findutils, grep and sed: tools GitHub's Ubuntu runners have and
+      # actions assume (android-actions/setup-android needs unzip).
       extraPackages = with pkgs; [
         dockerPackage
+        bzip2
         curl
+        diffutils
+        file
+        gawk
+        gnumake
+        gnupatch
+        hostname
         jq
+        procps
+        unzip
+        wget
+        which
         xz
+        zip
         zstd
       ];
       extraEnvironment = {
