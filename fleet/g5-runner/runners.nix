@@ -212,6 +212,17 @@ in
         BUN_INSTALL_CACHE_DIR = "${cacheDir}/bun";
         npm_config_cache = "${cacheDir}/npm";
         PLAYWRIGHT_BROWSERS_PATH = "${cacheDir}/ms-playwright";
+        # Tools installed by setup-* actions (setup-java's JDK). The runner
+        # reads this from its own environment instead of using _work/_tool.
+        RUNNER_TOOL_CACHE = "${cacheDir}/tool-cache";
+        AGENT_TOOLSDIRECTORY = "${cacheDir}/tool-cache";
+        # android-actions/setup-android installs into ANDROID_SDK_ROOT when
+        # it's set; sdkmanager packages then stay installed between jobs.
+        ANDROID_HOME = "${cacheDir}/android-sdk";
+        ANDROID_SDK_ROOT = "${cacheDir}/android-sdk";
+        # Gradle's dependency cache and wrapper downloads. Its gradle.properties
+        # (below) turns the daemon off.
+        GRADLE_USER_HOME = "${cacheDir}/gradle";
       };
 
       serviceOverrides = {
@@ -270,6 +281,11 @@ in
 
   systemd.tmpfiles.rules = [
     "d ${cacheDir} 0750 ${user} runners -"
+    "d ${cacheDir}/gradle 0755 ${user} runners -"
+    # With a shared GRADLE_USER_HOME, one job's build could attach to another
+    # job's idle daemon, which the runner kills when that other job ends.
+    # This file overrides the project's gradle.properties.
+    "f+ ${cacheDir}/gradle/gradle.properties 0644 ${user} runners - org.gradle.daemon=false"
   ]
   ++ map (id: "d ${workDir id} 0700 ${user} runners -") ids;
 }
