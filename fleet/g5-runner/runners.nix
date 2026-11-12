@@ -233,8 +233,15 @@ in
         # exposes only the runner's.
         ProtectHome = "tmpfs";
         BindPaths = [ runtimeDir ];
-        # ProtectSystem=strict makes everything else read-only.
-        ReadWritePaths = [ cacheDir ];
+        # ProtectSystem=strict makes everything else read-only. The runner
+        # user's own home stays writable too: Java takes user.home from the
+        # account, not from $HOME, so tools like sdkmanager write there
+        # (~/.android). Like the caches, it persists between jobs and is
+        # shared by all runners.
+        ReadWritePaths = [
+          cacheDir
+          config.users.users.${user}.home
+        ];
         # The module defaults to 0066, which checks files out as 0600. Docker
         # COPY keeps those modes, so images built here had files their
         # non-root users couldn't read (staging's schema migrator failed with
