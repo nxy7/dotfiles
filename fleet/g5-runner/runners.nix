@@ -13,15 +13,17 @@
 {
   config,
   lib,
+  options,
   pkgs,
   ...
 }:
 let
-  # One runner: cogni's CI publishes its Postgres service container on the
-  # fixed host port 5432 (`ports: - 5432:5432`), so two jobs on this machine
-  # at once would collide. Raise this after the workflows switch to a random
-  # host port (`ports: - 5432` plus `job.services.<name>.ports['5432']`).
-  runnerCount = 1;
+  # Job steps run directly on this machine, so anything a job listens on (the
+  # Postgres service's published port, a dev server for browser tests) is
+  # shared by all runners. Concurrent jobs need random host ports
+  # (`ports: - 5432` plus `job.services.<name>.ports['5432']`), not fixed ones.
+  # 16 threads and 31 GiB RAM; zram and a 34 GiB swap partition absorb peaks.
+  runnerCount = 5;
 
   ids = lib.genList (i: i + 1) runnerCount;
   forEachRunner = f: lib.listToAttrs (map f ids);
@@ -101,6 +103,46 @@ in
   };
 
   # ------------------------------------------------------------
+  # Prebuilt Linux binaries in jobs
+  # ------------------------------------------------------------
+
+  # Binaries downloaded by jobs (Playwright's Chromium, NuGet native assets)
+  # expect /lib64/ld-linux-x86-64.so.2 and FHS libraries. nix-ld provides
+  # both. On top of nix-ld's defaults (libstdc++, zlib, openssl, …) this adds
+  # what headless Chromium loads. A job failing with "error while loading
+  # shared libraries: libfoo.so" means the package providing libfoo goes here.
+  programs.nix-ld = {
+    enable = true;
+    libraries =
+      options.programs.nix-ld.libraries.default
+      ++ (with pkgs; [
+        alsa-lib
+        at-spi2-core # also provides atk and atk-bridge
+        cairo
+        cups
+        dbus
+        expat
+        fontconfig
+        freetype
+        glib
+        libdrm
+        libgbm
+        libxkbcommon
+        nspr
+        nss
+        pango
+        libX11
+        libxcb
+        libXcomposite
+        libXdamage
+        libXext
+        libXfixes
+        libXrandr
+        libxshmfence
+      ]);
+  };
+
+  # ------------------------------------------------------------
   # Runners
   # ------------------------------------------------------------
 
@@ -131,7 +173,11 @@ in
         xz
         zstd
       ];
-      extraEnvironment.DOCKER_HOST = "unix://${runtimeDir id}/docker.sock";
+      extraEnvironment = {
+        DOCKER_HOST = "unix://${runtimeDir id}/docker.sock";
+        # Services don't get the login-shell variables nix-ld relies on.
+        inherit (config.environment.variables) NIX_LD NIX_LD_LIBRARY_PATH;
+      };
 
       serviceOverrides = {
         # The module's ProtectHome=true hides all of /run/user, including
@@ -143,16 +189,31 @@ in
     }
   );
 
-  systemd.services = forEachRunner (
-    id:
-    lib.nameValuePair "github-runner-${runnerName id}" {
-      # Don't fail-loop before the token has been installed.
-      unitConfig.ConditionPathExists = tokenFile;
-      # The Docker daemon runs in this user's systemd manager.
-      wants = [ "user@${toString (uid id)}.service" ];
-      after = [ "user@${toString (uid id)}.service" ];
-    }
-  );
+  systemd.services =
+    forEachRunner (
+      id:
+      lib.nameValuePair "github-runner-${runnerName id}" {
+        # Don't fail-loop before the token has been installed.
+        unitConfig.ConditionPathExists = tokenFile;
+        # The Docker daemon runs in this user's systemd manager. GitHub rejects
+        # a runner whose clock is off ("The runner registration has been
+        # deleted"), so wait for NTP too.
+        wants = [
+          "user@${toString (uid id)}.service"
+          "time-sync.target"
+        ];
+        after = [
+          "user@${toString (uid id)}.service"
+          "time-sync.target"
+        ];
+      }
+    )
+    // {
+      # Without this unit, time-sync.target is reached before the clock is
+      # actually synced.
+      systemd-time-wait-sync.wantedBy = [ "sysinit.target" ];
+    };
+  systemd.additionalUpstreamSystemUnits = [ "systemd-time-wait-sync.service" ];
 
   systemd.tmpfiles.rules = map (id: "d ${workDir id} 0700 ${userName id} runners -") ids;
 }

@@ -8,7 +8,7 @@ lid-closed self-hosted GitHub Actions runner for
 |---|---|
 | `g5-runner/configuration.nix` | Laptop as a server: no sleep, lid ignored, panel off, 80% battery cap, Ethernet with Wi-Fi fallback, SSH, Nix GC |
 | `g5-runner/runners.nix` | The runners and their rootless Docker |
-| `g5-runner/hardware-configuration.nix` | Disks by label, Intel/NVMe kernel modules |
+| `g5-runner/hardware-configuration.nix` | Generated on the laptop: disks by UUID, kernel modules |
 
 The RTX 4060 is powered off entirely (nixos-hardware `common-gpu-nvidia-disable`).
 
@@ -27,9 +27,11 @@ The RTX 4060 is powered off entirely (nixos-hardware `common-gpu-nvidia-disable`
 - Only SSH (key-only) is open in the firewall. Rootless Docker's published
   ports don't bypass the firewall the way rootful Docker's do.
 
-One runner by default. cogni's CI publishes Postgres on the fixed host port
-5432, so two jobs at once would collide; see `runnerCount` in
-`g5-runner/runners.nix`.
+Five runners (`runnerCount` in `g5-runner/runners.nix`), so up to five jobs
+run at once. Job steps run directly on the laptop, so they share its ports:
+workflows have to publish service containers on random host ports
+(`ports: - 5432`), and anything else a job listens on can't use a fixed port
+either.
 
 ## Switching the existing NixOS install (keeps the disk)
 
@@ -74,6 +76,9 @@ What changes:
   laptop, run `sudo passwd admin` once you're in over SSH.
 - **Rollback**: the desktop generations stay in the systemd-boot menu until
   the weekly GC deletes generations older than 7 days.
+- The desktop kept the hardware clock in local time
+  (`time.hardwareClockInLocalTime`), which leaves the runner config an hour
+  off at boot. Run `sudo timedatectl set-local-rtc 0` once.
 
 ## Fresh install (wipes the laptop)
 
@@ -99,9 +104,9 @@ Back up anything you still need from the laptop first.
    mount -o umask=077 /dev/disk/by-label/boot /mnt/boot
    ```
 
-4. Compare the detected hardware with `g5-runner/hardware-configuration.nix`.
-   If the generated `boot.initrd.availableKernelModules` lists anything the
-   repo's file doesn't, add it to the repo and push:
+4. New partitions get new UUIDs, so replace
+   `g5-runner/hardware-configuration.nix` with this output, then commit and
+   push it:
 
    ```bash
    nixos-generate-config --root /mnt --show-hardware-config
@@ -131,7 +136,7 @@ ssh admin@g5-runner.local
 
    ```bash
    read -rsp 'PAT: ' t; printf '%s\n' "$t" | sudo install -m 600 /dev/stdin /var/lib/github-runner-token; unset t
-   sudo systemctl start github-runner-cogni-1
+   sudo systemctl start github-runner-cogni-{1..5}
    ```
 
 2. **Wi-Fi fallback** (optional; Ethernet works without it):
@@ -149,13 +154,24 @@ ssh admin@g5-runner.local
    sudo -u runner-1 DOCKER_HOST=unix:///run/user/901/docker.sock docker info   # rootless Docker is up
    ```
 
-   The runner shows up as **g5-runner-1** under WCEEN/cogni → Settings →
-   Actions → Runners. If `battery-charge-limit` was skipped, look for a charge
+   The runners show up as **g5-runner-1** to **g5-runner-5** under
+   WCEEN/cogni → Settings → Actions → Runners. If `battery-charge-limit` was skipped, look for a charge
    limit in the BIOS, or take the battery out (it runs fine on AC alone).
 
 ## Deploying changes
 
-From the Mac, building on the G5 itself (no Linux builder needed on the Mac):
+Push to GitHub. Every night at 04:00 the laptop rebuilds from
+`github:nxy7/dotfiles?dir=fleet#g5-runner` (`system.autoUpgrade`; the repo is
+public, so it needs no credentials). To apply a push right away:
+
+```bash
+ssh admin@g5-runner.local sudo systemctl start nixos-upgrade   # waits until done
+ssh admin@g5-runner.local journalctl -u nixos-upgrade -e        # if it failed
+```
+
+To try a change before pushing, build it on the G5 from the Mac checkout (no
+Linux builder needed on the Mac). The next nightly rebuild replaces it with
+whatever is on GitHub.
 
 ```bash
 cd ~/dotfiles
@@ -181,7 +197,11 @@ Things that differ from GitHub's hosted `ubuntu-24.04-arm` runners:
   Nix-based jobs (backend tests, tsz-quality) work. Jobs that publish arm64
   images should stay on hosted ARM runners.
 - **No apt or sudo**: steps like `playwright install-deps` (which runs
-  `sudo apt-get`) won't work on NixOS and need a Nix-based alternative.
+  `sudo apt-get`) won't work on NixOS and have to be skipped here.
+- **Downloaded binaries** (Playwright's Chromium, NuGet native assets) run
+  through nix-ld. If one fails with "error while loading shared libraries:
+  libfoo.so", add the package providing it to `programs.nix-ld.libraries` in
+  `g5-runner/runners.nix`.
 - **Nix is already installed**, so steps that install Nix should be skipped
   on this runner.
 

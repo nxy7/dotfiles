@@ -130,6 +130,19 @@
   };
   nix.optimise.automatic = true;
 
+  # Every night, rebuild from the config pushed to GitHub (the repo is public,
+  # so no credentials are needed). To apply a push right away:
+  # `sudo systemctl start nixos-upgrade`. A switch that changes the runner's
+  # service restarts it and cancels a job in progress, hence the quiet hour.
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:nxy7/dotfiles?dir=fleet#g5-runner";
+    dates = "04:00";
+    # Follow the pushed flake.lock. Without this it would also update the
+    # leftover nixos-24.05 channel from the desktop days every night.
+    upgrade = false;
+  };
+
   environment.systemPackages = with pkgs; [
     git
     htop
