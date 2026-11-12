@@ -63,6 +63,9 @@
     secretsFile = "/var/lib/wireless/secrets";
     networks."NETIASPOT-47CD-5G".pskRaw = "ext:home_psk";
   };
+  # Without the password file, skip Wi-Fi instead of failing: a failed unit
+  # makes every deploy and nightly upgrade report an error.
+  systemd.services.wpa_supplicant.unitConfig.ConditionPathExists = "/var/lib/wireless/secrets";
 
   # g5-runner.local on the LAN.
   services.avahi = {

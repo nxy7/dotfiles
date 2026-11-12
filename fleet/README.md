@@ -6,22 +6,31 @@ lid-closed self-hosted GitHub Actions runner for
 
 | File | What it does |
 |---|---|
-| `g5-runner/configuration.nix` | Laptop as a server: no sleep, lid ignored, panel off, 80% battery cap, Ethernet with Wi-Fi fallback, SSH, Nix GC |
-| `g5-runner/runners.nix` | The runners and their rootless Docker |
+| `g5-runner/configuration.nix` | Laptop as a server: no sleep, lid ignored, panel off, battery cap (if the firmware supports one), Ethernet with Wi-Fi fallback, SSH, Nix GC, nightly self-update |
+| `g5-runner/runners.nix` | The runners, their rootless Docker, shared caches, nix-ld |
 | `g5-runner/hardware-configuration.nix` | Generated on the laptop: disks by UUID, kernel modules |
 
 The RTX 4060 is powered off entirely (nixos-hardware `common-gpu-nvidia-disable`).
 
 ## Isolation
 
-- Each runner is its own system user (`runner-1`, …), in neither `docker`
-  nor `wheel`.
-- Each runner user has its **own rootless Docker daemon**. Job containers,
-  including service containers like Postgres, run inside that user's
-  namespace, so a job can't get root on the host through Docker.
+- All runners run as one unprivileged system user, `runner`, in neither
+  `docker` nor `wheel`.
+- That user has one **rootless Docker daemon**. Job containers, including
+  service containers like Postgres, run inside its user namespace, so a job
+  can't get root on the host through Docker.
+- **One user, shared caches**: jobs running at the same time can see each
+  other's files, processes, environment (including `GITHUB_TOKEN`) and
+  containers. That's fine for a private repo where only the team pushes;
+  revisit it if outside contributors' pull requests ever run here. In
+  exchange, all runners share one set of Docker images and one download cache
+  in `/var/cache/github-runner` (Nix inputs, NuGet, Bun, npm, Playwright), so
+  every job starts warm. (Nix's caches can't be shared between different
+  users: their SQLite files are writable only by whoever created them.)
 - **Ephemeral**: one job per registration, then the runner deregisters and
-  re-registers with a wiped state and work directory. The Nix store and each
-  runner's Docker images persist, so caches survive between jobs.
+  re-registers with a wiped state and work directory. The work directory is
+  also the job's `HOME`, so checkouts, build output and anything else written
+  there start fresh every job; the caches above live outside it.
 - The GitHub token is read by root at startup and hidden from the runner
   process.
 - Only SSH (key-only) is open in the firewall. Rootless Docker's published
@@ -46,7 +55,7 @@ SSH server.
    cd ~/dotfiles
    cp /etc/nixos/hardware-configuration.nix fleet/g5-runner/hardware-configuration.nix
    grep -n luks fleet/g5-runner/hardware-configuration.nix   # should print nothing
-   getent passwd 901                                          # should print nothing
+   getent passwd 900                                          # should print nothing
    ```
 
    If `grep` finds `luks`, the disk is encrypted. The runner would then stop
@@ -151,7 +160,7 @@ ssh admin@g5-runner.local
    ```bash
    systemctl status github-runner-cogni-1        # registered and listening
    systemctl status battery-charge-limit          # "skipped" = firmware has no charge limit
-   sudo -u runner-1 DOCKER_HOST=unix:///run/user/901/docker.sock docker info   # rootless Docker is up
+   sudo -u runner DOCKER_HOST=unix:///run/user/900/docker.sock docker info   # rootless Docker is up
    ```
 
    The runners show up as **g5-runner-1** to **g5-runner-5** under

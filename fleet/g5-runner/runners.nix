@@ -1,13 +1,21 @@
 # GitHub Actions runners for WCEEN/cogni.
 #
 # Isolation model:
-#   - Each runner is its own system user, not in `docker` or `wheel`.
-#   - Each runner user has its own rootless Docker daemon (a systemd user
-#     service). Containers run in that user's namespace, so a job can't
-#     become root on the host through Docker, and can't touch other runners.
+#   - All runners run as one unprivileged system user, `runner`, which is in
+#     neither `docker` nor `wheel`. Jobs can't get root on the host.
+#   - That user has one rootless Docker daemon (a systemd user service).
+#     Containers run in its user namespace, so Docker isn't a way to root.
+#   - One user means concurrent jobs can see each other: files, processes,
+#     environment (including GITHUB_TOKEN) and containers. Fine for a private
+#     repo where only the team pushes; revisit if outside contributors' pull
+#     requests ever run here.
+#   - In exchange, all runners share one Docker image store and one set of
+#     download caches (Nix, NuGet, Bun, npm, Playwright), so every job starts
+#     warm. Nix's caches are per user (SQLite files only their creator can
+#     write), so separate users couldn't share them.
 #   - Ephemeral: a runner takes one job, deregisters, and restarts with a
-#     wiped state and work directory. The Nix store and each runner's Docker
-#     images persist between jobs, so caching still works.
+#     wiped state and work directory (which is also its HOME). Caches live
+#     outside it.
 #   - The GitHub token is only read by root at startup and is hidden from
 #     the runner process (the NixOS module does this).
 {
@@ -31,60 +39,60 @@ let
   tokenFile = "/var/lib/github-runner-token";
   dockerPackage = config.virtualisation.docker.rootless.package;
 
+  user = "runner";
+  # Fixed UID so the Docker socket path (/run/user/<uid>) is known here.
+  uid = 900;
+  runtimeDir = "/run/user/${toString uid}";
+  cacheDir = "/var/cache/github-runner";
+
   runnerName = id: "cogni-${toString id}";
-  userName = id: "runner-${toString id}";
-  # Fixed UIDs so the Docker socket path (/run/user/<uid>) is known here.
-  uid = id: 900 + id;
-  runtimeDir = id: "/run/user/${toString (uid id)}";
   # On disk: the module's default work dir is under /run (RAM), which
   # node_modules and build outputs would fill.
   workDir = id: "/var/lib/github-runner-work/${runnerName id}";
 in
 {
   # ------------------------------------------------------------
-  # Runner users, each with its own rootless Docker
+  # The runner user and its rootless Docker
   # ------------------------------------------------------------
 
   users.groups.runners = { };
 
-  users.users = forEachRunner (
-    id:
-    lib.nameValuePair (userName id) {
-      isSystemUser = true;
-      uid = uid id;
-      group = "runners";
-      # Rootless Docker keeps images under ~/.local/share/docker.
-      home = "/var/lib/${userName id}";
-      createHome = true;
-      # Start this user's systemd manager (and its Docker daemon) at boot,
-      # without anyone logging in.
-      linger = true;
-      # Rootless Docker maps container UIDs into these ranges. NixOS only
-      # allocates them automatically for normal users.
-      subUidRanges = [
-        {
-          startUid = 1000000 + (id - 1) * 65536;
-          count = 65536;
-        }
-      ];
-      subGidRanges = [
-        {
-          startGid = 1000000 + (id - 1) * 65536;
-          count = 65536;
-        }
-      ];
-    }
-  );
+  users.users.${user} = {
+    isSystemUser = true;
+    inherit uid;
+    group = "runners";
+    # Rootless Docker keeps images under ~/.local/share/docker.
+    home = "/var/lib/${user}";
+    createHome = true;
+    # Start this user's systemd manager (and its Docker daemon) at boot,
+    # without anyone logging in.
+    linger = true;
+    # Rootless Docker maps container UIDs into these ranges. NixOS only
+    # allocates them automatically for normal users.
+    subUidRanges = [
+      {
+        startUid = 1000000;
+        count = 65536;
+      }
+    ];
+    subGidRanges = [
+      {
+        startGid = 1000000;
+        count = 65536;
+      }
+    ];
+  };
 
   virtualisation.docker.rootless.enable = true;
-  # Only runner users get a daemon; admin logging in over SSH doesn't.
+  # Only the runner user gets a daemon; admin logging in over SSH doesn't.
   systemd.user.services.docker.unitConfig.ConditionGroup = "runners";
 
   # Rootless Docker isn't covered by virtualisation.docker.autoPrune.
   # Anonymous volumes are pruned too: the Postgres service image declares
-  # one, and the runner leaves it behind after each job.
+  # one, and the runner leaves it behind after each job. Images and volumes
+  # that a running job uses are kept.
   systemd.user.services.docker-prune = {
-    description = "Prune this runner's rootless Docker";
+    description = "Prune the runners' rootless Docker";
     unitConfig.ConditionGroup = "runners";
     environment.DOCKER_HOST = "unix://%t/docker.sock";
     serviceConfig.Type = "oneshot";
@@ -151,7 +159,7 @@ in
     lib.nameValuePair (runnerName id) {
       enable = true;
       url = "https://github.com/WCEEN/cogni";
-      inherit tokenFile;
+      inherit tokenFile user;
       name = "g5-runner-${toString id}";
       replace = true;
       ephemeral = true;
@@ -162,7 +170,6 @@ in
         "g5"
       ];
 
-      user = userName id;
       group = "runners";
       workDir = workDir id;
 
@@ -174,17 +181,48 @@ in
         zstd
       ];
       extraEnvironment = {
-        DOCKER_HOST = "unix://${runtimeDir id}/docker.sock";
+        DOCKER_HOST = "unix://${runtimeDir}/docker.sock";
         # Services don't get the login-shell variables nix-ld relies on.
         inherit (config.environment.variables) NIX_LD NIX_LD_LIBRARY_PATH;
+
+        # Download caches shared by all runners and kept between jobs (HOME
+        # is the work dir, which is wiped before every job). XDG_CACHE_HOME
+        # covers Nix's input and evaluation caches.
+        XDG_CACHE_HOME = cacheDir;
+        NUGET_PACKAGES = "${cacheDir}/nuget/packages";
+        NUGET_HTTP_CACHE_PATH = "${cacheDir}/nuget/http-cache";
+        # NuGet's cross-process locks; each runner's /tmp is private, so
+        # they have to live somewhere all runners see.
+        NUGET_SCRATCH = "${cacheDir}/nuget/scratch";
+        BUN_INSTALL_CACHE_DIR = "${cacheDir}/bun";
+        npm_config_cache = "${cacheDir}/npm";
+        PLAYWRIGHT_BROWSERS_PATH = "${cacheDir}/ms-playwright";
       };
 
       serviceOverrides = {
-        # The module's ProtectHome=true hides all of /run/user, including
-        # this runner's Docker socket. tmpfs keeps other users' runtime dirs
-        # hidden and exposes only this one.
+        # The module's ProtectHome=true hides all of /run/user, including the
+        # Docker socket. tmpfs keeps other users' runtime dirs hidden and
+        # exposes only the runner's.
         ProtectHome = "tmpfs";
-        BindPaths = [ (runtimeDir id) ];
+        BindPaths = [ runtimeDir ];
+        # ProtectSystem=strict makes everything else read-only.
+        ReadWritePaths = [ cacheDir ];
+        # The module defaults to 0066, which checks files out as 0600. Docker
+        # COPY keeps those modes, so images built here had files their
+        # non-root users couldn't read (staging's schema migrator failed with
+        # "Permission denied"). 0022 matches GitHub-hosted runners.
+        UMask = "0022";
+        # The runner reads /proc/1/cgroup before creating a job's container
+        # network ("Could not find a part of the path '/proc/1/cgroup'").
+        ProtectProc = "default";
+        # Playwright's Chromium crashes ("Target crashed") inside the module's
+        # syscall filter and namespace/user/device sandbox. The runner is
+        # still an unprivileged user with rootless Docker; this only drops
+        # systemd's extra layer around the runner process.
+        SystemCallFilter = lib.mkForce [ ];
+        RestrictNamespaces = false;
+        PrivateUsers = false;
+        PrivateDevices = false;
       };
     }
   );
@@ -195,15 +233,15 @@ in
       lib.nameValuePair "github-runner-${runnerName id}" {
         # Don't fail-loop before the token has been installed.
         unitConfig.ConditionPathExists = tokenFile;
-        # The Docker daemon runs in this user's systemd manager. GitHub rejects
-        # a runner whose clock is off ("The runner registration has been
-        # deleted"), so wait for NTP too.
+        # The Docker daemon runs in the runner user's systemd manager.
+        # GitHub rejects a runner whose clock is off ("The runner
+        # registration has been deleted"), so wait for NTP too.
         wants = [
-          "user@${toString (uid id)}.service"
+          "user@${toString uid}.service"
           "time-sync.target"
         ];
         after = [
-          "user@${toString (uid id)}.service"
+          "user@${toString uid}.service"
           "time-sync.target"
         ];
       }
@@ -215,5 +253,8 @@ in
     };
   systemd.additionalUpstreamSystemUnits = [ "systemd-time-wait-sync.service" ];
 
-  systemd.tmpfiles.rules = map (id: "d ${workDir id} 0700 ${userName id} runners -") ids;
+  systemd.tmpfiles.rules = [
+    "d ${cacheDir} 0750 ${user} runners -"
+  ]
+  ++ map (id: "d ${workDir id} 0700 ${user} runners -") ids;
 }
