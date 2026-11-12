@@ -149,6 +149,8 @@
   environment.systemPackages = with pkgs; [
     git
     htop
+    btop
+    lm_sensors # `sensors`: CPU and SSD temperatures
     vim
     curl
     jq

@@ -21,8 +21,11 @@ The RTX 4060 is powered off entirely (nixos-hardware `common-gpu-nvidia-disable`
   can't get root on the host through Docker.
 - **One user, shared caches**: jobs running at the same time can see each
   other's files, processes, environment (including `GITHUB_TOKEN`) and
-  containers. That's fine for a private repo where only the team pushes;
-  revisit it if outside contributors' pull requests ever run here. In
+  containers. cogni's release jobs run here too, so that includes prod
+  deploy credentials and Android signing keys. Accepted for a private repo
+  where only the team pushes; revisit it if outside contributors' pull
+  requests ever run here (moving releases to GitHub-hosted runners is a
+  `runs-on` change in cogni). In
   exchange, all runners share one set of Docker images and one download cache
   in `/var/cache/github-runner` (Nix inputs, NuGet, Bun, npm, Playwright), so
   every job starts warm. (Nix's caches can't be shared between different

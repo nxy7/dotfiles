@@ -6,9 +6,11 @@
 #   - That user has one rootless Docker daemon (a systemd user service).
 #     Containers run in its user namespace, so Docker isn't a way to root.
 #   - One user means concurrent jobs can see each other: files, processes,
-#     environment (including GITHUB_TOKEN) and containers. Fine for a private
-#     repo where only the team pushes; revisit if outside contributors' pull
-#     requests ever run here.
+#     environment (including GITHUB_TOKEN) and containers. That includes
+#     cogni's release jobs, whose environment holds prod deploy credentials
+#     and Android signing keys. Accepted for a private repo where only the
+#     team pushes; revisit if outside contributors' pull requests ever run
+#     here (moving releases to GitHub-hosted runners is a `runs-on` change).
 #   - In exchange, all runners share one Docker image store and one set of
 #     download caches (Nix, NuGet, Bun, npm, Playwright), so every job starts
 #     warm. Nix's caches are per user (SQLite files only their creator can
